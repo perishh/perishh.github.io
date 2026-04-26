@@ -1,0 +1,199 @@
+{
+  "questions": [
+    {
+      "text": "According to the presentation, which two signals are exceptions and can never be ignored by a process?",
+      "answers": [
+        "SIGINT and SIGTERM",
+        "SIGKILL and SIGSTOP",
+        "SIGSEGV and SIGILL",
+        "SIGUSR1 and SIGUSR2"
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 48 explicitly states that while we can ask the kernel to ignore signals, two signals can never be ignored: SIGKILL and SIGSTOP."
+    },
+    {
+      "text": "In the context of 'unreliable signals' in older Unix, what is the primary risk identified when a signal occurs after a predicate evaluation but before the call to pause()?",
+      "answers": [
+        "The process will terminate immediately.",
+        "The signal handler will be executed twice.",
+        "The process could sleep forever because the signal is 'lost'.",
+        "The kernel will return an EINTR error to the main program loop."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 61 explains that if a signal takes place after the predicate evaluation but before the call to pause, the signal is 'lost' and the process could sleep forever."
+    },
+    {
+      "text": "What does the 'Core' default disposition signify for a signal like SIGSEGV or SIGFPE?",
+      "answers": [
+        "The process ignores the signal and continues.",
+        "The process stops temporarily until a SIGCONT is received.",
+        "The process terminates and produces a memory image file (dump-core).",
+        "The process continues but logs an error to the system console."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 50 defines the 'Core' action as: 'Default action is to terminate the process & dump-core.'"
+    },
+    {
+      "text": "What is the return value of the alarm(unsigned int seconds) system call?",
+      "answers": [
+        "0 on success, -1 on failure.",
+        "The process ID of the calling process.",
+        "The number of seconds remaining until any previously scheduled alarm was due.",
+        "A unique integer identifier for the scheduled signal."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 57 states that alarm() returns the number of seconds remaining until any previously scheduled alarm was due to be delivered; otherwise, it returns 0."
+    },
+    {
+      "text": "In the sigaction structure, what is the purpose of the sa_mask field?",
+      "answers": [
+        "It defines which signals are ignored by the process globally.",
+        "It specifies a set of signals to be blocked during the execution of the signal handler.",
+        "It is used to mask the return value of the signal handler function.",
+        "It identifies the bitmask for the signal's priority level."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 67 states that the sa_mask field specifies signals that will be blocked during the execution of the sa_handler."
+    },
+    {
+      "text": "When using sigprocmask(), which 'how' argument value results in the set of blocked signals becoming the union of the current set and the set argument?",
+      "answers": ["SIG_SETMASK", "SIG_UNBLOCK", "SIG_UNION", "SIG_BLOCK"],
+      "answerIndex": 3,
+      "explanation": "Slide 75 defines SIG_BLOCK as: 'set of blocked signals is the union of the current set and the set argument.'"
+    },
+    {
+      "text": "What happens if the 'sig' argument in the kill(pid_t pid, int sig) system call is 0?",
+      "answers": [
+        "The process with the specified PID is terminated.",
+        "A SIGKILL is sent by default.",
+        "No signal is dispatched, but error checking is performed.",
+        "The process with the specified PID is resumed."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 52 states: 'If sig is 0 then no signal is dispatched.'"
+    },
+    {
+      "text": "According to the presentation, what is a major limitation regarding the reliability of signals?",
+      "answers": [
+        "Signals can only be sent by the superuser.",
+        "Signals cannot be stacked; you cannot have more than one of each type outstanding.",
+        "Signals can only be sent to processes in the same process group.",
+        "Signals are only delivered when a process is in user mode."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 78 states that in general, signals cannot be stacked (you can never have more than one signal of each type outstanding at any moment), which leads to questions about signals being 'lost'."
+    },
+    {
+      "text": "In older Unix versions, what was a common (but often unsuccessful) effort to handle the 'unreliable' nature of signals within a handler?",
+      "answers": [
+        "Calling exit() as the first line of the handler.",
+        "Ignoring all other signals at the start of the handler.",
+        "Re-stating the signal's expected disposition as the first line of the handler.",
+        "Using the pause() call inside the handler."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 59 mentions that an 'unsuccessful effort' to handle unreliable signals was to '(re-)state the signal’s expected disposition as the 1st line of the handler.'"
+    },
+    {
+      "text": "What is the return value of the pause() system call when a signal is caught and the signal-handling function returns?",
+      "answers": [
+        "0",
+        "-1",
+        "The integer value of the signal caught.",
+        "The PID of the process that sent the signal."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 56 states: 'pause returns -1, and errno is set to EINTR' when a signal was caught and the handling function returned."
+    },
+    {
+      "text": "Which function is used to initialize a signal set to contain all available signals?",
+      "answers": [
+        "sigemptyset()",
+        "sigaddset()",
+        "sigfillset()",
+        "sigsetmask()"
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 64 and 65 demonstrate that sigfillset() is used to create a 'full mask' or a set containing all signals."
+    },
+    {
+      "text": "The raise(int sig) function is documented as being equivalent to which kill() call?",
+      "answers": [
+        "kill(0, sig)",
+        "kill(-1, sig)",
+        "kill(getppid(), sig)",
+        "kill(getpid(), sig)"
+      ],
+      "answerIndex": 3,
+      "explanation": "Slide 56 explicitly states: 'raise(int sig)... is equivalent to: kill(getpid(), sig);'."
+    },
+    {
+      "text": "If a process is executing a system call like read() or write() on a 'slow device' and a signal is dispatched, what is the 'exception' noted in the slides?",
+      "answers": [
+        "The signal is ignored until the system call completes.",
+        "The system call could be interrupted by the signal.",
+        "The system call is automatically restarted by the kernel.",
+        "The process is forced to dump core."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 78 notes: 'Exception: a few calls such as read/write/open on slow devices could be interrupted by a signal.'"
+    },
+    {
+      "text": "In the sigaction structure, which flag is used to ensure a signal's action is reset to SIG_DFL upon return from the handler?",
+      "answers": ["SA_SIGINFO", "SA_NOCLDWAIT", "SA_RESETHAND", "SA_NODEFER"],
+      "answerIndex": 2,
+      "explanation": "Slide 68 states: 'A signal’s action is reset to SIG_DFL on return from the handler by sa_flags=SA_RESETHAND'."
+    },
+    {
+      "text": "What does the signal() system call return on success?",
+      "answers": [
+        "0",
+        "The number of the signal being handled.",
+        "The previous value of the signal handler.",
+        "A pointer to the new handler function."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 53 states: 'signal() returns the previous value of the signal handler, or SIG_ERR on error.'"
+    },
+    {
+      "text": "Which signal is associated with a 'Broken pipe: write to pipe with no readers'?",
+      "answers": ["SIGILL", "SIGPIPE", "SIGBUS", "SIGSYS"],
+      "answerIndex": 1,
+      "explanation": "According to the table on Slide 49, SIGPIPE (integer 13) is for a 'Broken pipe: write to pipe with no readers'."
+    },
+    {
+      "text": "What is the command to list all available signals on a Linux/Unix terminal according to the examples?",
+      "answers": ["kill -all", "kill -list", "kill -l", "signal -l"],
+      "answerIndex": 2,
+      "explanation": "Slide 51 shows the command 'kill -l' being used to list all available signals."
+    },
+    {
+      "text": "In sigprocmask(), if the 'set' argument is NULL, what happens to the process's signal mask?",
+      "answers": [
+        "All signals are unblocked.",
+        "The signal mask remains unchanged.",
+        "The signal mask is set to include all signals.",
+        "The function returns an error."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 75 states: 'If set is NULL, the signal mask is unchanged and current value of mask is returned in oldset (if it is not NULL);'."
+    },
+    {
+      "text": "Which signal is generated by typing 'cntrl-c' at the terminal?",
+      "answers": ["SIGQUIT", "SIGTSTP", "SIGINT", "SIGKILL"],
+      "answerIndex": 2,
+      "explanation": "Slide 47 and Slide 49 identify SIGINT (integer 2) as the 'Interrupt from keyboard', typically generated by Ctrl-C."
+    },
+    {
+      "text": "How are signals primarily identified in the system?",
+      "answers": [
+        "By unique 4-character strings.",
+        "By memory addresses.",
+        "By integer numbers.",
+        "By process group IDs."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 47 states: 'Signals are identified with integer number. - a unique number represent a different type of signal.'"
+    }
+  ]
+}

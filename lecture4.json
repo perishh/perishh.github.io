@@ -1,0 +1,179 @@
+{
+  "questions": [
+    {
+      "text": "In a Bash script, how does the shell interpret the variable '$10' compared to '${10}'?",
+      "answers": [
+        "They are identical and both refer to the tenth input parameter.",
+        "'$10' is interpreted as the first parameter followed by a literal '0', while '${10}' refers to the tenth parameter.",
+        "'$10' is a syntax error, and only '${10}' is valid for parameters above 9.",
+        "'$10' refers to the tenth parameter, while '${10}' is used only for environment variables."
+      ],
+      "answerIndex": 1,
+      "explanation": "As shown on slide 4, using $10 results in the value of the first parameter ($1) followed by the character '0'. Curly braces are required to correctly reference positional parameters beyond the ninth ($1 to $9)."
+    },
+    {
+      "text": "Which of the following describes the behavior of single quotes versus double quotes when used with variables?",
+      "answers": [
+        "Double quotes treat everything literally, while single quotes allow variable expansion.",
+        "Both single and double quotes allow for variable expansion and command substitution.",
+        "Single quotes deactivate the reference to the value indicated by '$', while double quotes retain the value but help handle spaces.",
+        "Single quotes are used for integers, while double quotes are used for strings."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 5 explains that double quotes help retain multiple spaces while allowing variable expansion, whereas single quotes deactivate the reference to the value indicated by the $ sign, treating the contents literally."
+    },
+    {
+      "text": "What is the significance of the exit status code '0' in Bash scripting?",
+      "answers": [
+        "It indicates that the script encountered a minor warning.",
+        "It indicates a successful completion of the last command.",
+        "It indicates that a variable is null or empty.",
+        "It indicates an 'unknown program' or 'command not found' error."
+      ],
+      "answerIndex": 1,
+      "explanation": "According to slide 10, the variable $? returns the exit code of the last command, where a value of 0 signifies successful completion."
+    },
+    {
+      "text": "When using the 'bc' utility, what is the effect of setting 'ibase=16' and then entering '1A'?",
+      "answers": [
+        "It outputs the decimal value 26.",
+        "It outputs the binary value 00011010.",
+        "It sets the output precision to 16 decimal places.",
+        "It is a syntax error because 'bc' only supports base 10."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 14 demonstrates that 'ibase' sets the input base. In hexadecimal (base 16), the value '1A' is equivalent to 26 in decimal."
+    },
+    {
+      "text": "Which of the following is the correct syntax for performing multiplication using the 'expr' command?",
+      "answers": ["expr 5 * 3", "expr 5 x 3", "expr 5 \\* 3", "expr (5 * 3)"],
+      "answerIndex": 2,
+      "explanation": "Slide 7 notes that when using 'expr', you must escape the asterisk (\\*) because otherwise the shell would interpret it as a wildcard character."
+    },
+    {
+      "text": "How does the Bash numerical construct '(( ))' differ from the C programming language convention regarding truth values?",
+      "answers": [
+        "Bash '(( ))' returns 1 for TRUE and 0 for FALSE, exactly like C.",
+        "Bash '(( ))' returns an exit code of 0 for TRUE (non-zero results) and 1 for FALSE (zero results).",
+        "Bash '(( ))' cannot evaluate logical comparisons, only basic addition.",
+        "There is no difference; Bash adopts the C convention for all exit codes."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 16 states that the construct returns 0 (TRUE) when the value inside evaluates to non-zero, and 1 (FALSE) when it evaluates to zero. This is described as the 'Opposite from C convention' when thinking in terms of Unix exit codes for success."
+    },
+    {
+      "text": "Which conditional flag is used to check if a specific path exists and is a regular file?",
+      "answers": ["-e", "-d", "-f", "-r"],
+      "answerIndex": 2,
+      "explanation": "As shown on slide 19, the '-e' flag checks if a file exists, while the '-f' flag specifically checks if it is a 'regular file'."
+    },
+    {
+      "text": "In a script called with './script.sh a b c d', what would be the value of '$#'?",
+      "answers": ["0", "1", "4", "script.sh"],
+      "answerIndex": 2,
+      "explanation": "Slide 4 explains that $# represents the number of input parameters. In this case, there are four parameters (a, b, c, and d)."
+    },
+    {
+      "text": "Using 'expr substr', what is the result of 'expr substr EnaMegaloString 4 6'?",
+      "answers": ["EnaMeg", "Megalo", "aloStr", "egaloS"],
+      "answerIndex": 1,
+      "explanation": "Slide 7 shows that 'expr substr $string $position $length' extracts a specific number of characters starting from a specific position. Starting at position 4 of 'EnaMegaloString' for 6 characters yields 'Megalo'."
+    },
+    {
+      "text": "When comparing strings inside '[ ]' brackets, what is the purpose of the '\\<' operator?",
+      "answers": [
+        "It checks if the first string is shorter in length than the second.",
+        "It checks if the first string is alphanumerically less than the second.",
+        "It is a redirection operator that sends a string into a file.",
+        "It checks if a string is null."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 21 identifies '\\<' as the operator for 'alphanumerically less' when performing string comparisons."
+    },
+    {
+      "text": "In 'bc', if the 'scale' is set to 0, what is the result of the calculation '19/3'?",
+      "answers": ["6.3333", "6.33", "6", "7"],
+      "answerIndex": 2,
+      "explanation": "Slide 13 shows that when 'scale=0', 'bc' performs integer division and truncates the remainder. Therefore, 19/3 equals 6."
+    },
+    {
+      "text": "Which operator is used for a logical 'OR' within a single '[ ]' test construct?",
+      "answers": ["-and", "||", "|", "-o"],
+      "answerIndex": 3,
+      "explanation": "Slide 22 indicates that '-o' represents the Logical OR within a conditional expression block."
+    },
+    {
+      "text": "Why would the assignment 'a = 2334' fail in a Bash script?",
+      "answers": [
+        "Variables must be declared with a keyword like 'int'.",
+        "Spaces are not allowed immediately before or after the '=' in assignments.",
+        "The value must be enclosed in double quotes.",
+        "Variables in Bash cannot hold numeric values."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 5 explicitly states: 'Never use spaces immediately before or after = in assignments'."
+    },
+    {
+      "text": "What is the exit status ($?) of the command '(( 5 - 5 ))'?",
+      "answers": ["0", "1", "5", "127"],
+      "answerIndex": 1,
+      "explanation": "Slide 17 and 18 show that since 5 - 5 equals 0, the exit status is 1 (FALSE/Failure) because Bash '(( ))' returns 0 for non-zero results and 1 for zero results."
+    },
+    {
+      "text": "In the Bash 'case' statement, what characters are used to terminate each pattern's list of statements?",
+      "answers": ["fi", "esac", ";;", "::"],
+      "answerIndex": 2,
+      "explanation": "The syntax diagrams on slide 24 show that each conditional block in a 'case' statement ends with ';;'."
+    },
+    {
+      "text": "If 'obase=2' is set in 'bc', what is the output for the decimal number 5?",
+      "answers": ["10", "101", "111", "5"],
+      "answerIndex": 1,
+      "explanation": "Slide 15 shows that 'obase' sets the output base. Decimal 5 in binary (base 2) is 101."
+    },
+    {
+      "text": "What does the syntax '>& /dev/null' accomplish in a script command like 'cd /dada >& /dev/null'?",
+      "answers": [
+        "It redirects both standard output and standard error to /dev/null, hiding all output.",
+        "It only redirects standard error, while standard output is still shown.",
+        "It saves the error message into a variable named /dev/null.",
+        "It forces the 'cd' command to succeed even if the directory doesn't exist."
+      ],
+      "answerIndex": 0,
+      "explanation": "As seen on slide 11, this syntax is used to suppress both stdout and stderr, preventing any error messages from being displayed to the user if the directory 'dada' does not exist."
+    },
+    {
+      "text": "Which of the following 'if' conditions is functionally equivalent to the numerical test '(( a > b ))'?",
+      "answers": [
+        "[ \"$a\" -gt \"$b\" ]",
+        "[ \"$a\" > \"$b\" ]",
+        "[ \"$a\" -ge \"$b\" ]",
+        "[ \"$a\" == \"$b\" ]"
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 20 provides a table showing that the integer comparison '-gt' (greater than) inside '[ ]' is the equivalent of the '>' symbol used inside '(( ))'."
+    },
+    {
+      "text": "What is the primary function of the shebang (#! /bin/bash) at the top of a shell script?",
+      "answers": [
+        "It acts as a comment to describe the script's purpose.",
+        "It tells the operating system which shell interpreter to use to execute the script.",
+        "It initializes all variables to zero.",
+        "It sets the file permissions to executable automatically."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 2 explains that the 'first line says which shell is to be used (here is bash)'."
+    },
+    {
+      "text": "How can you perform decimal inequality tests in Bash if the language only supports integer arithmetic?",
+      "answers": [
+        "By using the 'let' command with the '--decimal' flag.",
+        "By piping an 'echo' command with the inequality into 'bc'.",
+        "By using double brackets '[[ ]]' which natively support floating point numbers.",
+        "Bash cannot perform decimal inequality tests."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 9 demonstrates that you can perform inequality tests for decimals by echoing the expression (e.g., 'A - B > 0') and piping it into 'bc', which returns 1 for true and 0 for false."
+    }
+  ]
+}

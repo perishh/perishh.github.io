@@ -1,0 +1,209 @@
+{
+  "questions": [
+    {
+      "text": "According to the Unix process memory layout, which of the following is located at the highest memory address?",
+      "answers": [
+        "Program text",
+        "Initialized static data",
+        "The stack",
+        "Command-line arguments and environment variables"
+      ],
+      "answerIndex": 3,
+      "explanation": "Page 4 shows the memory layout where command-line arguments and environment variables (argc, argv, env) are at the high address, while the program text is at the low address."
+    },
+    {
+      "text": "In the context of process resource limits, what is the 'hard limit' represented by rlim_max?",
+      "answers": [
+        "The current limit enforced by the kernel",
+        "The ceiling for the soft limit",
+        "The minimum amount of memory required for execution",
+        "A limit that cannot be queried by the user"
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 6 defines rlim_max as the 'Hard limit (ceiling for rlim_cur)'."
+    },
+    {
+      "text": "Which process is known as the ancestor of all user processes in a Unix system and what is its PID?",
+      "answers": ["kernel, PID=0", "root, PID=1", "init, PID=1", "bash, PID=0"],
+      "answerIndex": 2,
+      "explanation": "Page 5 states that the very first process is called init and has PID=1, and all user processes are descendants of it."
+    },
+    {
+      "text": "What are the return values of the fork() system call?",
+      "answers": [
+        "Returns 1 to the parent and 0 to the child",
+        "Returns the parent's PID to the child and 0 to the parent",
+        "Returns the child's PID to the parent and 0 to the child",
+        "Returns 0 to both, using a flag to distinguish the process type"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 13 explains that fork() returns 0 in the child process and returns the processID of the child to the parent."
+    },
+    {
+      "text": "In the AT&T Unix Detailed State Diagram, which state is identified by the number 9?",
+      "answers": [
+        "Preempted",
+        "Zombie",
+        "Asleep in main-memory",
+        "Ready to Run, Swapped"
+      ],
+      "answerIndex": 1,
+      "explanation": "On page 11, the state diagram labels state 9 as 'Zombie'."
+    },
+    {
+      "text": "When using the wait(int *status) system call, if the child terminated normally, how is the exit code stored within the status integer?",
+      "answers": [
+        "In the rightmost 7 bits",
+        "In the leftmost 8 bits (left byte)",
+        "In the rightmost 8 bits (right byte)",
+        "It is not stored in the status integer; wait() returns it directly"
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 22 and 29 specify that the exit code is in the left byte of the status, often accessed via (status >> 8)."
+    },
+    {
+      "text": "Which wait macro returns the number of the signal that caused the child process to terminate?",
+      "answers": [
+        "WEXITSTATUS(status)",
+        "WIFSIGNALED(status)",
+        "WTERMSIG(status)",
+        "WSTOPSIG(status)"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 23 states that WTERMSIG(status) returns the number of the signal that caused the child process to terminate."
+    },
+    {
+      "text": "What occurs to the memory segments of a process when an execve() call is successful?",
+      "answers": [
+        "The segments are appended to the new program's segments",
+        "Only the stack is preserved to maintain function return addresses",
+        "Text, data, bss, and stack are overwritten by the new program",
+        "The process creates a new PID to accommodate the new segments"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 33 and 34 explain that exec calls replace the calling process, including text, data, bss, and stack, with the new executable."
+    },
+    {
+      "text": "Which exec family functions specifically use the PATH environment variable to locate the executable file?",
+      "answers": [
+        "execl and execv",
+        "execle and execve",
+        "execlp and execvp",
+        "Only execve"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 35 notes that execlp and execvp use the environment variable PATH to 'locate' the executable."
+    },
+    {
+      "text": "In a waitpid(pid_t pid, int *status, int options) call, what does a pid value of -1 signify?",
+      "answers": [
+        "Wait for any child process whose groupID matches the parent",
+        "Wait for any child process",
+        "Wait for the specific child with PID 1",
+        "An error has occurred in the call"
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 25 defines the pid value of -1 as 'wait for any child process'."
+    },
+    {
+      "text": "What is the result of waitpid() if the WNOHANG option is specified and the child exists but has not yet changed state?",
+      "answers": [
+        "The function returns the child's PID",
+        "The function returns -1",
+        "The function blocks until the state changes",
+        "The function returns 0"
+      ],
+      "answerIndex": 3,
+      "explanation": "Page 26 states that if WNOHANG is specified and children exist but have not changed state, then 0 is returned."
+    },
+    {
+      "text": "A process that has terminated but whose parent has not yet received its exit code is known as:",
+      "answers": [
+        "An orphan process",
+        "A preempted process",
+        "A zombie process",
+        "A swapped process"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 31 defines a zombie as a process that terminates but remains in the system until its parent receives its exit code."
+    },
+    {
+      "text": "In the binary tree process creation code provided (page 40), what logic is used by the first child (pid1) to update its logical ID?",
+      "answers": [
+        "numb = 2 * numb",
+        "numb = 2 * numb + 1",
+        "numb = numb + 1",
+        "numb = numb * i"
+      ],
+      "answerIndex": 0,
+      "explanation": "In the switch(pid1=fork()) case 0 on page 40, the code executes 'numb=2*numb; break;'."
+    },
+    {
+      "text": "Which header files are required to use the getrlimit and setrlimit system calls?",
+      "answers": [
+        "<unistd.h> and <stdio.h>",
+        "<sys/types.h> and <sys/wait.h>",
+        "<sys/time.h> and <sys/resource.h>",
+        "<stdlib.h> and <string.h>"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 6 lists #include <sys/time.h> and #include <sys/resource.h> for these system calls."
+    },
+    {
+      "text": "What happens to the Program Counter (PC) immediately after a fork() command is executed?",
+      "answers": [
+        "It resets to the first command of the program in both processes",
+        "It points to the next instruction in the parent and the first command in the child",
+        "It points to the next instruction in both the parent and the child",
+        "It is cleared in the child until the parent sends a signal"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 14 illustrates that after executing fork(), the PC in both the parent and child processes points to the instruction immediately following the fork() call."
+    },
+    {
+      "text": "If a child process is created and the parent terminates before the child, the child becomes:",
+      "answers": [
+        "A zombie",
+        "An orphan",
+        "A root process",
+        "A swapped process"
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 21 demonstrates 'Orphan Processes' where the parent terminates first, leaving the child to be adopted (usually by init/PID 1)."
+    },
+    {
+      "text": "The waitpid constant WUNTRACED is used to:",
+      "answers": [
+        "Return immediately if no child has exited",
+        "Return if a child has stopped",
+        "Return if a stopped child has been resumed",
+        "Prevent the child from becoming a zombie"
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 26 lists WUNTRACED as a constant that causes waitpid to 'return if a child has stopped'."
+    },
+    {
+      "text": "In an execve call, what requirement is placed on the argv and envp arrays?",
+      "answers": [
+        "They must be sorted alphabetically",
+        "They must contain at least three elements",
+        "They must be NULL-terminated",
+        "They must be stored in the heap"
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 33 explicitly states: 'Both argv and envp must be NULL-terminated.'"
+    },
+    {
+      "text": "Which resource limit constant restricts the maximum size of the process stack in bytes?",
+      "answers": ["RLIMIT_AS", "RLIMIT_DATA", "RLIMIT_FSIZE", "RLIMIT_STACK"],
+      "answerIndex": 3,
+      "explanation": "Page 7 shows that RLIMIT_STACK is used for the 'maximum size of the process stack, in bytes'."
+    },
+    {
+      "text": "In the shell, which variable is used to see the exit status of the most recently terminated process?",
+      "answers": ["$$", "$?", "$!", "$@"],
+      "answerIndex": 1,
+      "explanation": "Page 12 states: 'otherwise, the value of status is available (often) at the shell variable $?'."
+    }
+  ]
+}

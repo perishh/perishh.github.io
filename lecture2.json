@@ -1,0 +1,204 @@
+{
+  "questions": [
+    {
+      "text": "Based on the provided command line examples, if a user has aliased 'rm' to 'rm -i' and then executes 'rm -f filename', what is the resulting behavior?",
+      "answers": [
+        "The file is deleted immediately without any prompt due to the force option.",
+        "The system prompts the user with '(yes/no)?' because the alias 'rm -i' takes precedence over the '-f' flag in some shell configurations.",
+        "The command returns an error because '-i' and '-f' are mutually exclusive.",
+        "The file is moved to a temporary trash directory."
+      ],
+      "answerIndex": 1,
+      "explanation": "As shown on page 4, even when using 'rm -f aaa', the system still prompts 'remove aaa (yes/no)?' because the user had executed 'alias rm rm -i', which forced interactive mode."
+    },
+    {
+      "text": "According to the comparison table, which statement is true regarding Hard Links and Soft Links?",
+      "answers": [
+        "Soft links can only be used for files, not directories.",
+        "Deleting the initial file does not affect a Soft Link.",
+        "Changing the name of the initial file creates problems for Soft Links but not for Hard Links.",
+        "Hard links are essentially copies of the path to the initial file."
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 22 explicitly states that for Hard Links, a name change of the initial file does not create problems, whereas for Soft Links, a name change in the initial file creates problems."
+    },
+    {
+      "text": "In the 'sort' command, what is the specific function of 'number1' in the syntax '+number1 -number2'?",
+      "answers": [
+        "It specifies the total number of lines to be sorted.",
+        "It specifies the number of fields to be skipped to get to the beginning of the sort field.",
+        "It specifies the character position within a field to start sorting.",
+        "It defines the ASCII value of the delimiter."
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 15 states that 'number1' specifies the number of fields to be skipped to get to the beginning of the sort field."
+    },
+    {
+      "text": "Referencing the 'wc' command output on page 13, what does the first column of the output '10 30 183 lista' represent?",
+      "answers": [
+        "Number of characters",
+        "Number of words",
+        "Number of lines",
+        "File size in bytes"
+      ],
+      "answerIndex": 2,
+      "explanation": "The 'wc' output format is lines, words, and characters. The command 'wc -l' (which isolates lines) shows 10, and 'wc -w' (words) shows 30, confirming the first column is the line count."
+    },
+    {
+      "text": "When using the 'less' command, which key is used to search for a specific pattern 's' within the file content?",
+      "answers": ["s", "/s", "f s", "Ctrl+F s"],
+      "answerIndex": 1,
+      "explanation": "Page 11 lists navigation keys for 'less', noting that '/<s>' is used to search for pattern 's'."
+    },
+    {
+      "text": "On page 10, the command 'chmod -R 700 mydir/' was executed. What was the effect on the files A1 and A2 inside that directory?",
+      "answers": [
+        "They were deleted.",
+        "Their permissions remained unchanged as the command only applied to the directory.",
+        "Their permissions were changed to rwx------ (read, write, execute for owner only).",
+        "They became read-only for all users."
+      ],
+      "answerIndex": 2,
+      "explanation": "The '-R' flag stands for recursive. Before the command, A1 and A2 had 'rwxr-xr-x'. After the 'chmod -R 700', 'ls -lR' shows they both have 'rwx------'."
+    },
+    {
+      "text": "A user runs 'grep -n x86 dmesg'. What does the '-n' option contribute to the output?",
+      "answers": [
+        "It makes the search case-insensitive.",
+        "It displays the line numbers where the pattern was found.",
+        "It counts the total number of matches.",
+        "It only displays the names of files containing the match."
+      ],
+      "answerIndex": 1,
+      "explanation": "As shown on page 12, the output for 'grep -n' includes prefixes like '10:', '41:', '58:', which correspond to the line numbers in the file."
+    },
+    {
+      "text": "Based on the shell I/O descriptions, what are the file descriptors for stdin, stdout, and stderr respectively?",
+      "answers": [
+        "1, 2, 3",
+        "0, 1, 2",
+        "1, 0, 2",
+        "Standard input has no descriptor."
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 27 states that the file descriptors for stdin, stdout, and stderr are 0, 1, 2 respectively."
+    },
+    {
+      "text": "Which command is used to display the differences between two ASCII files as shown on page 24?",
+      "answers": ["cmp", "diff", "comm", "dist"],
+      "answerIndex": 1,
+      "explanation": "The screenshot on page 24 demonstrates the use of 'diff' to show line-by-line differences (e.g., '4c4' and the specific changed lines)."
+    },
+    {
+      "text": "According to page 7, how does a user move from 'input' mode to 'edit' mode in the vi/vim editor?",
+      "answers": [
+        "Pressing the 'i' key",
+        "Pressing the 'ESC' button",
+        "Pressing 'Enter'",
+        "Typing ':w'"
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 7 specifies: 'Move from input to edit with ESC button.'"
+    },
+    {
+      "text": "On page 21, what happens when 'more mysoftlink' is executed after the original file 'bbbb' has been deleted?",
+      "answers": [
+        "The system displays the contents of 'myhardlink' instead.",
+        "The system returns 'mysoftlink: No such file or directory'.",
+        "The system displays an empty file.",
+        "The system automatically restores 'bbbb' from the link."
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 21 shows that after 'rm bbbb', the command 'more mysoftlink' results in 'mysoftlink: No such file or directory' because the soft link points to a non-existent path."
+    },
+    {
+      "text": "In the context of printing commands on page 25, which command is used to remove a specific print job from the queue?",
+      "answers": ["lpstat -r", "lpq -d", "lprm", "lpr -clear"],
+      "answerIndex": 2,
+      "explanation": "Page 25 shows 'lprm -Php-LaserJet-1320-series 143' being used to remove job 143 from the printer queue."
+    },
+    {
+      "text": "Looking at the 'cut' command examples on page 23, what is the result of 'cut -f3,2 -d \":\" lista1'?",
+      "answers": [
+        "It displays the first and second columns.",
+        "It displays the third and second columns (in that specific order) of the file using ':' as a delimiter.",
+        "It displays the lines starting from character 2 to 3.",
+        "It displays the third and second columns, but re-ordered to 2 then 3 in the output."
+      ],
+      "answerIndex": 1,
+      "explanation": "The output on page 23 shows that 'cut -f3,2' extracts those specific fields. Note that 'cut' usually outputs fields in the order they appear in the file, but the command specifically designates those columns."
+    },
+    {
+      "text": "What is the primary difference between 'more' and 'less' as defined in the processing commands table?",
+      "answers": [
+        "'more' is for directories while 'less' is for files.",
+        "'less' allows for backward display of file content, whereas 'more' is page-by-page (forward).",
+        "'more' can edit files, 'less' is read-only.",
+        "There is no difference; they are aliases for the same binary."
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 8 describes 'more' as page-by-page display and 'less' as forward/backward display of file content."
+    },
+    {
+      "text": "On page 19, the command 'touch antoulas' is executed when the file 'antoulas' does not exist. What is the result?",
+      "answers": [
+        "The command fails with an error.",
+        "An empty file named 'antoulas' is created.",
+        "The system searches for a user named 'antoulas'.",
+        "The system changes the timestamp of the current directory."
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 8 and page 19 explain that 'touch' is used to change the timestamp or 'create an empty file' if it doesn't exist."
+    },
+    {
+      "text": "In a 'csh' shell, what does the command 'grep bra < lista > out1' do?",
+      "answers": [
+        "It searches for 'bra' in 'lista' and displays it on the screen.",
+        "It appends the word 'bra' to the files 'lista' and 'out1'.",
+        "It takes 'lista' as stdin, searches for 'bra', and redirects the stdout to a file named 'out1'.",
+        "It compares the files 'lista' and 'out1' for the pattern 'bra'."
+      ],
+      "answerIndex": 2,
+      "explanation": "Page 28 shows this redirection example in csh, where '<' redirects stdin and '>' redirects stdout."
+    },
+    {
+      "text": "According to the slide on shell types, what file is executed as soon as a user logs into a system?",
+      "answers": ["~/.cshrc", ".logout", ".login", ".bash_history"],
+      "answerIndex": 2,
+      "explanation": "Page 26 states: 'As soon as a user logs into a system, the commands in file .login are executed.'"
+    },
+    {
+      "text": "When using 'ls -F', as seen on page 1, what does a trailing slash (/) indicate next to an item name?",
+      "answers": [
+        "The item is an executable file.",
+        "The item is a symbolic link.",
+        "The item is a directory.",
+        "The item is a hidden file."
+      ],
+      "answerIndex": 2,
+      "explanation": "In the 'ls -lF' output on page 1, entries like 'junk/' and 'hsperfdata_root/' have trailing slashes and are also identified by the 'd' at the start of the permission string, indicating directories."
+    },
+    {
+      "text": "What is the function of the '-i' option in the 'cp' and 'mv' commands?",
+      "answers": [
+        "It forces the command to ignore errors.",
+        "It enables interactive mode, asking for confirmation before an action is taken.",
+        "It makes the command case-insensitive for filenames.",
+        "It installs the files into the system directory."
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 20 defines '-i' as 'interactive mode (asks before an action can be taken).'"
+    },
+    {
+      "text": "To see only the last 3 lines of a file named 'lista2', which command should be used based on the examples?",
+      "answers": [
+        "head -3 lista2",
+        "tail -3 lista2",
+        "tail +3 lista2",
+        "last 3 lista2"
+      ],
+      "answerIndex": 1,
+      "explanation": "Page 24 shows the command 'tail -3 lista2' being used to display the final three lines of the file."
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "questions": [
+    {
+      "text": "In a Unix pipe created with 'int p[2]', which file descriptor is traditionally used for reading and which for writing?",
+      "answers": [
+        "p[0] for writing, p[1] for reading",
+        "p[0] for reading, p[1] for writing",
+        "Both p[0] and p[1] can be used for either reading or writing interchangeably",
+        "The indices are assigned randomly by the kernel"
+      ],
+      "answerIndex": 1,
+      "explanation": "According to the slides, pipe creates a unidirectional data channel where pipefd[0] refers to the read end and pipefd[1] refers to the write end."
+    },
+    {
+      "text": "What is a critical property of file descriptors that makes pipes useful when combined with the fork() system call?",
+      "answers": [
+        "File descriptors are automatically closed upon a fork()",
+        "File descriptors are renamed in the child process to avoid conflict",
+        "File descriptors remain open across a fork(), allowing parent and child to share the same pipe",
+        "Pipes are automatically destroyed during a fork() to save memory"
+      ],
+      "answerIndex": 2,
+      "explanation": "The real value of a pipe appears when used with fork() because file descriptors remain open across the fork, allowing the two processes to communicate."
+    },
+    {
+      "text": "What happens if a process attempts to read from a pipe that is currently empty, but at least one process still has the write end of that pipe open?",
+      "answers": [
+        "The read() call returns -1 immediately",
+        "The read() call returns 0",
+        "The process crashes with a segmentation fault",
+        "The potential read() blocks until data is written or all write ends are closed"
+      ],
+      "answerIndex": 3,
+      "explanation": "The slides state that if a process has opened a pipe for write but hasn't written anything yet, a potential read() blocks."
+    },
+    {
+      "text": "Under what condition does a read() call on a pipe return 0?",
+      "answers": [
+        "When the pipe is full",
+        "When the pipe is empty and no process has the pipe open for writing",
+        "When the process does not have permission to read",
+        "When the write() end is faster than the read() end"
+      ],
+      "answerIndex": 1,
+      "explanation": "As per the documentation in the slides, if a pipe is empty and no process has the pipe open for write(), a read() returns 0 (indicating EOF)."
+    },
+    {
+      "text": "According to POSIX standards, what is the designated minimum limit for the size of a pipe buffer?",
+      "answers": ["1024 Bytes", "4096 Bytes", "512 Bytes", "65536 Bytes"],
+      "answerIndex": 2,
+      "explanation": "The slides mention that while Unix systems often display higher capacity, POSIX designates this limit to be 512 Bytes."
+    },
+    {
+      "text": "In the provided 'size program' example, what is the purpose of the alarm(10) call before the write() operation?",
+      "answers": [
+        "To terminate the program after 10 seconds of successful writing",
+        "To catch a situation where the write() blocks indefinitely because the pipe is full",
+        "To synchronize the write with the read operation",
+        "To measure the speed of the data transfer"
+      ],
+      "answerIndex": 1,
+      "explanation": "The program uses sigaction and alarm to handle the SIGALRM signal. If the write() blocks (because the pipe buffer is full), the alarm will eventually trigger the handler, allowing the program to report the capacity."
+    },
+    {
+      "text": "When a process executes an exec() call, what happens to the file descriptors and symbolic names of pipes?",
+      "answers": [
+        "Both the descriptors and symbolic names are lost",
+        "The symbolic names are preserved, but descriptors are closed",
+        "The descriptors are inherited, but their symbolic names (variable names in code) are not",
+        "The kernel reassigns all pipes to standard I/O (0, 1, 2)"
+      ],
+      "answerIndex": 2,
+      "explanation": "Slides note that while file descriptors and pipes are inherited by the child across an exec, their symbolic names are not accessible to the new program image."
+    },
+    {
+      "text": "In the code 'dup2(fd[WRITE], 1);', what is the intended effect on the process's I/O?",
+      "answers": [
+        "It closes the write end of the pipe",
+        "It redirects the standard output (STDOUT) to the write end of the pipe",
+        "It redirects the pipe input to the standard input (STDIN)",
+        "It duplicates the standard output to file descriptor 2"
+      ],
+      "answerIndex": 1,
+      "explanation": "dup2(oldfd, newfd) makes newfd (1, which is STDOUT) a copy of oldfd (the pipe's write end). Thus, standard output is redirected into the pipe."
+    },
+    {
+      "text": "What are the two primary limitations of 'classic' pipes mentioned in the material?",
+      "answers": [
+        "They are slow and they consume too much CPU",
+        "They only work on Windows and they are limited to 1KB",
+        "Processes must share common ancestry and pipes are not permanent",
+        "They cannot be used with fork() and they require root privileges"
+      ],
+      "answerIndex": 2,
+      "explanation": "The 'Limitations' slide explicitly lists that processes using pipes must share common ancestry and that pipes are not permanent (persistent)."
+    },
+    {
+      "text": "How do Named Pipes (FIFOs) differ from classic pipes regarding persistence?",
+      "answers": [
+        "FIFOs are deleted immediately after the process ends",
+        "FIFOs are permanent on the file system and exist until explicitly deleted",
+        "FIFOs only exist in the RAM and are lost on reboot",
+        "There is no difference in persistence"
+      ],
+      "answerIndex": 1,
+      "explanation": "The slides state that FIFOs address the deficiencies of classic pipes by being permanent on the file system."
+    },
+    {
+      "text": "Which system call is used to create a Named Pipe (FIFO) in C code?",
+      "answers": [
+        "pipe()",
+        "mknod() with the 'p' flag or mkfifo()",
+        "creat()",
+        "socket()"
+      ],
+      "answerIndex": 1,
+      "explanation": "The 'Creation of FIFOs' slide specifies the system program /bin/mknod with the 'p' parameter and the API function 'int mkfifo(const char *pathname, mode_t mode)'."
+    },
+    {
+      "text": "Is it possible to perform a 'seek' operation on a FIFO?",
+      "answers": [
+        "Yes, using the lseek() call",
+        "Yes, but only if it was opened in O_RDWR mode",
+        "No, a FIFO cannot be seeked",
+        "Yes, but only for the first 512 bytes"
+      ],
+      "answerIndex": 2,
+      "explanation": "The slide 'Named Pipes (FIFOs)' explicitly states: 'A FIFO cannot be seeked.'"
+    },
+    {
+      "text": "In the 'unusual redirection' example (page 23), how is the output of 'who' sent to a file without using shell redirection characters (like '>')?",
+      "answers": [
+        "By using the write() system call inside a loop",
+        "By closing file descriptor 1 and then creating a new file which takes over the lowest available descriptor (1)",
+        "By passing the filename as an argument to the who command",
+        "By setting an environment variable called STDOUT"
+      ],
+      "answerIndex": 1,
+      "explanation": "The code closes FD 1 (STDOUT) and then calls creat(). Since the kernel assigns the lowest available FD, the new file 'userlist' becomes FD 1. When execlp runs 'who', it outputs to its FD 1, which is now the file."
+    },
+    {
+      "text": "What is the risk if both a parent and a child process attempt to read and write to the same pipe indiscriminately?",
+      "answers": [
+        "The system will automatically deadlock",
+        "Data may become mingled and chaos may ensue because pipes are intended to be unidirectional",
+        "The pipe will automatically expand its buffer to accommodate the extra traffic",
+        "The kernel will throw a 'Pipe Conflict' error and terminate both processes"
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 47 notes that while both can theoretically read/write p[0] and p[1], pipes are intended to be unidirectional, and indiscriminate use leads to mingled data and 'chaos'."
+    },
+    {
+      "text": "If a server needs to monitor data arriving from multiple pipes simultaneously without blocking on an empty one, which system call should it use?",
+      "answers": ["fork()", "wait()", "select()", "fpathconf()"],
+      "answerIndex": 2,
+      "explanation": "The slide 'Reading from Multiple Pipes' introduces the select() call as the way for a server to become aware of which pipe has information ready."
+    },
+    {
+      "text": "What does a write operation on a pipe do if it exceeds the 'atomic' write size (e.g., 4096 bytes on some systems)?",
+      "answers": [
+        "It fails and returns -1",
+        "It blocks until the entire data can be written in one piece",
+        "It occurs in stages (non-atomically), potentially mingling with other writes",
+        "It ignores the extra data"
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 58 states that a write will execute atomically if the data is small enough; otherwise, writing occurs in stages, which can lead to mingled data if multiple processes are writing."
+    },
+    {
+      "text": "In the FIFO server program (receivemessages.c), what happens if it attempts to open a FIFO that already exists using 'mkfifo'?",
+      "answers": [
+        "The program crashes",
+        "It overwrites the existing FIFO",
+        "mkfifo returns -1 and errno is set to EEXIST, which the program checks to avoid exiting",
+        "The program prompts the user to delete the file"
+      ],
+      "answerIndex": 2,
+      "explanation": "The code on page 29 shows: 'if ( mkfifo(fifo, 0666) == -1 ) { if ( errno != EEXIST ) { ... exit(6); } }'. This means it only exits if the error is something OTHER than the FIFO already existing."
+    },
+    {
+      "text": "In the 'Cleaner Version' of the pipe example, why does the child process call 'close(p[0])'?",
+      "answers": [
+        "To save system memory",
+        "Because the child is only writing, and it should close the unused read end of the pipe",
+        "To signal to the parent that it is ready",
+        "To prevent the parent from reading"
+      ],
+      "answerIndex": 1,
+      "explanation": "It is best practice to close the unused ends of a pipe. Since the child is writing to p[1], it closes the read end p[0]."
+    },
+    {
+      "text": "What is the effect of using 'O_NONBLOCK' in the open() call for a FIFO in the client program?",
+      "answers": [
+        "It prevents the open() call from blocking if no one has the FIFO open for reading",
+        "It makes the writing speed faster",
+        "It ensures that the write() call will never fail",
+        "It allows the FIFO to be used for two-way communication"
+      ],
+      "answerIndex": 0,
+      "explanation": "The client program on page 31 uses O_NONBLOCK. In the context of FIFOs, this typically allows the open call to proceed without waiting for a corresponding reader/writer depending on the mode."
+    },
+    {
+      "text": "What is the specific value of '_POSIX_PIPE_BUF' mentioned in the execution outcome on slide 58?",
+      "answers": ["4096", "512", "65536", "1024"],
+      "answerIndex": 1,
+      "explanation": "The screenshot of the program output shows 'The respective POSIX value 512'."
+    }
+  ]
+}

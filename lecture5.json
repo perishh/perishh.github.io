@@ -1,0 +1,219 @@
+{
+  "questions": [
+    {
+      "text": "In the 'math' script (page 1), why is the multiplication symbol specified as '\\*)' in the case statement and 'expr $1 \\* $3' in the command?",
+      "answers": [
+        "To perform a double multiplication operation",
+        "To prevent the shell from interpreting the asterisk as a wildcard for filename expansion",
+        "Because Bash requires backslashes for all arithmetic operators",
+        "To indicate a pointer-to-integer operation in the shell environment"
+      ],
+      "answerIndex": 1,
+      "explanation": "The asterisk is a wildcard in Bash. To treat it as a literal character for the multiplication case or within the 'expr' command, it must be escaped with a backslash."
+    },
+    {
+      "text": "According to the 'for Loops' example (page 2), what is the output of a loop defined as: for koko in \"1 2 3 4 5\" do echo $koko done?",
+      "answers": [
+        "The numbers 1 through 5 on separate lines",
+        "A syntax error because of the quotes",
+        "The string '1 2 3 4 5' printed on a single line",
+        "Only the number 1"
+      ],
+      "answerIndex": 2,
+      "explanation": "When values are enclosed in double quotes within a list-based for loop, they are treated as a single item/string, resulting in one iteration."
+    },
+    {
+      "text": "In the 'forLoops2' example (page 4), what does the parameter expansion syntax '${*:2:3}' specifically accomplish?",
+      "answers": [
+        "It skips the first 2 arguments and prints the 3rd one",
+        "It prints arguments starting from index 2, up to 3 total arguments",
+        "It prints all arguments except indices 2 and 3",
+        "It divides the second argument by three"
+      ],
+      "answerIndex": 1,
+      "explanation": "The syntax ${*:start:length} extracts a slice of positional parameters. ${*:2:3} starts at the second argument and includes three arguments total."
+    },
+    {
+      "text": "In the 'breakCont' script (page 5), what is the specific effect of the second while loop?",
+      "answers": [
+        "It prints all numbers from 1 to 19",
+        "It prints only the numbers 1 and 2 and then terminates the loop",
+        "It prints all numbers except 3",
+        "It prints numbers until it hits an error"
+      ],
+      "answerIndex": 1,
+      "explanation": "The script contains an 'if [ \"$a\" -gt 2 ] then break' condition. Once 'a' becomes 3, the break command exits the entire loop immediately."
+    },
+    {
+      "text": "Which command in the slides (page 6) is mentioned as an alternative to 'expr $var0 + 1' for arithmetic incrementing?",
+      "answers": [
+        "increment var0",
+        "let \"var0 += 1\"",
+        "var0 = var0 + 1",
+        "add 1 to $var0"
+      ],
+      "answerIndex": 1,
+      "explanation": "The slides list 'let \"var0 += 1\"' and 'var0=$(( $var0 + 1 ))' as valid alternative methods for arithmetic in Bash."
+    },
+    {
+      "text": "What happens to the shell's positional parameters when the 'set $myvar' command is executed (page 7)?",
+      "answers": [
+        "It clears all variables in the current session",
+        "It assigns the split words of $myvar to $1, $2, $3, etc.",
+        "It makes the variable $myvar read-only",
+        "It sets the variable as an environment variable"
+      ],
+      "answerIndex": 1,
+      "explanation": "The 'set' command with arguments reassigns the positional parameters ($1, $2, etc.) based on the words provided in the string."
+    },
+    {
+      "text": "In the string reversal script (page 8), why is the loop condition 'while test $chind -gt 0' used?",
+      "answers": [
+        "To ensure the script doesn't run on empty strings",
+        "Because 'expr substr' uses 1-based indexing, so the loop stops before reaching index 0",
+        "To avoid a syntax error with negative indices",
+        "To count the number of characters in the string"
+      ],
+      "answerIndex": 1,
+      "explanation": "In Bash 'expr substr', string indexing begins at 1. The script decrements the index to print characters from end to beginning, stopping when it reaches the first character (index 1)."
+    },
+    {
+      "text": "In 'listRegFiles' (page 9), what is the purpose of the syntax 'dirName=${1-`pwd`}'?",
+      "answers": [
+        "It compares the first argument to the current working directory",
+        "It sets dirName to the first argument, or defaults to the current directory if no argument is provided",
+        "It creates a new directory named after the first argument",
+        "It deletes the first argument if it equals the current directory"
+      ],
+      "answerIndex": 1,
+      "explanation": "This is a parameter expansion for default values. If $1 is unset or null, the result of the `pwd` command is assigned to dirName."
+    },
+    {
+      "text": "In the 'shiftCommand' example (page 10), how does the 'for' loop behave differently than usual?",
+      "answers": [
+        "It iterates over a range of numbers instead of strings",
+        "It uses the 'shift' command to remove the current $1 and re-index remaining arguments",
+        "It only iterates once",
+        "It prints arguments in reverse order"
+      ],
+      "answerIndex": 1,
+      "explanation": "The script uses 'for str' (which implicitly iterates over all parameters) while simultaneously calling 'shift'. This demonstrates how the iterator 'str' remains stable even if $1 is shifted."
+    },
+    {
+      "text": "Why does the standard Bash factorial script fail when calculating the factorial of 24 (page 11)?",
+      "answers": [
+        "Because the number 24 is prime",
+        "Because the result exceeds the maximum value for a signed 64-bit integer, causing a 'Numerical result out of range' error",
+        "Because the 'expr' command does not support numbers larger than 100",
+        "The script has a syntax error on line 24"
+      ],
+      "answerIndex": 1,
+      "explanation": "Standard Bash arithmetic and the 'expr' command have fixed-width integer limits. 24! is a massive number that causes an overflow/out of range error."
+    },
+    {
+      "text": "What utility is demonstrated on page 12 to solve the precision/range limitations of Bash arithmetic for factorials?",
+      "answers": ["awk", "python", "bc (Basic Calculator)", "calc"],
+      "answerIndex": 2,
+      "explanation": "The 'bc' utility provides arbitrary-precision arithmetic, allowing it to calculate very large factorials like 180! which Bash cannot handle natively."
+    },
+    {
+      "text": "In the 'dirSize' script (page 13), what does the command 'size=`du -sk $dir | cut -f1`' do?",
+      "answers": [
+        "Deletes the directory and returns the freed size",
+        "Gets the disk usage in kilobytes and extracts only the first field (the numeric size)",
+        "Cuts the directory into smaller files of size 1kb",
+        "Lists the files in the directory sorted by size"
+      ],
+      "answerIndex": 1,
+      "explanation": "The 'du -sk' command displays size in KB followed by the name; 'cut -f1' extracts just the numeric size value."
+    },
+    {
+      "text": "How is a file's content loaded into an array in the 'printContents' script (page 14)?",
+      "answers": [
+        "load array < filename",
+        "text=( $(cat \"$1\") )",
+        "array_push(text, cat \"$1\")",
+        "set -a text \"$1\""
+      ],
+      "answerIndex": 1,
+      "explanation": "The syntax text=( $(cat \"$1\") ) uses command substitution to read the file and parentheses to initialize the variable as an array based on whitespace separation."
+    },
+    {
+      "text": "What is the result of using 'head -3' in the 'listAndCopy' script (page 16)?",
+      "answers": [
+        "It deletes the first 3 lines of a file",
+        "It outputs only the first 3 lines of each file processed",
+        "It moves the first 3 files to a new directory",
+        "It lists files starting with the letter H"
+      ],
+      "answerIndex": 1,
+      "explanation": "The 'head' command with the -3 flag restricts output to the first three lines of the specified file."
+    },
+    {
+      "text": "In the word counting script (page 17), what logic is used to count contiguous occurrences?",
+      "answers": [
+        "It uses a hash map to store every word found in the file",
+        "It compares the current word ($str) to the previous word ($prev) and increments a counter if they match",
+        "It sorts the file and then uses 'uniq -c'",
+        "It uses grep -c on every word in the dictionary"
+      ],
+      "answerIndex": 1,
+      "explanation": "The script iterates through words, checking if the current word matches 'prev'. If it does, 'cons' is incremented; otherwise, the previous count is printed and the counter resets."
+    },
+    {
+      "text": "In the guessing game script (page 19), how is 'myNumber' generated?",
+      "answers": [
+        "It uses the $RANDOM internal variable",
+        "It uses the current nanosecond from the 'date' command, performs modulo with BASE, and adds 1",
+        "It asks a second user to input a hidden number",
+        "It reads the first number from a file called /dev/urandom"
+      ],
+      "answerIndex": 1,
+      "explanation": "The script uses $(( (( 'date +%N' / 1000) % ${BASE}) +1 ) ) to generate a pseudo-random number based on the system clock's nanoseconds."
+    },
+    {
+      "text": "According to page 21, what is the primary characteristic of the 'exec' builtin command?",
+      "answers": [
+        "It executes a command in a background subshell",
+        "It replaces the current shell process with the specified command without creating a new process",
+        "It executes a script with administrative privileges",
+        "It is used to terminate a script with a specific error code"
+      ],
+      "answerIndex": 1,
+      "explanation": "The slide explicitly states 'What follows the exec replaces the shell without creating a new process!', meaning the original script PID becomes the new command's PID."
+    },
+    {
+      "text": "In 'gorepated' (page 22), why will the line 'echo \"This line will never echo!\"' never be reached?",
+      "answers": [
+        "Because there is a syntax error before it",
+        "Because the 'exec $0' command replaces the current process with a new instance of the script",
+        "Because the script exits with code 99",
+        "Because of the 'sleep 1' command"
+      ],
+      "answerIndex": 1,
+      "explanation": "When 'exec $0' is called, the current script process is entirely replaced by a new execution of the same script. The code following 'exec' is no longer in memory."
+    },
+    {
+      "text": "In the 'goredirection' script (page 24), what is the function of 'exec 6<&0'?",
+      "answers": [
+        "It closes file descriptor 6",
+        "It duplicates the current standard input (fd 0) into file descriptor 6 to save it",
+        "It redirects output to a file named '6'",
+        "It makes the script read from 6 different files at once"
+      ],
+      "answerIndex": 1,
+      "explanation": "The command '6<&0' links file descriptor 6 to standard input. This effectively 'saves' the state of stdin so it can be restored later after fd 0 has been redirected to a file."
+    },
+    {
+      "text": "In the final outcome (page 25), how does the script restore the ability to read from the keyboard after reading from 'data-file'?",
+      "answers": [
+        "By restarting the computer",
+        "By calling 'exec 0<&6 6<&-' to restore stdin from the saved fd 6 and then closing fd 6",
+        "By deleting the 'data-file'",
+        "By using the 'reset' command"
+      ],
+      "answerIndex": 1,
+      "explanation": "The command 'exec 0<&6' points standard input back to the source saved in fd 6 (the keyboard/original stdin), and '6<&-' closes the temporary descriptor."
+    }
+  ]
+}

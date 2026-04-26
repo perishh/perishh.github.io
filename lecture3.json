@@ -1,0 +1,204 @@
+{
+  "questions": [
+    {
+      "text": "In the C Shell (csh), if the 'noclobber' variable is set, which command must be used to overwrite an existing file named 'filea'?",
+      "answers": [
+        "date > filea",
+        "date >> filea",
+        "date >! filea",
+        "date &> filea"
+      ],
+      "answerIndex": 2,
+      "explanation": "According to the 'csh redirection' slide, when noclobber is on, the shell prevents overwriting files with '>'. The '>!' operator is used to force the redirection and overwrite the file."
+    },
+    {
+      "text": "Based on the 'Append type redirection' slide, what is the result of executing 'cat c_file >> a_file' if both files already contain data?",
+      "answers": [
+        "The contents of a_file are replaced by the contents of c_file.",
+        "The contents of c_file are appended to the end of a_file.",
+        "A new file is created containing data from both.",
+        "An error 'File exists' is returned."
+      ],
+      "answerIndex": 1,
+      "explanation": "The '>>' operator is the append operator. The example shows that after executing the command, 'cat a_file' displays its original timestamp followed by the timestamp appended from c_file."
+    },
+    {
+      "text": "In the C program example for 'inout-redir', why does the word 'Guillermo' appear 6 times on a single line in the output?",
+      "answers": [
+        "Because the for loop runs 6 times.",
+        "Because there are two different print statements (fprintf and write) inside a loop that runs 3 times.",
+        "Because the fflush command duplicates the buffer.",
+        "Because the sleep(1) command causes the system to retry the print operation."
+      ],
+      "answerIndex": 1,
+      "explanation": "Inside the for loop (which iterates 3 times), both 'fprintf(stdout, ...)' and 'write(1, ...)' are called. This results in 2 prints per iteration, totaling 6 prints of the name before the newline and '!' are printed."
+    },
+    {
+      "text": "Which command correctly sends standard output (stdout) to 'out.log' and standard error (stderr) to 'err.log' simultaneously?",
+      "answers": [
+        "./inout-redir > out.log > err.log",
+        "./inout-redir 1> out.log 2> err.log",
+        "./inout-redir &> out.log err.log",
+        "./inout-redir >& out.log 2> err.log"
+      ],
+      "answerIndex": 1,
+      "explanation": "As shown in the 'Directing stdout and stderr' slide, '1>' specifically redirects file descriptor 1 (stdout) and '2>' redirects file descriptor 2 (stderr)."
+    },
+    {
+      "text": "In the context of 'Some More Redirection', which of the following is NOT shown as a valid way to send both output and errors to a single file named 'allout'?",
+      "answers": [
+        "./inout-redir >& allout",
+        "./inout-redir &> allout",
+        "./inout-redir > allout 2>&1",
+        "./inout-redir | allout"
+      ],
+      "answerIndex": 3,
+      "explanation": "The slides demonstrate '>&', '&>', and '> allout 2>&1' as valid methods. The pipe symbol '|' is used for connecting commands, not for direct file redirection."
+    },
+    {
+      "text": "When using a sequence of commands separated by semicolons (e.g., 'mkdir mydir; cd mydir'), what happens to the shell's working directory after the sequence finishes?",
+      "answers": [
+        "The shell remains in the original directory.",
+        "The shell remains in the last directory specified by the 'cd' command.",
+        "The shell resets to the home directory.",
+        "The shell prompts the user to choose a directory."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 52 (OCR page 7) shows that using semicolons results in the shell staying in the new directory. It is the 'grouping' of commands using parentheses '(...)' that leaves the shell in the original directory."
+    },
+    {
+      "text": "If the current 'umask' is set to '077', what will be the permissions of a newly created directory?",
+      "answers": ["drwxrwxrwx", "drwx------", "drwxr-xr-x", "d---------"],
+      "answerIndex": 1,
+      "explanation": "A umask of 077 removes all permissions (read, write, execute) for the group and others. Since the default for a directory is 777, 777 - 077 = 700 (drwx------)."
+    },
+    {
+      "text": "What does the metacharacter pattern '*[a-z][uz][b-z]*' match in the provided examples?",
+      "answers": [
+        "Any file ending with a letter, followed by 'u' or 'z', followed by any number of characters starting with 'b' to 'z'.",
+        "Only files named 'uz'.",
+        "Any file that contains exactly three characters.",
+        "Files that match 'my1out', 'out1', and 'zzz'."
+      ],
+      "answerIndex": 0,
+      "explanation": "As seen in the 'Metacharacter-Examples' slide, the command 'ls *[a-z][uz][b-z]*' matches and returns 'my1out', 'out1', and 'zzz'."
+    },
+    {
+      "text": "According to the 'Variables' classification, which type of variable is used specifically to configure the system environment, such as determining which text editor is used for history files?",
+      "answers": [
+        "Shell Variables",
+        "User-Defined Variables",
+        "Environment Variables",
+        "Local Variables"
+      ],
+      "answerIndex": 2,
+      "explanation": "The slide on Variables (OCR page 11) states that Environment Variables are used to configure the environment, specifically mentioning a system variable that determines the editor."
+    },
+    {
+      "text": "In csh, how do you correctly assign the value 'antoulas' to the environment variable 'ALEX'?",
+      "answers": [
+        "ALEX=antoulas",
+        "set ALEX = antoulas",
+        "setenv ALEX antoulas",
+        "export ALEX=antoulas"
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 57 (OCR page 12) demonstrates using 'setenv ALEX antoulas' to set an environment variable in the C shell."
+    },
+    {
+      "text": "How do you reference the value of a user-defined variable named 'MYVAR' in bash?",
+      "answers": ["MYVAR", "&MYVAR", "$MYVAR", "#MYVAR"],
+      "answerIndex": 2,
+      "explanation": "As shown in the bash variable slide, 'echo MYVAR' just prints the string, while 'echo $MYVAR' prints the stored value (e.g., 'alexis')."
+    },
+    {
+      "text": "In the bash history example, what does the command '!511' do?",
+      "answers": [
+        "Deletes the 511th command in history.",
+        "Repeats the 511th command in the history list.",
+        "Saves the history to a file named 511.",
+        "Searches for '511' in all files."
+      ],
+      "answerIndex": 1,
+      "explanation": "The History in bash slide shows that '!511' executes the command 'ls -la *tex' because that was the command associated with index 511 in the history list."
+    },
+    {
+      "text": "Which command is used to display a list of all current jobs and their status (Running, Stopped, etc.) in the background or suspended?",
+      "answers": ["ps", "top", "jobs", "bg"],
+      "answerIndex": 2,
+      "explanation": "The 'Process Management' and 'Working with bg and fg' slides show 'jobs' being used to display interrupted or backgrounded processes."
+    },
+    {
+      "text": "In the 'jobs' command output, what does the '+' symbol next to a job number signify?",
+      "answers": [
+        "The job has been terminated.",
+        "The job is the most recently backgrounded or stopped job (current job).",
+        "The job has a high CPU priority.",
+        "The job is a system-level process."
+      ],
+      "answerIndex": 1,
+      "explanation": "The slide 'Dealing with Multiple Jobs' shows '+' and '-' symbols. In standard shell behavior (implied by the sequence of 'fg' commands), the '+' indicates the default job that 'fg' or 'bg' would act upon if no ID is specified."
+    },
+    {
+      "text": "Which command allows you to view the contents of a compressed '.tar.gz' file without actually decompressing it on the disk?",
+      "answers": ["gunzip", "zcat", "tar -x", "cat"],
+      "answerIndex": 1,
+      "explanation": "The slide on decompression (OCR page 22) specifies that 'zcat' does not alter the structure of the compressed file, allowing its contents to be piped to 'tar xv'."
+    },
+    {
+      "text": "What is the function of the 'tr -d '[i-l]s'' command as shown in the examples?",
+      "answers": [
+        "It translates characters 'i' through 'l' into 's'.",
+        "It deletes all occurrences of characters in the range 'i' to 'l' as well as the character 's'.",
+        "It deletes only the string '[i-l]s' from the file.",
+        "It searches for 'i', 'l', and 's' and replaces them with spaces."
+      ],
+      "answerIndex": 1,
+      "explanation": "The '-d' flag in 'tr' stands for delete. The pattern '[i-l]s' specifies a range (i, j, k, l) and the character 's'. The output on the slide shows these characters have been removed."
+    },
+    {
+      "text": "Which 'find' command would locate all files in the current directory ending in '.tex' and execute an 'ls -l' on each of them?",
+      "answers": [
+        "find . -name '*.tex' -print",
+        "find . -type f -name '*.tex' -exec ls -l '{}' \\;",
+        "find . -ls -name '*.tex'",
+        "find . -perm 664 -exec ls -l"
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 71 (OCR page 26) shows the syntax: 'find . -type f -name '*tex' -exec ls -l '{}' \\;'."
+    },
+    {
+      "text": "What does the Makefile variable '$@' represent?",
+      "answers": [
+        "The first dependency of the rule.",
+        "The current list of prerequisites.",
+        "The current target of the rule.",
+        "The compiler command (e.g., gcc)."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 76 (OCR page 31) explicitly states: '$@ : current target'."
+    },
+    {
+      "text": "According to the 'Using Makefile' slide, why is a TAB character mandatory before a command?",
+      "answers": [
+        "It is only for visual clarity.",
+        "The makefile will not work without it; it is imperative for command recognition.",
+        "It tells 'make' to run the command in the background.",
+        "It allows the command to run with root privileges."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 74 (OCR page 29) states: 'The existence of TAB before the command above is imperative; otherwise, makefile does not work!'"
+    },
+    {
+      "text": "In a Makefile, what happens if the 'required-files' (prerequisites) have not changed since the last time the target was built?",
+      "answers": [
+        "The target is deleted and rebuilt.",
+        "The command for that target is not executed because it is up to date.",
+        "The 'make' command returns an error.",
+        "The 'clean' target is automatically triggered."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 74 states: 'If required-files have not \"changed\" then the command of the Makefile does not get executed (things are up to date).'"
+    }
+  ]
+}

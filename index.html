@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Builder</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Outfit:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <p class="eyebrow">SYSTEM PROGRAMMING</p>
+        <h1>Quiz</h1>
+      </header>
+
+      <!-- INPUT SCREEN -->
+      <div id="screen-input" class="screen active">
+        <div class="card">
+          <p class="input-label">
+            <span class="dot"></span>Select lecture to start quiz.
+          </p>
+
+          <button class="btn" onclick="startQuiz(2)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 2
+          </button>
+          <button class="btn" onclick="startQuiz(3)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 3
+          </button>
+          <button class="btn" onclick="startQuiz(4)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 4
+          </button>
+          <button class="btn" onclick="startQuiz(5)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 5
+          </button>
+          <button class="btn" onclick="startQuiz(6)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 6
+          </button>
+          <button class="btn" onclick="startQuiz(7)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 7
+          </button>
+          <button class="btn" onclick="startQuiz(8)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 8
+          </button>
+          <button class="btn" onclick="startQuiz(9)">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <polygon points="3,1 13,7 3,13" fill="currentColor" />
+            </svg>
+            Lecture 9
+          </button>
+        </div>
+      </div>
+
+      <!-- QUIZ SCREEN -->
+      <div id="screen-quiz" class="screen">
+        <div class="card">
+          <div class="quiz-meta">
+            <span class="q-label">Question</span>
+            <span class="q-fraction" id="q-fraction"></span>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" id="prog-fill"></div>
+          </div>
+          <div class="q-text" id="q-text"></div>
+          <div class="answers" id="answers" role="list"></div>
+          <div class="explanation" id="explanation" aria-live="polite">
+            <strong>Explanation</strong>
+            <span id="expl-text"></span>
+          </div>
+          <div class="quiz-footer">
+            <button
+              class="btn"
+              id="next-btn"
+              style="display: none"
+              onclick="nextQuestion()"
+            >
+              Next
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+                style="margin-left: 2px"
+              >
+                <path
+                  d="M2 6h8M6 2l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULT SCREEN -->
+      <div id="screen-result" class="screen">
+        <div class="card">
+          <div class="result-hero">
+            <div class="ring-wrap">
+              <svg
+                width="100"
+                height="100"
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="42"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.06)"
+                  stroke-width="6"
+                />
+                <circle
+                  id="ring-arc"
+                  cx="50"
+                  cy="50"
+                  r="42"
+                  fill="none"
+                  stroke="#d4a853"
+                  stroke-width="6"
+                  stroke-linecap="round"
+                  stroke-dasharray="263.89"
+                  stroke-dashoffset="263.89"
+                  style="
+                    transition: stroke-dashoffset 0.8s
+                      cubic-bezier(0.4, 0, 0.2, 1);
+                  "
+                />
+              </svg>
+              <div class="ring-center">
+                <span class="big" id="res-score">0</span>
+                <span class="small" id="res-total"></span>
+              </div>
+            </div>
+            <p class="result-msg" id="res-msg"></p>
+            <p class="result-sub" id="res-sub"></p>
+          </div>
+
+          <p class="review-title">Review</p>
+          <div
+            class="review-list"
+            id="review-list"
+            aria-label="Question review"
+          ></div>
+
+          <div class="result-actions">
+            <button class="btn btn-ghost" onclick="goHome()">
+              Take other quiz
+            </button>
+            <button class="btn" onclick="retakeQuiz()">Retake quiz</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./script.js"></script>
+</html>
