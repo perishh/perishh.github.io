@@ -1,0 +1,224 @@
+{
+  "questions": [
+    {
+      "text": "In the thread execution example where Thread 1 executes `x = 1; y = 1;` and Thread 2 executes `if (y == 1 && x == 0) exit();` (with `x` and `y` initially 0), why can the `exit()` function actually be called?",
+      "answers": [
+        "Due to sequential consistency guaranteed by the hardware",
+        "Because the compiler, processor, or memory subsystem can reorder instruction execution",
+        "Because Thread 2 always executes before Thread 1 starts",
+        "Because local variables are automatically shared across thread stacks"
+      ],
+      "answerIndex": 1,
+      "explanation": "In concurrent programming, the interleaving model (sequential consistency) is not guaranteed. Instruction reordering by the compiler, processor, or memory subsystem can cause the write to `y` to become visible to Thread 2 before the write to `x` is visible, allowing the condition to evaluate to true."
+    },
+    {
+      "text": "What is the interleaving model of thread execution called, and is it typically supported in practice by modern hardware and compilers?",
+      "answers": [
+        "Strict Serializability; yes, it is the default behavior on all CPUs",
+        "Sequential Consistency; no, it is generally not supported in practice due to optimization techniques",
+        "Event-Driven Execution; yes, via modern kernel thread schedulers",
+        "Weak Consistency; no, but it can be fully emulated without any performance cost"
+      ],
+      "answerIndex": 1,
+      "explanation": "The interleaving model of threads is called sequential consistency. It is not supported in practice by modern systems because compilers and hardware reorder instructions to optimize performance."
+    },
+    {
+      "text": "Why is spinning in high-level code, such as `while (!ready) ;`, considered bad practice in systems programming?",
+      "answers": [
+        "It always causes a compilation error in modern C standards",
+        "The compiler or hardware may optimize the check away or cache the value of `ready` in a register, preventing the thread from ever seeing updates from other threads",
+        "It automatically releases all held mutexes, causing race conditions",
+        "It forces the operating system to increase the thread's scheduling priority"
+      ],
+      "answerIndex": 1,
+      "explanation": "Without synchronization primitives, the compiler or hardware is free to optimize the loop (such as caching the value of `ready` in a register), meaning the thread may never observe changes made to `ready` by another thread."
+    },
+    {
+      "text": "How do mutexes and condition variables prevent the issues associated with high-level spinning?",
+      "answers": [
+        "They double the processor clock speed for critical sections",
+        "They insert the necessary memory barrier/fence instructions to push and pull data to/from main memory",
+        "They turn off compiler optimizations globally across the entire executable",
+        "They convert the program from multi-threaded to single-threaded at runtime"
+      ],
+      "answerIndex": 1,
+      "explanation": "Mutexes and condition variables insert memory fences or instruction barriers that force the system to push changed data to main memory and pull fresh data, ensuring visibility across threads."
+    },
+    {
+      "text": "In monitor-style programming, what two primary synchronization constructs are combined to implement controlled concurrent access to any kind of critical section?",
+      "answers": [
+        "Semaphores and spinlocks",
+        "Mutexes and condition variables",
+        "Barriers and read-write locks",
+        "Signals and atomic pipes"
+      ],
+      "answerIndex": 1,
+      "explanation": "Monitor-style programming is built upon mutexes (to enforce mutual exclusion) and condition variables (to block threads until a certain state predicate is satisfied)."
+    },
+    {
+      "text": "In the provided Readers/Writers example, when a Reader finishes reading and decrements the reader count (`readers--`), under what specific condition does it signal `write_cond`?",
+      "answers": [
+        "When `readers == 1`",
+        "When `readers == 0`",
+        "Only when `writer == true`",
+        "Every time a reader exits, regardless of the remaining count"
+      ],
+      "answerIndex": 1,
+      "explanation": "A writer can only enter when there are zero active readers. Therefore, an exiting reader only signals the waiting writer (`write_cond`) when the reader count drops to 0."
+    },
+    {
+      "text": "In the Readers/Writers example, why does the Writer thread call `broadcast(read_cond)` but only `signal(write_cond)` upon exiting its critical section?",
+      "answers": [
+        "Multiple readers can concurrently enter the critical section, but only a single writer can enter",
+        "Broadcasting to writers would cause a system crash",
+        "Condition variables do not support broadcasting to writers",
+        "The lock can only be held by readers after a writer exits"
+      ],
+      "answerIndex": 0,
+      "explanation": "Because multiple reader threads can execute concurrently inside the critical section, the exiting writer broadcasts to wake up all waiting readers. Only one writer can write at a time, so a single signal is sufficient for waiting writers."
+    },
+    {
+      "text": "In the provided recursive lock implementation, what condition causes a thread calling `acquire()` to wait on the `held` condition variable?",
+      "answers": [
+        "`count == 0`",
+        "`count > 0 && holder == self()`",
+        "`count > 0 && holder != self()`",
+        "`count == 0 || holder != self()`"
+      ],
+      "answerIndex": 2,
+      "explanation": "A recursive lock allows the thread currently holding the lock (`holder == self()`) to acquire it again without blocking. Therefore, a thread must only wait if the lock is held by a different thread (`count > 0 && holder != self()`)."
+    },
+    {
+      "text": "Why is a `while` loop used instead of an `if` statement to check the condition around a `wait(c, m)` call in monitor-style programming?",
+      "answers": [
+        "To protect against spurious wakeups and to re-verify the condition in case another thread modified the state between signaling and acquisition of the lock",
+        "Because `if` statements are not syntactically compatible with condition variables in C",
+        "To ensure that the waiting thread consumes less CPU cycles during scheduling",
+        "Because `wait` automatically unlocks and locks the mutex in a loop"
+      ],
+      "answerIndex": 0,
+      "explanation": "Threads can wake up spuriously from a condition variable wait. Additionally, another thread could acquire the mutex first and change the state predicate before the woken thread gets to run, making a loop check necessary."
+    },
+    {
+      "text": "In the Red+Green priority queue implementation (up to 3 threads in CS, Red has priority), why does `green_acquire()` wait when `red_waiting != 0`?",
+      "answers": [
+        "To prevent green threads from starving red threads by giving priority to waiting red threads",
+        "To allow green threads to enter only when red threads are active",
+        "Because green threads must always run in pairs",
+        "To enforce a strict alternating ordering between green and red threads"
+      ],
+      "answerIndex": 0,
+      "explanation": "To enforce the priority of red threads over green threads, green threads must block and wait if there is any red thread waiting to enter the critical section, even if total occupancy is under 3."
+    },
+    {
+      "text": "In the Red+Green priority queue example, why does `red_acquire()` call `broadcast(green_cond)` before releasing its mutex?",
+      "answers": [
+        "To wake up waiting green threads because a red thread has entered, potentially filling the remaining slots",
+        "To ensure green threads wait on a different condition variable",
+        "Because red threads always delegate work to green threads",
+        "To notify green threads that the total occupancy might still be under 3, allowing them to re-evaluate when slots open"
+      ],
+      "answerIndex": 3,
+      "explanation": "After a red thread successfully acquires its slot, it signals waiting green threads because the state has changed (it decremented `red_waiting`), meaning green threads should check if they are now allowed to enter."
+    },
+    {
+      "text": "According to the 'Golden Rules of Monitor-Style Programming', what should be associated with every distinct boolean condition or predicate in the program text?",
+      "answers": [
+        "A separate thread",
+        "A separate condition variable",
+        "A global volatile pointer",
+        "An atomic memory barrier"
+      ],
+      "answerIndex": 1,
+      "explanation": "The golden rules state that you should use a separate condition variable for every boolean-condition/predicate in the program text to maintain clear and correct signaling logic."
+    },
+    {
+      "text": "Under what circumstance does the 'Golden Rules of Monitor-Style Programming' permit calling `signal` instead of `broadcast`?",
+      "answers": [
+        "Only when you are absolutely certain that any and only one waiting thread can make progress in the critical section",
+        "Whenever performance is a critical factor",
+        "When multiple different types of threads are waiting on the same condition variable",
+        "Only inside the main thread's initialization phase"
+      ],
+      "answerIndex": 0,
+      "explanation": "Calling `signal` wakes up only one thread. If the wrong thread is woken up and cannot proceed, it may go back to sleep, leading to deadlock. Thus, `signal` is only safe when you are certain that any single waiting thread can successfully proceed."
+    },
+    {
+      "text": "What is the technical definition of a data race in multi-threaded programming?",
+      "answers": [
+        "Two threads attempting to acquire the same lock at the exact same physical time",
+        "Unsynchronized accesses to the same shared memory location by two threads, where at least one of the accesses is a write",
+        "A thread executing a loop indefinitely while holding a lock",
+        "A scheduling conflict where a low-priority thread blocks a high-priority thread"
+      ],
+      "answerIndex": 1,
+      "explanation": "A data race occurs specifically when two or more threads concurrently access the same memory location without synchronization, and at least one of those accesses is a write."
+    },
+    {
+      "text": "In the Consumer pattern example, releasing a lock after checking `empty(buffer)` and then re-acquiring it before executing `get_request(buffer)` eliminates the data race but introduces which type of bug?",
+      "answers": [
+        "A logical ordering violation",
+        "An atomicity violation",
+        "A resource leak",
+        "A self-deadlock"
+      ],
+      "answerIndex": 1,
+      "explanation": "Releasing the lock between the check (`empty`) and the action (`get_request`) allows another thread to interleave and modify the buffer state, violating the required atomicity of the operation."
+    },
+    {
+      "text": "What constitutes a 'Logical Ordering Violation' in concurrency?",
+      "answers": [
+        "An error where locks are acquired in an incorrect global order, leading to deadlock",
+        "A logical error where a shared memory location is read or accessed before it is properly initialized/set to its correct value by another thread",
+        "When threads are executed in a deterministic order that does not match their priority",
+        "An API call violation where `pthread_cond_wait` is called without holding a mutex"
+      ],
+      "answerIndex": 1,
+      "explanation": "A logical ordering violation occurs when a thread reads/uses a shared variable before another thread has completed its initialization or assignment of the correct state, often due to missing synchronization."
+    },
+    {
+      "text": "What is a primary disadvantage of using fine-grained locking (e.g., locking individual nodes in a data structure) compared to coarse-grained locking?",
+      "answers": [
+        "It significantly decreases potential parallelism",
+        "It increases the likelihood of data races and atomicity violations due to complex coordination",
+        "It consumes more CPU instructions for simple sequential access",
+        "It makes deadlock impossible but increases memory overhead"
+      ],
+      "answerIndex": 1,
+      "explanation": "Fine-grained locking permits higher parallelism but drastically increases code complexity, making it much more difficult to avoid races, atomicity violations, and deadlocks."
+    },
+    {
+      "text": "Why does holding locks result in a lack of modularity and composability in software development?",
+      "answers": [
+        "Because locks are automatically destroyed when a function scope exits",
+        "Because holding locks is a global property that affects the entire program and cannot be hidden behind abstract interfaces",
+        "Because compiler optimization completely disables modular structure when locks are detected",
+        "Because modern systems limit the number of active mutexes to a very small count"
+      ],
+      "answerIndex": 1,
+      "explanation": "Locking is non-local and global; callers must know what locks their callees acquire to avoid deadlocks. This makes it extremely difficult to compose safe independent modules into larger safe services."
+    },
+    {
+      "text": "In the client code attempting an atomic move between two accounts, why does locking `acc1->account_mutex` followed by locking `acc2->account_mutex` lead to a potential deadlock?",
+      "answers": [
+        "Because C structures cannot hold mutexes safely",
+        "If thread A calls `move(X, Y)` and thread B calls `move(Y, X)` concurrently, they can lock their respective first accounts and then wait indefinitely for the second lock",
+        "Because the first lock is automatically released when the second lock is requested",
+        "Due to hardware limitations on nested mutex acquisitions"
+      ],
+      "answerIndex": 1,
+      "explanation": "If two concurrent threads call the move function with opposite source and destination arguments, they will acquire their respective first locks and wait forever for the second lock held by the other thread (circular wait)."
+    },
+    {
+      "text": "In the atomic move function, how can calling `move(s, s, amount)` (moving money from an account to itself) cause a bug?",
+      "answers": [
+        "It leads to a divide-by-zero error in the deposit function",
+        "It results in a self-deadlock because the thread attempts to acquire the same non-recursive mutex twice",
+        "It causes an atomicity violation where the account balance temporarily doubles",
+        "It triggers an automatic compiler warning that halts execution"
+      ],
+      "answerIndex": 1,
+      "explanation": "If the source and destination are the exact same account, the thread will lock `acc1->account_mutex` and then attempt to lock it again as `acc2->account_mutex`, resulting in a self-deadlock."
+    }
+  ]
+}

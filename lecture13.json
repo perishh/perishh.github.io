@@ -1,0 +1,214 @@
+{
+  "questions": [
+    {
+      "text": "According to the slides on thread safety, what is the standard naming convention for thread-safe implementations of non-thread-safe C library functions (like `asctime` or `strtok`), and what is the workaround mentioned for safely calling non-thread-safe functions?",
+      "answers": [
+        "They are postfixed with `_r`, and the workaround is to invoke the non-thread-safe calls in conjunction with mutexes to enforce mutual exclusion.",
+        "They are prefixed with `safe_`, and the workaround is to run them inside a separate process.",
+        "They are postfixed with `_safe`, and the workaround is to statically compile the binary with specific compiler flags.",
+        "They are postfixed with `_t`, and the workaround is to wrap them in a signal handler."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 70 states that thread-safe implementations are denoted with the postfix `_r`. Slide 71 mentions that an easy way to safely use non-thread-safe calls with threads is to invoke them in conjunction with mutexes (i.e., in mutually exclusive fashion)."
+    },
+    {
+      "text": "Under the LinuxThreads implementation described in the slides, what does the call `pthread_mutex_destroy` actually do?",
+      "answers": [
+        "It frees all allocated memory and marks the mutex identifier as invalid.",
+        "It does nothing except checking that the mutex is unlocked.",
+        "It forces the mutex to unlock and then signals any blocked threads.",
+        "It destroys the mutex and returns `EBUSY` if the mutex is currently locked, otherwise it returns 0 after doing nothing."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 32 explicitly states: 'In the LinuxThreads implementation, the call does nothing except checking that mutex is unlocked.'"
+    },
+    {
+      "text": "What is the consequence of a thread calling `pthread_mutex_lock` on a mutex that the same thread has already successfully locked?",
+      "answers": [
+        "The function immediately returns with the error code `EBUSY`.",
+        "The call succeeds immediately and returns 0.",
+        "A deadlock occurs, suspending the thread indefinitely.",
+        "The function returns the error code `EINVAL`."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 40 warns: 'NEVER have pthread_mutex_lock called by the thread that has already locked the mutex. A deadlock will occur.'"
+    },
+    {
+      "text": "Which of the following describes the correct sequence of atomic and non-atomic actions performed by `pthread_cond_wait` regarding the associated mutex?",
+      "answers": [
+        "It locks the mutex, waits for the condition to be signaled, and then unlocks the mutex upon return.",
+        "It atomically unlocks the mutex and waits for the condition to be signaled. Before returning to the calling thread, it re-acquires the mutex.",
+        "It locks the mutex, signals the condition variable, and then atomically releases the mutex.",
+        "It atomically locks the mutex, waits for the condition to be signaled, and releases the mutex after returning."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 51 explains that `pthread_cond_wait` 'atomically unlocks the mutex and waits for the condition variable cond to be signaled.' It also specifies that 'Before returning to the calling thread, pthread_cond_wait re-acquires mutex.'"
+    },
+    {
+      "text": "What does `pthread_cond_destroy` return if there are threads currently waiting on the target condition variable?",
+      "answers": ["0", "`EINVAL`", "`EBUSY`", "`EPERM`"],
+      "answerIndex": 2,
+      "explanation": "According to Slide 54, 'In case some threads are waiting on cond, pthread_cond_destroy returns EBUSY.'"
+    },
+    {
+      "text": "Under what condition does `pthread_mutex_trylock` return the error code `EINVAL`?",
+      "answers": [
+        "When the mutex is already locked by another thread.",
+        "When the mutex was not initialized properly.",
+        "When the caller thread does not own the mutex.",
+        "When the mutex has been destroyed prior to the call."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 33 states: 'If pthread_mutex_trylock returns the code EINVAL, the mutex was not initialized properly.'"
+    },
+    {
+      "text": "Why must a condition variable always be associated with a mutex?",
+      "answers": [
+        "To prevent a race condition where a thread prepares to wait on a condition variable and another thread signals the condition just before the first thread actually waits.",
+        "Because condition variables dynamically allocate memory that only mutexes can free.",
+        "To ensure that all threads waiting on the condition are executed on the same CPU core.",
+        "Because POSIX standards require all synchronization objects to have matching memory layouts."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 49 states: 'A condition variable must always be associated with a mutex to avoid a race condition: This race may occur when a thread prepares to wait on a condition variable and another thread signals the condition just before the first thread actually waits on the condition variable.'"
+    },
+    {
+      "text": "The lecture slides present two different ways to implement a multi-threaded word counter. What is the key structural benefit of the second approach (which uses a `struct arg_set` passed to each thread) over the first approach?",
+      "answers": [
+        "The second approach uses `pthread_mutex_trylock` instead of `pthread_mutex_lock`, preventing deadlocks.",
+        "The second approach allows the main thread to exit early without waiting for the child threads to finish.",
+        "The second approach avoids using any mutex because each thread increments its own local counter within its structured argument, eliminating race conditions on a shared global variable.",
+        "The second approach completely eliminates the need for dynamic memory allocation using `malloc`."
+      ],
+      "answerIndex": 2,
+      "explanation": "As shown on Slides 37-39, the second method passes a pointer to a thread-specific `struct arg_set` where each thread counts words into its own `count` field. Because they do not share a global counter, 'No mutex is used in the above function!', avoiding the overhead and contention of locking."
+    },
+    {
+      "text": "Based on the list of system calls and C library functions that are not required to be thread-safe, which of the following functions must be invoked with caution (e.g., wrapped in a mutex) when used in a multi-threaded context?",
+      "answers": ["`pthread_create`", "`strtok`", "`strcmp`", "`fclose`"],
+      "answerIndex": 1,
+      "explanation": "Slide 42 lists functions not required to be thread-safe, which includes `strtok`."
+    },
+    {
+      "text": "In the 'Sum of Squares' multi-threaded example (Slides 16-19), when the program was run with 99 threads without a mutex, the calculated sum was significantly smaller than the correct mathematical total. What is the fundamental cause of this discrepancy?",
+      "answers": [
+        "A race condition on the shared global variable `sqsum` where concurrent increments overlapped, causing some additions to be lost.",
+        "Floating-point rounding errors that accumulate differently when multiple threads perform concurrent division.",
+        "The operating system automatically terminated threads that took too long to execute, leaving the calculation incomplete.",
+        "An integer overflow in the loop index variable `i` when distributed across multiple threads."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 18 shows that without a mutex, multiple threads execute the statement `sqsum += (double) (i+1) * (double) (i+1);` simultaneously. This is a read-modify-write operation on a shared global variable, leading to a race condition where some updates are overwritten and lost, resulting in a lower sum."
+    },
+    {
+      "text": "What is the precise operational difference between `pthread_cond_signal` and `pthread_cond_broadcast`?",
+      "answers": [
+        "`pthread_cond_signal` wakes up all waiting threads in sequential order, whereas `pthread_cond_broadcast` wakes them up simultaneously.",
+        "`pthread_cond_signal` restarts exactly one of the waiting threads, whereas `pthread_cond_broadcast` restarts all of the threads waiting on that condition variable.",
+        "`pthread_cond_signal` requires the caller to hold a mutex, whereas `pthread_cond_broadcast` can only be called without holding any mutexes.",
+        "`pthread_cond_signal` returns the number of awakened threads, whereas `pthread_cond_broadcast` always returns 0."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 52 states that `pthread_cond_signal` 'restarts one of the threads... If several threads are waiting on cond, exactly one is restarted.' Slide 53 states that `pthread_cond_broadcast` 'restarts all the threads that are waiting on the condition variable cond.'"
+    },
+    {
+      "text": "In the provided 'bounded buffer' (producer-consumer) implementation (Slide 37), why is a `while` loop used to check the condition (e.g., `while (pool->count >= POOL_SIZE)`) rather than a simple `if` statement before calling `pthread_cond_wait`?",
+      "answers": [
+        "Because `pthread_cond_wait` can experience spurious wakeups, or another thread might consume/produce and alter the buffer state before the awakened thread can re-acquire the lock and proceed.",
+        "Because a `while` loop forces the operating system to allocate more CPU time slices to the waiting thread.",
+        "Because calling `pthread_cond_wait` inside an `if` block is a syntax error in standard POSIX C.",
+        "Because a `while` loop automatically releases the mutex at each iteration, whereas an `if` block keeps it locked."
+      ],
+      "answerIndex": 0,
+      "explanation": "In multi-threaded programming, condition checks must be in a loop because of spurious wakeups or the possibility that another thread altered the state between the signal and the thread actually running with the re-acquired lock."
+    },
+    {
+      "text": "Which of the following statements is true regarding the ownership and unlocking of a POSIX mutex?",
+      "answers": [
+        "Any thread in the process can unlock a locked mutex to prevent deadlocks.",
+        "Only the thread that currently holds the lock on the mutex should call `pthread_mutex_unlock`.",
+        "The operating system automatically unlocks a mutex if the thread holding it goes to sleep.",
+        "A mutex can only be unlocked by the main thread of the program."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 40 specifies: 'pthread_mutex_unlock should be called only by the thread holding the mutex.'"
+    },
+    {
+      "text": "What are the names of the macros used for static initialization of a mutex and a condition variable, respectively?",
+      "answers": [
+        "`MUTEX_INITIALIZER` and `COND_INITIALIZER`",
+        "`PTHREAD_MUTEX_INITIALIZER` and `PTHREAD_COND_INITIALIZER`",
+        "`PTHREAD_MUTEX_STATIC` and `PTHREAD_COND_STATIC`",
+        "`INIT_PTHREAD_MUTEX` and `INIT_PTHREAD_COND`"
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 30 shows the static initializer macro `PTHREAD_MUTEX_INITIALIZER` for mutexes, and Slide 21 shows `PTHREAD_COND_INITIALIZER` for condition variables."
+    },
+    {
+      "text": "According to the slide 'Waiting on a condition', what are the requirements on the signaling thread regarding the associated mutex when calling `pthread_cond_signal`?",
+      "answers": [
+        "The signaling thread must never acquire the mutex before calling `pthread_cond_signal`.",
+        "The signaling thread must acquire the mutex before the `pthread_cond_signal` call and unlock it immediately after the call.",
+        "The signaling thread must destroy the mutex before signaling the condition.",
+        "The signaling thread must hold the mutex locked continuously for at least 500 milliseconds after signaling."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 22 states: 'The signaling thread must acquire the mutex before the pthread_cond_signal call and unlock it immediately after the call.'"
+    },
+    {
+      "text": "In the bounded buffer implementation (Slide 37), how is the `pool->end` index updated when a new item is placed into the buffer?",
+      "answers": [
+        "`pool->end = pool->end + 1;`",
+        "`pool->end = (pool->end + 1) % POOL_SIZE;`",
+        "`pool->end = (pool->end + 1) / POOL_SIZE;`",
+        "`pool->end = pool->start + pool->count;`"
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 37 shows the index update logic in `place`: `pool->end = (pool->end + 1) % POOL_SIZE;`."
+    },
+    {
+      "text": "How much CPU time does a thread consume while it is suspended inside `pthread_cond_wait`?",
+      "answers": [
+        "It consumes normal CPU time because it continuously polls the state of the condition variable.",
+        "It consumes 50% of a single CPU core's capacity.",
+        "It does not consume any CPU time because its execution is suspended until signaled.",
+        "It consumes CPU time only when other threads are executing on different cores."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 22 states: 'The thread execution is suspended and does not consume any CPU time until the condition variable is signaled...'"
+    },
+    {
+      "text": "How does the LinuxThreads implementation handle condition variable attributes (`cond_attr`) passed to `pthread_cond_init`?",
+      "answers": [
+        "It throws an `EINVAL` error if `cond_attr` is not set to a valid non-NULL pointer.",
+        "It supports all standard POSIX attributes for conditions.",
+        "It supports no attributes for conditions, meaning `cond_attr` is completely ignored.",
+        "It automatically maps the condition attributes to the corresponding mutex attributes."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 21 states: 'The LinuxThreads implementation supports no attributes for conditions (cond_attr is ignored).'"
+    },
+    {
+      "text": "What value does the function `pthread_mutex_init` always return?",
+      "answers": [
+        "1",
+        "The thread ID of the calling thread.",
+        "0",
+        "A pointer to the newly allocated mutex object."
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 30 states: 'pthread_mutex_init always returns 0'."
+    },
+    {
+      "text": "In the bounded buffer producer-consumer example code (Slide 38), what is the loop condition that allows the `consumer` thread to continue executing?",
+      "answers": [
+        "`while (pool.count > 0)`",
+        "`while (num_of_items > 0)`",
+        "`while (num_of_items > 0 || pool.count > 0)`",
+        "`while (1)`"
+      ],
+      "answerIndex": 2,
+      "explanation": "Slide 38 shows the consumer's loop: `while (num_of_items > 0 || pool.count > 0) { ... }`."
+    }
+  ]
+}

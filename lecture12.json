@@ -1,0 +1,219 @@
+{
+  "questions": [
+    {
+      "text": "In a POSIX threads environment, how are errors typically handled and reported by `pthread` library functions compared to traditional UNIX system calls?",
+      "answers": [
+        "They return the error number directly as the function's return value, and do not set the global `errno` variable.",
+        "They return -1 and set the global `errno` variable, which can then be read using `perror()`.",
+        "They return NULL and require calling a separate `pthread_error()` function to retrieve the error code.",
+        "They throw a runtime signal that must be caught by a thread-specific signal handler."
+      ],
+      "answerIndex": 0,
+      "explanation": "According to Slide 6, POSIX thread library functions do not set the global `errno` variable. Therefore, traditional error-printing functions like `perror()` cannot be used. Instead, the error code is returned directly by the function, and `strerror()` must be used to print a diagnostic message."
+    },
+    {
+      "text": "Why is it dangerous or undefined behavior to pass the address of a local variable to `pthread_exit` as the return value of a thread?",
+      "answers": [
+        "The local variable's storage is allocated on the thread's stack, which is deallocated when the thread terminates, making the pointer wild/dangling.",
+        "The compiler will refuse to compile the program because automatic variables are automatically converted to `const void*`.",
+        "The operating system automatically zeros out all memory locations corresponding to the thread's local variables before joining.",
+        "Local variables are shared across threads, so another thread might overwrite the value before `pthread_join` completes."
+      ],
+      "answerIndex": 0,
+      "explanation": "As explained on Slide 11, local (auto) variables are allocated on the terminating thread's stack frame. When the thread exits, its stack is reclaimed, meaning references to these variables become undefined. Developers should use dynamically allocated memory (e.g., via `malloc`) to return status data."
+    },
+    {
+      "text": "What happens if a program calls `pthread_join` on a thread that has already been detached via `pthread_detach`?",
+      "answers": [
+        "The `pthread_join` function fails and returns an error.",
+        "The calling thread is suspended indefinitely until the program terminates.",
+        "The thread is re-attached and successfully joined, returning its exit status.",
+        "The program crashes immediately with a segmentation fault."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 13 explicitly states that 'Issuing a `pthread_join` on a detached thread fails.' Once detached, a thread's resources are automatically reclaimed upon termination, and its exit status can no longer be retrieved via joining."
+    },
+    {
+      "text": "Under what condition can multiple threads of a single process run in **parallel** rather than concurrently?",
+      "answers": [
+        "When there are multiple processors, and the threads are assigned to different kernel threads.",
+        "When the threads are running in user space without using lightweight processes (LWPs).",
+        "When the programmer compiles the application using the `-parallel` flag instead of `-lpthread`.",
+        "When the process is cloned using a traditional `fork()` system call."
+      ],
+      "answerIndex": 0,
+      "explanation": "As stated on Slide 4, threads execute concurrently in the presence of a single processor. However, if there are multiple processors, threads can be mapped to different kernel threads and execute in parallel across different CPUs."
+    },
+    {
+      "text": "If a multi-threaded process calls the `fork()` system call, what is the thread status in the newly created child process?",
+      "answers": [
+        "Only the thread that invoked `fork()` is duplicated in the child process.",
+        "All threads that were active in the parent process are duplicated in the child process.",
+        "The child process is created with no threads, and must call `pthread_create()` to begin execution.",
+        "All threads are terminated except the main thread, which is duplicated."
+      ],
+      "answerIndex": 0,
+      "explanation": "According to Slide 8, when `fork` is called in a multi-threaded program, only the specific thread that invoked the `fork` system call is duplicated in the resulting child process."
+    },
+    {
+      "text": "How do threads and processes differ regarding the sharing of file descriptors?",
+      "answers": [
+        "Threads share a single common set of file descriptors, so closing a descriptor in one thread closes it for all. Processes have independent copies of descriptors.",
+        "Processes share file descriptors via shared memory, while threads must explicitly duplicate them using `dup2()`.",
+        "Threads have separate, independent copies of file descriptors, whereas processes share them globally.",
+        "Neither threads nor processes can share file descriptors unless they are parent and child."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 7 outlines that threads of a single process share a common file descriptor table, meaning any thread can use the same descriptor and a single `close()` is sufficient. In contrast, processes get their own independent copies of file descriptors after a fork."
+    },
+    {
+      "text": "What is the consequence of any single thread invoking an `exec` family system call?",
+      "answers": [
+        "All threads in the process disappear because the entire address space is replaced by the new program.",
+        "Only the calling thread is replaced by the new program, while other threads continue running.",
+        "The `exec` call fails because multi-threaded processes cannot load new program images.",
+        "The calling thread is suspended, and the new program runs in a nested process context."
+      ],
+      "answerIndex": 0,
+      "explanation": "As shown in the table on Slide 8, executing `exec` replaces the shared address space, causing all threads within that process to instantly disappear."
+    },
+    {
+      "text": "In the multi-threaded race condition example (Slides 24-25), changing `sleep(1)` to `sleep(0)` inside the loop of the child thread (`print_count`) caused the output to consistently show `count = 1` five times. Why does this happen?",
+      "answers": [
+        "The child thread executes its entire loop and terminates almost instantly before the main thread can increment the counter again.",
+        "Calling `sleep(0)` forces the operating system to reset all shared variables back to their initial values.",
+        "The compiler optimizes away the `counter` increments in the main thread because `sleep(0)` makes them dead code.",
+        "The operating system prioritizes the main thread's increments, preventing the child thread from reading any value higher than 1."
+      ],
+      "answerIndex": 0,
+      "explanation": "Since the main thread has `sleep(1)` between its increments, it takes full seconds to increment `counter`. When the child thread's sleep is reduced to `sleep(0)`, it is scheduled and completes its entire loop five times almost instantaneously while the main thread is still sleeping during its first iteration, resulting in five prints of the value '1'."
+    },
+    {
+      "text": "Which of the following is correct regarding compiling a C program that uses the POSIX thread library with GCC?",
+      "answers": [
+        "The program must include `<pthread.h>` and be compiled with the `-lpthread` flag.",
+        "The program must include `<thread.h>` and be compiled with the `-pthreads` flag.",
+        "The program must include `<string.h>` and be compiled with the `-lposix` flag.",
+        "The program must include `<pthread.h>` and no special compiler flags are needed as it is part of standard libc."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 5 states that `#include <pthread.h>` must be included in all programs using threads, and they must be compiled with the pthread library using the `gcc <filename>.c -lpthread` command."
+    },
+    {
+      "text": "Why is a context switch between two threads of the same process generally faster than a context switch between two different processes?",
+      "answers": [
+        "Threads share the same address space and resource context, meaning the kernel does not need to swap page tables or memory mappings.",
+        "Threads run entirely in user space and do not require kernel involvement for context switching.",
+        "Threads use registers that are automatically duplicated in hardware, bypassing the CPU register file.",
+        "Process context switches require saving the instruction pointer, whereas thread switches do not."
+      ],
+      "answerIndex": 0,
+      "explanation": "According to Slide 5, because threads share the same address space, file descriptors, and resources, the kernel does not have to rebuild or switch major virtual memory contexts, making thread context switches significantly faster than process context switches."
+    },
+    {
+      "text": "If a thread is terminated via `pthread_cancel`, what value is stored in the status pointer when another thread calls `pthread_join` on it?",
+      "answers": [
+        "`PTHREAD_CANCELED`",
+        "`NULL`",
+        "`-1`",
+        "An error number indicating the cancellation signal"
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 12 explains that if a target thread was canceled, the special constant identifier `PTHREAD_CANCELED` is copied into the location pointed to by `*retval`."
+    },
+    {
+      "text": "What value is returned by POSIX thread management functions like `pthread_create` and `pthread_join` upon successful execution?",
+      "answers": ["`0`", "`1`", "The ID of the thread", "`-1`"],
+      "answerIndex": 0,
+      "explanation": "According to Slides 10 and 12, both `pthread_create` and `pthread_join` return `0` upon successful completion. Any other return value indicates an error number."
+    },
+    {
+      "text": "In the word counting program (Slides 26-27), multiple threads process different files and increment a shared global variable `total_words` concurrently. What type of hazard does this introduce?",
+      "answers": [
+        "A race condition, because the increment operation is non-atomic and threads can overwrite each other's updates.",
+        "A deadlock, because both threads will wait on each other to release the `total_words` variable.",
+        "A segmentation fault, because the threads attempt to write to read-only global memory.",
+        "A starvation hazard, where one thread is locked out of incrementing the variable forever."
+      ],
+      "answerIndex": 0,
+      "explanation": "As illustrated on Slide 29, because `total_words++` is not an atomic operation, concurrent assignments can interleave, leading to a race condition where some increments are lost and the final total value is inconsistent."
+    },
+    {
+      "text": "What is the behavior of `pthread_create` when the `attr` argument is passed as `NULL`?",
+      "answers": [
+        "The thread is created with default attributes.",
+        "The function returns an error code immediately without creating a thread.",
+        "The thread is created as a detached thread by default.",
+        "The thread's stack size is set to zero, forcing it to share the creator's stack."
+      ],
+      "answerIndex": 0,
+      "explanation": "As stated on Slide 10, passing `NULL` as the second argument (`attr`) to `pthread_create` specifies that default attributes should be used for the newly generated thread."
+    },
+    {
+      "text": "Contrast the behavior of calling `exit(0)` versus calling `pthread_exit(NULL)` inside a thread function.",
+      "answers": [
+        "`exit(0)` terminates the entire process and all of its threads, whereas `pthread_exit(NULL)` only terminates the calling thread.",
+        "`exit(0)` only terminates the main thread, whereas `pthread_exit(NULL)` terminates the process.",
+        "Both functions have identical behavior and terminate only the calling thread.",
+        "`pthread_exit(NULL)` is ignored if called by any thread other than the main thread."
+      ],
+      "answerIndex": 0,
+      "explanation": "According to Slides 8 and 11, `exit` causes all threads in the process to die together, whereas `pthread_exit` terminates only the single calling thread, allowing other threads of the process to continue executing."
+    },
+    {
+      "text": "What is the correct function signature for the start routine (the entry point function) passed as the third argument to `pthread_create`?",
+      "answers": [
+        "`void *(*start_routine)(void *)`",
+        "`int (*start_routine)(void *)`",
+        "`void (*start_routine)(void)`",
+        "`void *(*start_routine)(int)`"
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 10 details the signature of the `pthread_create` function, showing that the `start_routine` must be a function pointer taking a single `void *` argument and returning a `void *`."
+    },
+    {
+      "text": "Which POSIX function allows a thread to obtain its own thread ID?",
+      "answers": [
+        "`pthread_self()`",
+        "`pthread_id()`",
+        "`pthread_getthreadid()`",
+        "`pthread_equal()`"
+      ],
+      "answerIndex": 0,
+      "explanation": "As stated on Slide 13, `pthread_self(void)` returns the unique thread-ID of the calling thread."
+    },
+    {
+      "text": "How should a programmer compare two thread IDs of type `pthread_t` for equality?",
+      "answers": [
+        "By calling the `pthread_equal()` function.",
+        "By using the standard C equality operator `==`.",
+        "By comparing their string representations using `strcmp()`.",
+        "By subtracting one from the other and checking if the result is 0."
+      ],
+      "answerIndex": 0,
+      "explanation": "Since `pthread_t` is an opaque structure or type that may not be a simple scalar integer on all platforms, developers must use the POSIX `pthread_equal()` function (listed on Slide 9) to reliably test two thread IDs for equality."
+    },
+    {
+      "text": "In the Solaris Thread Model shown on Slide 3, what is the role of a Lightweight Process (LWP)?",
+      "answers": [
+        "It acts as a bridge or virtual CPU mapping user-space threads to kernel threads.",
+        "It completely bypasses the kernel to schedule threads purely in user space.",
+        "It coordinates inter-process communication between completely separate applications.",
+        "It replaces the hardware processor to simulate concurrency on single-core systems."
+      ],
+      "answerIndex": 0,
+      "explanation": "As shown in the architectural diagram on Slide 3, lightweight processes (LWPs) are intermediate schedulable units in the OS kernel that act as virtual CPUs upon which user-space threads are scheduled and mapped to underlying kernel threads."
+    },
+    {
+      "text": "Since `pthread` functions do not set `errno`, which standard function is used to print diagnostic messages based on the returned error code?",
+      "answers": [
+        "`strerror()`, which requires `#include <string.h>`",
+        "`perror()`, which requires `#include <stdio.h>`",
+        "`pthread_error_print()`, which requires `#include <pthread.h>`",
+        "`err_string()`, which requires `#include <stdlib.h>`"
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 6 shows that when a pthread library function fails, `strerror()` is used to map the returned diagnostic error integer code to a readable string. This function requires the `<string.h>` header."
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "questions": [
+    {
+      "text": "What does the command `sed 's/[0-9]/$&/3'` do when applied to a line with multiple digits?",
+      "answers": [
+        "Replaces only the third occurrence of any digit on each line with a literal '$' followed by that digit.",
+        "Replaces the first three occurrences of any digit with the character '&'.",
+        "Replaces the third occurrence of any digit with the character '3'.",
+        "Inserts a '$' character after the third digit of the input file."
+      ],
+      "answerIndex": 0,
+      "explanation": "In the command `sed 's/[0-9]/$&/3'`, the suffix flag '3' specifies that only the 3rd match of the pattern `[0-9]` on a line should be replaced. The replacement pattern `$&` contains a literal '$' followed by '&', which represents the matched pattern (the 3rd digit itself)."
+    },
+    {
+      "text": "What is the primary difference between the behavior of the `d` command and the `D` command in `sed`?",
+      "answers": [
+        "The `d` command deletes the entire pattern space and begins the next cycle, while the `D` command deletes only up to the first embedded newline and starts the next cycle without reading new input if data remains.",
+        "The `d` command deletes lines in a specific address range, whereas `D` deletes lines globally across the entire file.",
+        "The `d` command is used for suppressing standard output, while the `D` command is used to delete files from disk.",
+        "There is no operational difference; `D` is simply a deprecated uppercase alias of `d`."
+      ],
+      "answerIndex": 0,
+      "explanation": "As explained in the lecture slides, the `d` command deletes the entire pattern space and starts the next cycle immediately. The `D` command deletes up to the first embedded newline in the pattern space and starts the next cycle, but skips reading from the input if there is still data left in the pattern space."
+    },
+    {
+      "text": "Using basic regular expressions (BRE) in `sed`, which of the following represents the correct syntax to capture three groups of digits (of sizes 4, 2, and 4) and format them with hyphens as `\\1-\\2-\\3`?",
+      "answers": [
+        "`s/\\([0-9]\\{4\\}\\) \\([0-9]\\{2\\}\\) \\([0-9]\\{4\\}\\)/\\1-\\2-\\3/`",
+        "`s/([0-9]{4}) ([0-9]{2}) ([0-9]{4})/\\1-\\2-\\3/`",
+        "`s/\\([0-9]{4}\\) \\([0-9]{2}\\) \\([0-9]{4}\\)/\\1-\\2-\\3/`",
+        "`s/([0-9]\\{4\\}) ([0-9]\\{2\\}) ([0-9]\\{4\\})/\\1-\\2-\\3/`"
+      ],
+      "answerIndex": 0,
+      "explanation": "Under standard basic regular expressions (BRE) in `sed`, capturing parentheses `\\(` and `\\)` as well as interval bounds `\\{` and `\\}` must be escaped with backslashes to be treated as special operators instead of literals."
+    },
+    {
+      "text": "Given the command `sed '1,2 s/cat/CAT/2'`, what action will `sed` perform on the input text?",
+      "answers": [
+        "On lines 1 and 2, it will substitute only the second occurrence of the word 'cat' with 'CAT'.",
+        "It will replace the word 'cat' with 'CAT' on the first two lines, and then duplicate line 2.",
+        "It will search for the word 'cat' and replace the first two occurrences on every line with 'CAT'.",
+        "It will delete lines 1 and 2 if they contain the word 'cat' more than twice."
+      ],
+      "answerIndex": 0,
+      "explanation": "The address prefix `1,2` restricts the substitution to lines 1 and 2. The substitution command flag `2` at the end of `s/cat/CAT/2` specifies that only the second occurrence of the match 'cat' on those lines should be replaced."
+    },
+    {
+      "text": "If you execute the character translation command `sed 'y/abcdt/ADCBQ/'` on the input string 'cat', what is the resulting output?",
+      "answers": ["CAQ", "CAD", "CBQ", "cat"],
+      "answerIndex": 0,
+      "explanation": "The character transformation command `y` maps characters in the first set to characters in the second set on a one-to-one basis: 'a'->'A', 'b'->'D', 'c'->'C', 'd'->'B', and 't'->'Q'. For the word 'cat', 'c' becomes 'C', 'a' becomes 'A', and 't' becomes 'Q', producing 'CAQ'."
+    },
+    {
+      "text": "What does the `n` (Next) command do when executed in a `sed` script?",
+      "answers": [
+        "It copies the current pattern space to the output (unless output is suppressed), deletes the pattern space, refills it with the next input line, and then continues the script.",
+        "It immediately terminates the current script and moves to processing the next file in the argument list.",
+        "It appends the next line of input to the current pattern space, separating them with a newline character.",
+        "It skips the next execution instruction in the sed script file."
+      ],
+      "answerIndex": 0,
+      "explanation": "According to the slides, `n` forces `sed` to read the next line. Before doing so, it copies the current pattern space to the output, deletes the current text in the pattern space, and then refills it with the next input line before continuing the script."
+    },
+    {
+      "text": "How does the `N` command differ from the `n` command in `sed`?",
+      "answers": [
+        "Unlike `n`, which clears the pattern space before reading the next line, `N` appends the next input line to the existing pattern space, separated by an embedded newline.",
+        "Unlike `n`, the `N` command suppresses standard output and writes directly to a temporary file.",
+        "The `n` command only matches lowercase characters, whereas the `N` command matches uppercase characters.",
+        "The `N` command immediately restarts the script from the first instruction, whereas `n` proceeds to the next line."
+      ],
+      "answerIndex": 0,
+      "explanation": "As detailed on slide 14, `n` clears the pattern space before inputting the next line, whereas `N` does not; instead, `N` appends the next input line to the current content of the pattern space, using a newline character (`\\n`) as a separator."
+    },
+    {
+      "text": "What is the primary effect of using the `-n` command-line option in `sed`?",
+      "answers": [
+        "It suppresses the default line-by-line printing of the pattern space at the end of each cycle.",
+        "It forces `sed` to process files in reverse numerical order.",
+        "It displays non-printable 'hidden' characters such as tabs and line endings.",
+        "It skips executing any comments inside the sed script file."
+      ],
+      "answerIndex": 0,
+      "explanation": "The `-n` option suppresses standard output, meaning `sed` will not automatically print the contents of the pattern space at the end of a cycle. Output must be explicitly generated using commands like `p`, `P`, or `w`."
+    },
+    {
+      "text": "What is printed when the uppercase `P` command is executed on a multi-line pattern space?",
+      "answers": [
+        "The content of the pattern space up to and including the first embedded newline character.",
+        "The entire content of the pattern space from beginning to end, ignoring any newlines.",
+        "Only the last line currently held in the pattern space.",
+        "Only lines that contain visible printable characters."
+      ],
+      "answerIndex": 0,
+      "explanation": "The `P` command (Print First Line) prints the contents of the pattern space up to and including the first embedded newline character, as described on slide 12 and slide 18."
+    },
+    {
+      "text": "Consider the following script `sednotN`:\n```\n/^$/ {\n  $!N\n  /^\\n$/ D\n}\n```\nWhat is the net effect of executing this script on a text file?",
+      "answers": [
+        "It compresses multiple consecutive blank lines into a single blank line.",
+        "It removes all blank lines from the file entirely.",
+        "It adds a blank line after every non-blank line in the file.",
+        "It terminates processing immediately when the first blank line is encountered."
+      ],
+      "answerIndex": 0,
+      "explanation": "When a blank line is matched (`/^$/`), and it is not the last line (`$!N`), the next line is appended to the pattern space. If the resulting pattern space contains only a newline (`/^\\n$/`), it indicates consecutive blank lines. The `D` command deletes the first part of this pattern space, starting the cycle again and effectively squeezing multiple blank lines into one."
+    },
+    {
+      "text": "What does the `l` command in `sed` allow you to do?",
+      "answers": [
+        "Display 'hidden' characters, such as showing tabs as `\\t` and the end of lines as `$`.",
+        "Convert all lowercase alphabetic characters to uppercase.",
+        "List the total number of lines processed in the input stream.",
+        "Link multiple external sed scripts together dynamically."
+      ],
+      "answerIndex": 0,
+      "explanation": "As shown on slide 12 and slide 19, the `l` command is used to display non-printable or 'invisible' characters, rendering tabs as `\\t` and showing the explicit end of a line with a `$` character."
+    },
+    {
+      "text": "If a `sed` script contains the command `1 r mainheader`, what action does `sed` take?",
+      "answers": [
+        "It reads the content of the file named 'mainheader' and appends it immediately after line 1 of the input file.",
+        "It replaces the first line of the input file with the first line of 'mainheader'.",
+        "It searches for 'mainheader' in line 1 and deletes it.",
+        "It writes line 1 of the input file into a new file named 'mainheader'."
+      ],
+      "answerIndex": 0,
+      "explanation": "The `r` command reads a file and outputs its contents. An address like `1` specifies that this content should be inserted into the output stream immediately after processing and outputting line 1."
+    },
+    {
+      "text": "How does the command `sed -n '/Mon/w Mon.log' log-events` affect the output and the filesystem?",
+      "answers": [
+        "It suppresses default standard output, and writes any line containing 'Mon' to a file named 'Mon.log'.",
+        "It prints all lines containing 'Mon' to standard output and reads new patterns from 'Mon.log'.",
+        "It deletes all lines containing 'Mon' from both the screen and the file 'Mon.log'.",
+        "It counts the occurrences of 'Mon' and appends the final count to 'Mon.log'."
+      ],
+      "answerIndex": 0,
+      "explanation": "The `-n` option suppresses default output to the standard output. The command `/Mon/w Mon.log` checks each line for the pattern 'Mon' and, if found, writes the current line to 'Mon.log' using the `w` (write) command."
+    },
+    {
+      "text": "What is the difference in meaning of the `$` character when it is used in the search pattern versus when it is used in the replacement section of a substitution command?",
+      "answers": [
+        "In the search pattern, `$` matches the end of the line, while in the replacement section, it is treated as a literal '$' character.",
+        "In the search pattern, `$` matches a literal '$' character, while in the replacement section, it forces a newline.",
+        "In the search pattern, `$` represents the last line of the file, while in the replacement section, it references the entire matched pattern.",
+        "There is no difference; it represents the end-of-line marker in both sections."
+      ],
+      "answerIndex": 0,
+      "explanation": "As shown in the slides, using `$` in a search pattern matches the end-of-line anchor (e.g., `s/$/>>>/` appends text to the line's end). When used in the replacement section (such as `s/[0-9]/$&/`), it is treated as a literal '$' character."
+    },
+    {
+      "text": "In the command sequence `$!N`, what does the prefix `$!` ensure?",
+      "answers": [
+        "It ensures that the `N` command is executed on every line of the input file except for the very last line.",
+        "It forces the command `N` to execute only on the last line of the input file.",
+        "It halts the script if an exclamation mark character is found at the end of the line.",
+        "It tells `sed` to run the script in reverse order, starting from the end of the file."
+      ],
+      "answerIndex": 0,
+      "explanation": "In `sed`, the symbol `$` represents the last line of the input text, and the exclamation mark `!` represents logical negation. Thus, `$!N` means 'if this is not the last line, execute the N command'."
+    },
+    {
+      "text": "What character is used in a `sed` replacement string to designate the entire text portion that was successfully matched by the search pattern?",
+      "answers": ["&", "%", "\\0", "$"],
+      "answerIndex": 0,
+      "explanation": "As stated on slide 6, the `&` character in a `sed` substitution replacement string designates the entire pattern that was matched by the search regular expression."
+    },
+    {
+      "text": "Which option is used when invoking `sed` to indicate that the editing commands should be read from a specified script file instead of the command line?",
+      "answers": ["-f", "-e", "-n", "-s"],
+      "answerIndex": 0,
+      "explanation": "According to slide 2, the `-f` option tells `sed` to find and apply all rules that are defined inside a specific script file, while `-e` is used for script commands provided directly on the command line."
+    },
+    {
+      "text": "Which of the following statements correctly describes how multiple commands in a single `sed` script are applied to an input line?",
+      "answers": [
+        "Commands are applied sequentially in the order they appear in the script, with each command modifying the current state of the pattern space.",
+        "All commands are applied simultaneously in parallel, preventing conflicts through race condition checks.",
+        "Only the first command that matches the pattern is executed, and all subsequent commands are ignored.",
+        "Commands are applied in reverse order, starting from the last instruction in the script file."
+      ],
+      "answerIndex": 0,
+      "explanation": "The operational model of `sed` is to scan input line-by-line and apply the script rules sequentially. Each matching instruction modifies the current contents of the pattern space, and subsequent instructions act upon that modified text."
+    },
+    {
+      "text": "When running the command `sed 'p' textfile`, what is the observable output?",
+      "answers": [
+        "Every line in the file is printed twice.",
+        "Only the first line of the file is printed.",
+        "No output is displayed because standard output is suppressed.",
+        "Only lines that contain matching text are printed."
+      ],
+      "answerIndex": 0,
+      "explanation": "By default, `sed` prints the contents of the pattern space to standard output at the end of every loop cycle. If you explicitly add the print `p` command, it prints the pattern space during script execution, resulting in each line being printed twice."
+    },
+    {
+      "text": "In `sed` regular expressions, what is the meaning of the notation `\\1`?",
+      "answers": [
+        "It references the first captured subpattern matched between the first set of escaped parentheses `\\(` and `\\)`.",
+        "It matches the first character of the current line.",
+        "It forces `sed` to repeat the current substitution command exactly one time.",
+        "It acts as a placeholder that deletes the first character matching the pattern."
+      ],
+      "answerIndex": 0,
+      "explanation": "Slide 6 and slide 7 describe how the backslash-number notation (like `\\1`, `\\2`, etc.) acts as a backreference to retrieve the text matched by the corresponding numbered pattern group enclosed within `\\(` and `\\)`."
+    }
+  ]
+}

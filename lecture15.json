@@ -1,0 +1,209 @@
+{
+  "questions": [
+    {
+      "text": "When two different processes attach to the same shared memory segment, which of the following statements is true regarding the virtual address where the segment is mapped?",
+      "answers": [
+        "The segment must be mapped to the exact same virtual address in both processes.",
+        "The segment is mapped to the same physical address, but can be mapped to different virtual addresses in each process's address space.",
+        "The virtual address must be specified manually by the developer in both processes.",
+        "The kernel always randomizes the virtual address to prevent sharing."
+      ],
+      "answerIndex": 1,
+      "explanation": "As illustrated on Slide 28/76, Process A maps the shared memory region to virtual address `0x30000` while Process B maps the same physical region to `0x50000`. They share physical memory but can map it to different virtual addresses."
+    },
+    {
+      "text": "If a process requests a shared memory segment of size 5000 bytes using `shmget()`, and the system's `PAGE_SIZE` is 4096 bytes, what will be the actual allocated size of the physical memory segment?",
+      "answers": ["5000 bytes", "4096 bytes", "8192 bytes", "10000 bytes"],
+      "answerIndex": 2,
+      "explanation": "According to slide 29/76, the returned size of the segment is equal to the requested size rounded up to a multiple of `PAGE_SIZE`. Because 5000 is between 4096 and 8192, it rounds up to the next multiple, which is 8192 bytes."
+    },
+    {
+      "text": "What happens if a call to `shmget()` is made with `shmflg` specifying both `IPC_CREAT` and `IPC_EXCL`, and a shared memory segment associated with the given key already exists?",
+      "answers": [
+        "The existing segment is overwritten and a new identifier is returned.",
+        "The call succeeds and returns the identifier of the existing segment.",
+        "The call fails, returning -1 and setting `errno` to `EEXIST`.",
+        "The call blocks until the existing segment is destroyed by another process."
+      ],
+      "answerIndex": 2,
+      "explanation": "As stated on slide 29/76, if both `IPC_CREAT` and `IPC_EXCL` are specified and the segment already exists for that key, `shmget()` fails and sets `errno` to `EEXIST`."
+    },
+    {
+      "text": "When using `shmat(shmid, shmaddr, shmflg)` to attach a shared memory segment, what is the effect of passing `NULL` as the `shmaddr` argument?",
+      "answers": [
+        "The system call fails immediately returning `(void *)-1`.",
+        "The OS automatically chooses a suitable, unused page-aligned address in the calling process's address space to attach the segment.",
+        "The system attaches the segment to the physical address 0.",
+        "The segment is mapped to the same virtual address as the creator process."
+      ],
+      "answerIndex": 1,
+      "explanation": "As shown on slide 30/76, if `shmaddr` is `NULL`, the OS automatically chooses a suitable, unused address to attach the segment."
+    },
+    {
+      "text": "A process calls `shmctl(shmid, IPC_RMID, NULL)` to remove a shared memory segment. What is the immediate behavior of the operating system regarding this segment?",
+      "answers": [
+        "The segment is immediately destroyed, and any process currently attached to it will crash on the next read/write.",
+        "The segment is marked for destruction but will only be physically destroyed when the last process detaches from it (i.e., `shm_nattch` becomes zero).",
+        "The call fails if there are other processes currently attached to the segment.",
+        "The kernel detaches all processes automatically before deleting the segment instantly."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 32/76 specifies that `IPC_RMID` marks the segment to be destroyed. Physical destruction is deferred until the number of current attachments (`shm_nattch`) becomes zero."
+    },
+    {
+      "text": "Which of the following correctly describes the difference between `shmdt()` and `shmctl(..., IPC_RMID, ...)`?",
+      "answers": [
+        "`shmdt()` deletes the segment from the system, while `shmctl(..., IPC_RMID)` only detaches the current process.",
+        "`shmdt()` detaches the segment from the process's address space, whereas `shmctl(..., IPC_RMID)` marks the segment to be destroyed from the system.",
+        "Both functions perform the exact same task and can be used interchangeably.",
+        "`shmdt()` must be called before `shmctl(..., IPC_RMID)` can be invoked; otherwise, the removal fails."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 30/76 explains that `shmdt()` detaches the shared memory segment from the calling process's address space. Slide 32/76 explains that `shmctl(..., IPC_RMID, ...)` marks the segment to be destroyed entirely from the system."
+    },
+    {
+      "text": "Which field in the `shmid_ds` structure is used by the operating system to keep track of how many active attachments currently exist for a shared memory segment?",
+      "answers": ["`shm_segsz`", "`shm_nattch`", "`shm_cpid`", "`shm_lpid`"],
+      "answerIndex": 1,
+      "explanation": "As shown in the `shmid_ds` struct definition on slide 31/76, `shm_nattch` holds the count of current active attaches."
+    },
+    {
+      "text": "Which of the following represents a core guarantee of operations (UP/increment and DOWN/decrement) performed on a semaphore?",
+      "answers": [
+        "They are asynchronous and can be interrupted mid-execution.",
+        "They are performed atomically by the kernel.",
+        "They can allow a semaphore's value to temporarily drop below zero during heavy load.",
+        "They require the process to actively poll in a user-space loop."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 37/76 states that these two operations are performed atomically on a semaphore, and the semaphore's value is never allowed to fall below zero."
+    },
+    {
+      "text": "What is a significant advantage of System-V semaphore system calls operating on **sets** of semaphores rather than single semaphores?",
+      "answers": [
+        "They consume less physical memory than standard POSIX semaphores.",
+        "The kernel guarantees atomic operations across the entire set, allowing multiple resources to be locked simultaneously without partial state changes.",
+        "They automatically resolve deadlock conditions without programmer intervention.",
+        "Operations on sets do not block the invoking process if a resource is unavailable."
+      ],
+      "answerIndex": 1,
+      "explanation": "According to slide 38/76, System-V system calls create sets of semaphores, and the kernel warrants atomic operations on these sets, enabling simultaneous locking of multiple resources."
+    },
+    {
+      "text": "A program calls `semget(key, nsems, semflg)` with `semflg` set to `IPC_CREAT | IPC_EXCL`. If a semaphore set with the specified key already exists in the system, how does the system call react?",
+      "answers": [
+        "It returns the identifier of the existing set and ignores the creation flag.",
+        "It fails and returns -1, setting `errno` to `EEXIST`.",
+        "It deletes the existing semaphore set and creates a brand new one.",
+        "It blocks until the other process removes the semaphore set."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 39/76 states that if `semflg` specifies both `IPC_CREAT` and `IPC_EXCL` and a semaphore set already exists for that key, `semget()` fails with `errno` set to `EEXIST`."
+    },
+    {
+      "text": "In a System-V semaphore set, what is the difference between the tracking values `semcnt` and `semzcnt`?",
+      "answers": [
+        "`semcnt` is the count of semaphores in the set, while `semzcnt` is the number of active processes using the set.",
+        "`semcnt` is the number of processes waiting for the semaphore value to increase, while `semzcnt` is the number of processes waiting for the semaphore value to reach exactly zero.",
+        "`semcnt` stores the PID of the last process that acted on the semaphore, while `semzcnt` stores the initial value.",
+        "`semcnt` counts UP operations, while `semzcnt` counts DOWN operations."
+      ],
+      "answerIndex": 1,
+      "explanation": "According to slide 40/76, `semcnt` tracks the number of processes waiting for the semaphore to reach a value greater than its current one, while `semzcnt` tracks the number of processes waiting for the semaphore to reach zero."
+    },
+    {
+      "text": "When preparing a `struct sembuf` for a `semop()` call, how do you specify a lock/DOWN operation (blocking decrement) and an unlock/UP operation (increment)?",
+      "answers": [
+        "Set `sem_op` to a positive value for locking and a negative value for unlocking.",
+        "Set `sem_op` to a negative value for locking (decrement) and a positive value for unlocking (increment).",
+        "Set `sem_flg` to `IPC_LOCK` and `IPC_UNLOCK` respectively.",
+        "Set `sem_num` to 0 for locking and 1 for unlocking."
+      ],
+      "answerIndex": 1,
+      "explanation": "As defined on slide 42/76, a value of `sem_op < 0` is used for locking, and `sem_op > 0` is used for unlocking."
+    },
+    {
+      "text": "Which `semctl()` command is used to set the individual semaphore values (`semval`) for **all** semaphores inside a semaphore set simultaneously using an array?",
+      "answers": ["`SETVAL`", "`IPC_SETALL`", "`IPC_SET`", "`SETALL`"],
+      "answerIndex": 1,
+      "explanation": "Slide 45/76 explains that the `IPC_SETALL` command is used to set the `semval` for all semaphores of the set using `arg.array`."
+    },
+    {
+      "text": "What happens to processes that are currently blocked inside a `semop()` call on a semaphore set if another process calls `semctl(semid, 0, IPC_RMID, ...)`?",
+      "answers": [
+        "They remain blocked indefinitely until a reboot.",
+        "They are awakened, and their blocked `semop()` calls fail with an error.",
+        "They are forcefully terminated by the kernel with a `SIGKILL` signal.",
+        "They automatically proceed as if the lock operation had succeeded."
+      ],
+      "answerIndex": 1,
+      "explanation": "Slide 45/76 indicates that `IPC_RMID` removes the semaphore set and awakens all processes blocked by the respective `semop()` calls."
+    },
+    {
+      "text": "In the provided server-client program using semaphores (slides 19-22), how is the semaphore initialized by the server before the client runs?",
+      "answers": [
+        "It is initialized to `1` using `semctl` with `SETVAL`.",
+        "It is initialized to `0` using `semctl` with `SETVAL`.",
+        "It is initialized to `-1` to start in a locked state.",
+        "It is not initialized; semaphores default to `0` automatically."
+      ],
+      "answerIndex": 1,
+      "explanation": "According to slides 19/76 and 20/76, the server sets `arg.val = 0;` and then calls `semctl(semid, 0, SETVAL, arg)` to initialize the semaphore value to 0."
+    },
+    {
+      "text": "In the provided server/client example (slides 19-22), the server initializes the semaphore to `0`, writes a message to shared memory, and then calls `semop` with `oper[0] = {0, 1, 0}` (an increment). Why does the client program define its operation as `oper[0] = {0, -1, 0}`?",
+      "answers": [
+        "To increment the semaphore to let the server write another message.",
+        "To decrement (lock) the semaphore, which blocks the client until the server increments it to 1, ensuring the client reads only after the server has written.",
+        "To delete the semaphore once the reading is done.",
+        "To check if the semaphore value is currently negative."
+      ],
+      "answerIndex": 1,
+      "explanation": "Because the semaphore starts at 0, the client's DOWN operation (`sem_op = -1`, slide 21/76) will block. It is only unblocked when the server performs an UP operation (`sem_op = 1`, slide 20/76) after writing to the shared memory."
+    },
+    {
+      "text": "Which of the following fields is unique to the semaphore set control structure `struct semid_ds` and is **not** present in the shared memory control structure `struct shmid_ds`?",
+      "answers": [
+        "`sem_perm`",
+        "`sem_nsems`",
+        "`sem_ctime`",
+        "None of these, they have identical structures."
+      ],
+      "answerIndex": 1,
+      "explanation": "Comparing slide 31/76 and slide 44/76, `sem_nsems` (number of semaphores in the set) is specific to `struct semid_ds`. Both contain standard permission control and update time fields (such as `shm_perm`, `shm_ctime`, `sem_perm`, and `sem_ctime`)."
+    },
+    {
+      "text": "In the Critical Section example (slides 25-29), the parent process calls `sleep(2)` before attempting to access the critical section, while the child process immediately attempts to access it. If the semaphore is initialized to `1`, which process enters the critical section first?",
+      "answers": [
+        "The parent process, because parent processes always have higher priority.",
+        "The child process, because it attempts to access the critical section immediately while the parent is sleeping.",
+        "Neither, because the initial semaphore value of 1 blocks both processes.",
+        "They enter the critical section simultaneously because semaphores allow concurrent access."
+      ],
+      "answerIndex": 1,
+      "explanation": "In Slide 28/76, the parent process enters a `sleep(2)` delay. This gives the child process time to run, execute `sem_P(sem_id)`, decrement the semaphore from 1 to 0, and enter the critical section first, as confirmed by the output trace on slide 29/76."
+    },
+    {
+      "text": "In the Critical Section code (slides 27-28), `shmat()` is called by the parent process *before* the `fork()` call. How does this affect the child process's access to the shared memory?",
+      "answers": [
+        "The child process must call `shmat()` again to get its own pointer to the shared memory.",
+        "The child process automatically inherits the attached shared memory segment at the same virtual address `sh`.",
+        "The child process cannot access the shared memory because attached segments are cleared upon `fork()`.",
+        "The child process crashes when trying to read/write to `sh` unless it has root privileges."
+      ],
+      "answerIndex": 1,
+      "explanation": "Since `fork()` duplicates the parent's address space, any shared memory segments attached prior to `fork()` (slide 27/76) are inherited by the child at the exact same virtual address `sh`, allowing immediate access without calling `shmat()` again."
+    },
+    {
+      "text": "What is the primary purpose of checking if the return value of `shmget()` or `semget()` is `-1`?",
+      "answers": [
+        "To verify if the kernel ran out of memory, which always returns 0 on success.",
+        "To handle system call failure, as these functions return `-1` on error and set `errno` to indicate the specific issue.",
+        "To check if the segment or set was created by a superuser.",
+        "To confirm that the key was already registered by another process."
+      ],
+      "answerIndex": 1,
+      "explanation": "These System-V IPC creation calls return a valid identifier (a non-negative integer) on success, and return `-1` on failure while setting the global `errno` variable to indicate the nature of the error."
+    }
+  ]
+}
