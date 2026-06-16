@@ -1,179 +1,219 @@
 {
   "questions": [
     {
-      "text": "In a Bash script, how does the shell interpret the variable '$10' compared to '${10}'?",
+      "text": "Ποια είναι η βασική προϋπόθεση ώστε ένας συνδυασμός ταξινομητών (Ensemble) να παρουσιάζει βελτιωμένη απόδοση σε σχέση με τους μεμονωμένους ταξινομητές;",
       "answers": [
-        "They are identical and both refer to the tenth input parameter.",
-        "'$10' is interpreted as the first parameter followed by a literal '0', while '${10}' refers to the tenth parameter.",
-        "'$10' is a syntax error, and only '${10}' is valid for parameters above 9.",
-        "'$10' refers to the tenth parameter, while '${10}' is used only for environment variables."
+        "Οι ταξινομητές πρέπει να είναι πανομοιότυποι και να εκπαιδεύονται στα ίδια δεδομένα.",
+        "Οι ταξινομητές πρέπει να είναι ανεξάρτητοι μεταξύ τους και να έχουν απόδοση καλύτερη από τυχαία πρόβλεψη.",
+        "Οι ταξινομητές πρέπει να είναι όσο το δυνατόν πιο απλοί (π.χ. stumps).",
+        "Οι ταξινομητές πρέπει να έχουν 0% σφάλμα στα δεδομένα εκπαίδευσης."
       ],
       "answerIndex": 1,
-      "explanation": "As shown on slide 4, using $10 results in the value of the first parameter ($1) followed by the character '0'. Curly braces are required to correctly reference positional parameters beyond the ninth ($1 to $9)."
+      "explanation": "Σύμφωνα με το κείμενο, τα Ensembles λειτουργούν καλύτερα όταν οι βασικοί ταξινομητές είναι ανεξάρτητοι και έχουν απόδοση καλύτερη από την τυχαία πρόβλεψη ($p > 0.5$ για δυαδική κατηγοριοποίηση)."
     },
     {
-      "text": "Which of the following describes the behavior of single quotes versus double quotes when used with variables?",
+      "text": "Ποιος είναι ο κύριος στόχος της τεχνικής **Bagging** όσον αφορά τα στατιστικά χαρακτηριστικά ενός μοντέλου;",
       "answers": [
-        "Double quotes treat everything literally, while single quotes allow variable expansion.",
-        "Both single and double quotes allow for variable expansion and command substitution.",
-        "Single quotes deactivate the reference to the value indicated by '$', while double quotes retain the value but help handle spaces.",
-        "Single quotes are used for integers, while double quotes are used for strings."
+        "Η μείωση της μεροληψίας (bias) του μοντέλου.",
+        "Η αύξηση της πολυπλοκότητας των χαρακτηριστικών.",
+        "Η μείωση της διακύμανσης (variance) σε ασταθή μοντέλα.",
+        "Η επιτάχυνση της διαδικασίας εκπαίδευσης."
       ],
       "answerIndex": 2,
-      "explanation": "Slide 5 explains that double quotes help retain multiple spaces while allowing variable expansion, whereas single quotes deactivate the reference to the value indicated by the $ sign, treating the contents literally."
+      "explanation": "Το Bagging χρησιμοποιείται κυρίως για να μειώσει τη διακύμανση μοντέλων που είναι ευαίσθητα σε μικρές αλλαγές των δεδομένων εκπαίδευσης."
     },
     {
-      "text": "What is the significance of the exit status code '0' in Bash scripting?",
+      "text": "Στη μέθοδο **Boosting**, πώς επηρεάζεται η εκπαίδευση του επόμενου ταξινομητή από τους προηγούμενους;",
       "answers": [
-        "It indicates that the script encountered a minor warning.",
-        "It indicates a successful completion of the last command.",
-        "It indicates that a variable is null or empty.",
-        "It indicates an 'unknown program' or 'command not found' error."
+        "Ο επόμενος ταξινομητής εκπαιδεύεται σε ένα εντελώς νέο τυχαίο υποσύνολο χαρακτηριστικών.",
+        "Δίνεται μεγαλύτερο βάρος στα δείγματα που ταξινομήθηκαν λάθος στους προηγούμενους γύρους.",
+        "Ο επόμενος ταξινομητής αγνοεί τα λάθη των προηγούμενων για να διατηρήσει την ανεξαρτησία.",
+        "Τα βάρη των δειγμάτων παραμένουν σταθερά σε όλη τη διάρκεια της διαδικασίας."
       ],
       "answerIndex": 1,
-      "explanation": "According to slide 10, the variable $? returns the exit code of the last command, where a value of 0 signifies successful completion."
+      "explanation": "Στο Boosting, κάθε επόμενος ταξινομητής εστιάζει περισσότερο στα 'δύσκολα' παραδείγματα, δηλαδή σε αυτά που ταξινομήθηκαν εσφαλμένα από τους προηγούμενους."
     },
     {
-      "text": "When using the 'bc' utility, what is the effect of setting 'ibase=16' and then entering '1A'?",
+      "text": "Ποια είναι η ειδοποιός διαφορά μεταξύ ενός **Random Forest** και μιας απλής εφαρμογής Bagging σε Decision Trees;",
       "answers": [
-        "It outputs the decimal value 26.",
-        "It outputs the binary value 00011010.",
-        "It sets the output precision to 16 decimal places.",
-        "It is a syntax error because 'bc' only supports base 10."
+        "Το Random Forest χρησιμοποιεί weighted vote αντί για majority vote.",
+        "Το Random Forest εκπαιδεύει τα δέντρα διαδοχικά (sequentially).",
+        "Στο Random Forest εξετάζεται ένα τυχαίο υποσύνολο χαρακτηριστικών σε κάθε κόμβο για την επιλογή του split.",
+        "Το Random Forest χρησιμοποιεί μόνο κλαδεμένα (pruned) δέντρα."
+      ],
+      "answerIndex": 2,
+      "explanation": "Εκτός από το bootstrap sample, το Random Forest εισάγει επιπλέον τυχαιότητα εξετάζοντας μόνο ένα τυχαίο υποσύνολο χαρακτηριστικών σε κάθε split κάθε δέντρου."
+    },
+    {
+      "text": "Γιατί τα **μη κλαδεμένα (unpruned) decision trees** θεωρούνται καλοί υποψήφιοι για τεχνικές Ensemble;",
+      "answers": [
+        "Επειδή έχουν χαμηλή διακύμανση.",
+        "Επειδή είναι σταθερά μοντέλα.",
+        "Επειδή είναι ευαίσθητα σε μικρές αλλαγές των δεδομένων (υψηλή διακύμανση).",
+        "Επειδή είναι εύκολα στην ερμηνεία ακόμα και σε μεγάλους αριθμούς."
+      ],
+      "answerIndex": 2,
+      "explanation": "Τα Ensembles χρησιμοποιούνται για να μειώσουν τη διακύμανση μοντέλων που είναι ευαίσθητα σε αλλαγές των δεδομένων, όπως τα μη κλαδεμένα δέντρα."
+    },
+    {
+      "text": "Τι ορίζεται ως **Bootstrap Sampling** στη διαδικασία του Bagging;",
+      "answers": [
+        "Η επιλογή των καλύτερων χαρακτηριστικών από το σύνολο δεδομένων.",
+        "Η δειγματοληψία με επανάθεση για τη δημιουργία πολλών διαφορετικών συνόλων εκπαίδευσης.",
+        "Η διαίρεση των δεδομένων σε $k$ ίσα μέρη (folds).",
+        "Η αφαίρεση των outliers πριν την εκπαίδευση."
+      ],
+      "answerIndex": 1,
+      "explanation": "Το bootstrap sampling είναι η διαδικασία δημιουργίας δειγμάτων μέσω δειγματοληψίας με επανάθεση από το αρχικό σύνολο δεδομένων."
+    },
+    {
+      "text": "Πώς προκύπτει η τελική πρόβλεψη σε ένα σύστημα **Boosting**;",
+      "answers": [
+        "Με απλή πλειοψηφία (majority vote).",
+        "Με τη χρήση μόνο του τελευταίου ταξινομητή που εκπαιδεύτηκε.",
+        "Με σταθμισμένη ψηφοφορία (weighted vote), όπου οι καλύτεροι ταξινομητές έχουν μεγαλύτερη επίδραση.",
+        "Με τον υπολογισμό του μέσου όρου των τιμών όλων των δέντρων."
+      ],
+      "answerIndex": 2,
+      "explanation": "Στο Boosting, η τελική πρόβλεψη γίνεται με weighted vote, δίνοντας μεγαλύτερη βαρύτητα στους ταξινομητές με την υψηλότερη απόδοση."
+    },
+    {
+      "text": "Ποιο από τα παρακάτω αποτελεί σημαντικό μειονέκτημα των Ensembles σε σχέση με έναν απλό ταξινομητή;",
+      "answers": [
+        "Η χαμηλή ακρίβεια σε πολύπλοκα δεδομένα.",
+        "Το αυξημένο υπολογιστικό κόστος και η δυσκολία στην ερμηνεία.",
+        "Η αδυναμία διαχείρισης μεγάλων συνόλων δεδομένων.",
+        "Η τάση τους να κάνουν underfitting."
+      ],
+      "answerIndex": 1,
+      "explanation": "Λόγω της εκπαίδευσης πολλών μοντέλων, το υπολογιστικό κόστος είναι υψηλότερο και η 'μαύρη κουτί' φύση τους τα κάνει λιγότερο ερμηνεύσιμα."
+    },
+    {
+      "text": "Στο Random Forest, η τελική κατηγορία προκύπτει με:",
+      "answers": [
+        "Majority vote των δέντρων.",
+        "Weighted vote βάσει του βάθους κάθε δέντρου.",
+        "Επιλογή του δέντρου με το μικρότερο training error.",
+        "Bootstrap aggregation των χαρακτηριστικών."
       ],
       "answerIndex": 0,
-      "explanation": "Slide 14 demonstrates that 'ibase' sets the input base. In hexadecimal (base 16), the value '1A' is equivalent to 26 in decimal."
+      "explanation": "Όπως αναφέρεται στο κείμενο, η τελική κατηγορία στο Random Forest προκύπτει με majority vote (πλειοψηφία) των επιμέρους δέντρων."
     },
     {
-      "text": "Which of the following is the correct syntax for performing multiplication using the 'expr' command?",
-      "answers": ["expr 5 * 3", "expr 5 x 3", "expr 5 \\* 3", "expr (5 * 3)"],
+      "text": "Ποια τεχνική Ensemble επικεντρώνεται στην 'σταδιακή βελτίωση' εκπαιδεύοντας μοντέλα το ένα μετά το άλλο;",
+      "answers": ["Bagging", "Random Forest", "Boosting", "Simple Voting"],
       "answerIndex": 2,
-      "explanation": "Slide 7 notes that when using 'expr', you must escape the asterisk (\\*) because otherwise the shell would interpret it as a wildcard character."
+      "explanation": "Το Boosting εκπαιδεύει διαδοχικά (sequential) πολλούς ταξινομητές, σε αντίθεση με το Bagging όπου οι ταξινομητές μπορούν να εκπαιδευτούν παράλληλα."
     },
     {
-      "text": "How does the Bash numerical construct '(( ))' differ from the C programming language convention regarding truth values?",
+      "text": "Αν ένας βασικός ταξινομητής σε ένα Ensemble έχει απόδοση $50\\%$ (τυχαία επιλογή) σε ένα δυαδικό πρόβλημα, πώς επηρεάζει το Ensemble;",
       "answers": [
-        "Bash '(( ))' returns 1 for TRUE and 0 for FALSE, exactly like C.",
-        "Bash '(( ))' returns an exit code of 0 for TRUE (non-zero results) and 1 for FALSE (zero results).",
-        "Bash '(( ))' cannot evaluate logical comparisons, only basic addition.",
-        "There is no difference; Bash adopts the C convention for all exit codes."
+        "Βελτιώνει σημαντικά την ακρίβεια.",
+        "Δεν προσφέρει καμία ουσιαστική βελτίωση στο σύνολο.",
+        "Μειώνει το υπολογιστικό κόστος.",
+        "Εξαλείφει το overfitting."
       ],
       "answerIndex": 1,
-      "explanation": "Slide 16 states that the construct returns 0 (TRUE) when the value inside evaluates to non-zero, and 1 (FALSE) when it evaluates to zero. This is described as the 'Opposite from C convention' when thinking in terms of Unix exit codes for success."
+      "explanation": "Οι βασικοί ταξινομητές πρέπει να έχουν απόδοση καλύτερη από την τυχαία πρόβλεψη για να είναι αποτελεσματικό το Ensemble."
     },
     {
-      "text": "Which conditional flag is used to check if a specific path exists and is a regular file?",
-      "answers": ["-e", "-d", "-f", "-r"],
+      "text": "Ποιο από τα παρακάτω μοντέλα θα επωφεληθεί περισσότερο από τη χρήση Bagging;",
+      "answers": [
+        "Ένας Linear Regression ταξινομητής με πολύ υψηλή μεροληψία (bias).",
+        "Ένα Neural Network που είναι ευαίσθητο στις αρχικές συνθήκες και τα δεδομένα εκπαίδευσης.",
+        "Ένας Naive Bayes ταξινομητής που παραμένει σταθερός σε αλλαγές δεδομένων.",
+        "Ένας ταξινομητής που προβλέπει πάντα την πλειοψηφούσα κλάση."
+      ],
+      "answerIndex": 1,
+      "explanation": "Το Bagging είναι χρήσιμο για 'ασταθείς' ταξινομητές, όπως τα νευρωνικά δίκτυα, που παρουσιάζουν μεταβολές στην απόδοση με μικρές αλλαγές στα δεδομένα."
+    },
+    {
+      "text": "Ποια είναι η επίδραση των Ensembles στο φαινόμενο του **overfitting**;",
+      "answers": [
+        "Το αυξάνουν, καθώς το μοντέλο γίνεται πολύ πολύπλοκο.",
+        "Δεν έχουν καμία επίδραση στο overfitting.",
+        "Βοηθούν στη μείωσή του, ειδικά σε ασταθή μοντέλα.",
+        "Το εξαλείφουν πλήρως σε κάθε περίπτωση."
+      ],
       "answerIndex": 2,
-      "explanation": "As shown on slide 19, the '-e' flag checks if a file exists, while the '-f' flag specifically checks if it is a 'regular file'."
+      "explanation": "Τα Ensembles βοηθούν στη μείωση του overfitting μειώνοντας τη διακύμανση (variance) του συνολικού μοντέλου."
     },
     {
-      "text": "In a script called with './script.sh a b c d', what would be the value of '$#'?",
-      "answers": ["0", "1", "4", "script.sh"],
-      "answerIndex": 2,
-      "explanation": "Slide 4 explains that $# represents the number of input parameters. In this case, there are four parameters (a, b, c, and d)."
-    },
-    {
-      "text": "Using 'expr substr', what is the result of 'expr substr EnaMegaloString 4 6'?",
-      "answers": ["EnaMeg", "Megalo", "aloStr", "egaloS"],
-      "answerIndex": 1,
-      "explanation": "Slide 7 shows that 'expr substr $string $position $length' extracts a specific number of characters starting from a specific position. Starting at position 4 of 'EnaMegaloString' for 6 characters yields 'Megalo'."
-    },
-    {
-      "text": "When comparing strings inside '[ ]' brackets, what is the purpose of the '\\<' operator?",
+      "text": "Στο Boosting, ένας ταξινομητής που έχει υψηλότερο ποσοστό σφάλματος από τους υπόλοιπους θα λάβει:",
       "answers": [
-        "It checks if the first string is shorter in length than the second.",
-        "It checks if the first string is alphanumerically less than the second.",
-        "It is a redirection operator that sends a string into a file.",
-        "It checks if a string is null."
+        "Μεγαλύτερο βάρος στην τελική ψηφοφορία.",
+        "Μικρότερο βάρος στην τελική ψηφοφορία.",
+        "Το ίδιο βάρος με όλους τους άλλους.",
+        "Θα διαγραφεί αυτόματα από το Ensemble."
       ],
       "answerIndex": 1,
-      "explanation": "Slide 21 identifies '\\<' as the operator for 'alphanumerically less' when performing string comparisons."
+      "explanation": "Στο weighted vote του Boosting, οι καλύτεροι ταξινομητές (αυτοί με το μικρότερο σφάλμα) έχουν μεγαλύτερη επίδραση στο τελικό αποτέλεσμα."
     },
     {
-      "text": "In 'bc', if the 'scale' is set to 0, what is the result of the calculation '19/3'?",
-      "answers": ["6.3333", "6.33", "6", "7"],
-      "answerIndex": 2,
-      "explanation": "Slide 13 shows that when 'scale=0', 'bc' performs integer division and truncates the remainder. Therefore, 19/3 equals 6."
-    },
-    {
-      "text": "Which operator is used for a logical 'OR' within a single '[ ]' test construct?",
-      "answers": ["-and", "||", "|", "-o"],
-      "answerIndex": 3,
-      "explanation": "Slide 22 indicates that '-o' represents the Logical OR within a conditional expression block."
-    },
-    {
-      "text": "Why would the assignment 'a = 2334' fail in a Bash script?",
+      "text": "Στο Random Forest, η τυχαία επιλογή χαρακτηριστικών (features) γίνεται:",
       "answers": [
-        "Variables must be declared with a keyword like 'int'.",
-        "Spaces are not allowed immediately before or after the '=' in assignments.",
-        "The value must be enclosed in double quotes.",
-        "Variables in Bash cannot hold numeric values."
+        "Μία φορά στην αρχή για όλα τα δέντρα.",
+        "Σε κάθε κόμβο (node) κάθε δέντρου ξεχωριστά.",
+        "Μόνο στις ρίζες (root nodes) των δέντρων.",
+        "Μετά την ολοκλήρωση της εκπαίδευσης των δέντρων."
       ],
       "answerIndex": 1,
-      "explanation": "Slide 5 explicitly states: 'Never use spaces immediately before or after = in assignments'."
+      "explanation": "Σε κάθε κόμβο του δέντρου στο Random Forest εξετάζεται ένα τυχαίο υποσύνολο χαρακτηριστικών για την επιλογή του καλύτερου split."
     },
     {
-      "text": "What is the exit status ($?) of the command '(( 5 - 5 ))'?",
-      "answers": ["0", "1", "5", "127"],
-      "answerIndex": 1,
-      "explanation": "Slide 17 and 18 show that since 5 - 5 equals 0, the exit status is 1 (FALSE/Failure) because Bash '(( ))' returns 0 for non-zero results and 1 for zero results."
-    },
-    {
-      "text": "In the Bash 'case' statement, what characters are used to terminate each pattern's list of statements?",
-      "answers": ["fi", "esac", ";;", "::"],
-      "answerIndex": 2,
-      "explanation": "The syntax diagrams on slide 24 show that each conditional block in a 'case' statement ends with ';;'."
-    },
-    {
-      "text": "If 'obase=2' is set in 'bc', what is the output for the decimal number 5?",
-      "answers": ["10", "101", "111", "5"],
-      "answerIndex": 1,
-      "explanation": "Slide 15 shows that 'obase' sets the output base. Decimal 5 in binary (base 2) is 101."
-    },
-    {
-      "text": "What does the syntax '>& /dev/null' accomplish in a script command like 'cd /dada >& /dev/null'?",
+      "text": "Ποιος είναι ο ρόλος της 'διακύμανσης' (variance) στα Ensembles;",
       "answers": [
-        "It redirects both standard output and standard error to /dev/null, hiding all output.",
-        "It only redirects standard error, while standard output is still shown.",
-        "It saves the error message into a variable named /dev/null.",
-        "It forces the 'cd' command to succeed even if the directory doesn't exist."
-      ],
-      "answerIndex": 0,
-      "explanation": "As seen on slide 11, this syntax is used to suppress both stdout and stderr, preventing any error messages from being displayed to the user if the directory 'dada' does not exist."
-    },
-    {
-      "text": "Which of the following 'if' conditions is functionally equivalent to the numerical test '(( a > b ))'?",
-      "answers": [
-        "[ \"$a\" -gt \"$b\" ]",
-        "[ \"$a\" > \"$b\" ]",
-        "[ \"$a\" -ge \"$b\" ]",
-        "[ \"$a\" == \"$b\" ]"
-      ],
-      "answerIndex": 0,
-      "explanation": "Slide 20 provides a table showing that the integer comparison '-gt' (greater than) inside '[ ]' is the equivalent of the '>' symbol used inside '(( ))'."
-    },
-    {
-      "text": "What is the primary function of the shebang (#! /bin/bash) at the top of a shell script?",
-      "answers": [
-        "It acts as a comment to describe the script's purpose.",
-        "It tells the operating system which shell interpreter to use to execute the script.",
-        "It initializes all variables to zero.",
-        "It sets the file permissions to executable automatically."
+        "Τα Ensembles αυξάνουν τη διακύμανση για να εξερευνήσουν περισσότερες λύσεις.",
+        "Τα Ensembles προσπαθούν να μειώσουν τη διακύμανση που προέρχεται από ασταθή μοντέλα.",
+        "Η διακύμανση πρέπει να είναι μηδενική για να ξεκινήσει η εκπαίδευση.",
+        "Η διακύμανση επηρεάζει μόνο το Boosting και όχι το Bagging."
       ],
       "answerIndex": 1,
-      "explanation": "Slide 2 explains that the 'first line says which shell is to be used (here is bash)'."
+      "explanation": "Η μείωση της διακύμανσης είναι ένας από τους κύριους λόγους χρήσης Ensembles (ειδικά του Bagging)."
     },
     {
-      "text": "How can you perform decimal inequality tests in Bash if the language only supports integer arithmetic?",
+      "text": "Ποιο από τα παρακάτω είναι πλεονέκτημα των Ensembles;",
       "answers": [
-        "By using the 'let' command with the '--decimal' flag.",
-        "By piping an 'echo' command with the inequality into 'bc'.",
-        "By using double brackets '[[ ]]' which natively support floating point numbers.",
-        "Bash cannot perform decimal inequality tests."
+        "Η απλότητα στην υλοποίηση και ο γρήγορος χρόνος εκπαίδευσης.",
+        "Η βελτίωση της ακρίβειας σε σχέση με έναν μόνο ταξινομητή.",
+        "Η δυνατότητα εύκολης οπτικοποίησης των κανόνων απόφασης.",
+        "Η απαίτηση λιγότερων δεδομένων εκπαίδευσης."
       ],
       "answerIndex": 1,
-      "explanation": "Slide 9 demonstrates that you can perform inequality tests for decimals by echoing the expression (e.g., 'A - B > 0') and piping it into 'bc', which returns 1 for true and 0 for false."
+      "explanation": "Το κύριο πλεονέκτημα είναι η βελτίωση της ακρίβειας (accuracy) μέσω του συνδυασμού πολλαπλών μοντέλων."
+    },
+    {
+      "text": "Η μέθοδος **Bagging** είναι ακρωνύμιο των λέξεων:",
+      "answers": [
+        "Boosted Aggregation",
+        "Bootstrap Aggregation",
+        "Balanced Aggregation",
+        "Binary Aggregation"
+      ],
+      "answerIndex": 1,
+      "explanation": "Το Bagging προέρχεται από το Bootstrap Aggregating."
+    },
+    {
+      "text": "Σε ένα Ensemble, αν οι βασικοί ταξινομητές είναι πλήρως εξαρτημένοι (correlated) μεταξύ τους, τότε:",
+      "answers": [
+        "Η απόδοση του Ensemble θα είναι μέγιστη.",
+        "Το Ensemble δεν θα προσφέρει καμία βελτίωση σε σχέση με έναν μεμονωμένο ταξινομητή.",
+        "Η διακύμανση θα μειωθεί στο ελάχιστο.",
+        "Το υπολογιστικό κόστος θα μειωθεί."
+      ],
+      "answerIndex": 1,
+      "explanation": "Η ανεξαρτησία είναι κρίσιμη· αν όλοι οι ταξινομητές κάνουν τα ίδια λάθη, ο συνδυασμός τους δεν βελτιώνει το αποτέλεσμα."
+    },
+    {
+      "text": "Τι είδους 'ψηφοφορία' χρησιμοποιείται συνήθως στο Bagging;",
+      "answers": [
+        "Weighted majority vote",
+        "Simple majority vote",
+        "Rank-based voting",
+        "Stochastic voting"
+      ],
+      "answerIndex": 1,
+      "explanation": "Στο Bagging, η τελική πρόβλεψη γίνεται συνήθως με απλή πλειοψηφία (majority vote) των βασικών ταξινομητών."
     }
   ]
 }

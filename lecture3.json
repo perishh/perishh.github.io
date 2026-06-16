@@ -1,204 +1,319 @@
 {
   "questions": [
     {
-      "text": "In the C Shell (csh), if the 'noclobber' variable is set, which command must be used to overwrite an existing file named 'filea'?",
+      "text": "Ποια είναι η χρονική πολυπλοκότητα του αλγορίθμου DBSCAN στη χειρότερη περίπτωση, όπου $m$ είναι το πλήθος των σημείων;",
+      "answers": ["$O(m \\cdot \\log m)$", "$O(m^2)$", "$O(m)$", "$O(1)$"],
+      "answerIndex": 1,
+      "explanation": "Σύμφωνα με το κείμενο, η χρονική πολυπλοκότητα στη χειρότερη περίπτωση είναι $O(m^2)$."
+    },
+    {
+      "text": "Ποιο από τα παρακάτω ισχύει για τα σημεία ορίου (border points) στον DBSCAN;",
       "answers": [
-        "date > filea",
-        "date >> filea",
-        "date >! filea",
-        "date &> filea"
+        "Είναι σημεία που έχουν αρκετά σημεία στη γειτονιά τους ώστε να είναι πυρήνες.",
+        "Είναι σημεία που δεν είναι πυρήνες αλλά βρίσκονται κοντά σε σημείο πυρήνα.",
+        "Είναι σημεία που αγνοούνται εντελώς από τον αλγόριθμο.",
+        "Είναι σημεία που βρίσκονται πάντα σε περιοχές χαμηλής πυκνότητας μακριά από πυρήνες."
+      ],
+      "answerIndex": 1,
+      "explanation": "Σύμφωνα με τον ορισμό, το σημείο ορίου δεν είναι πυρήνας, αλλά βρίσκεται κοντά σε σημείο πυρήνα."
+    },
+    {
+      "text": "Πώς υπολογίζεται η πυκνότητα γύρω από ένα σημείο στον DBSCAN;",
+      "answers": [
+        "Μετρώντας τα σημεία στην ακτίνα Eps, εξαιρουμένου του ίδιου του σημείου.",
+        "Μετρώντας τα σημεία στην ακτίνα Eps, συμπεριλαμβανομένου του ίδιου του σημείου.",
+        "Υπολογίζοντας τη μέση απόσταση από τα $k$ κοντινότερα σημεία.",
+        "Υπολογίζοντας τη διασπορά των σημείων στο χώρο."
+      ],
+      "answerIndex": 1,
+      "explanation": "Η πυκνότητα υπολογίζεται μετρώντας πόσα σημεία βρίσκονται μέσα σε ακτίνα Eps από αυτό, συμπεριλαμβανομένου και του ίδιου του σημείου."
+    },
+    {
+      "text": "Σε χώρους μικρών διαστάσεων, ποια δομή μπορεί να μειώσει τη χρονική πολυπλοκότητα του DBSCAN σε $O(m \\cdot \\log m)$;",
+      "answers": ["Hash tables", "B-trees", "KD-trees", "Linked lists"],
+      "answerIndex": 2,
+      "explanation": "Η χρήση ειδικών δομών όπως KD-trees μπορεί να μειώσει τη χρονική πολυπλοκότητα σε $O(m \\cdot \\log m)$."
+    },
+    {
+      "text": "Ποιος είναι ο κύριος περιορισμός του Perceptron;",
+      "answers": [
+        "Δεν μπορεί να εκπαιδευτεί με gradient descent.",
+        "Είναι υπολογιστικά πολύ αργό στην κατηγοριοποίηση.",
+        "Δεν μπορεί να λύσει προβλήματα που δεν είναι γραμμικά διαχωρίσιμα.",
+        "Απαιτεί υπερβολικά μεγάλη μνήμη."
       ],
       "answerIndex": 2,
-      "explanation": "According to the 'csh redirection' slide, when noclobber is on, the shell prevents overwriting files with '>'. The '>!' operator is used to force the redirection and overwrite the file."
+      "explanation": "Το Perceptron μαθαίνει γραμμικά όρια απόφασης και δεν μπορεί να λύσει προβλήματα που δεν είναι γραμμικά διαχωρίσιμα."
     },
     {
-      "text": "Based on the 'Append type redirection' slide, what is the result of executing 'cat c_file >> a_file' if both files already contain data?",
+      "text": "Ποια είναι η λειτουργία των κρυφών επιπέδων σε ένα πολυεπίπεδο νευρωνικό δίκτυο;",
       "answers": [
-        "The contents of a_file are replaced by the contents of c_file.",
-        "The contents of c_file are appended to the end of a_file.",
-        "A new file is created containing data from both.",
-        "An error 'File exists' is returned."
+        "Λειτουργούν ως επίπεδα εισόδου για τον θόρυβο.",
+        "Λειτουργούν σαν εξαγωγή χαρακτηριστικών από τα δεδομένα.",
+        "Χρησιμοποιούνται μόνο για την αποθήκευση των βαρών χωρίς υπολογισμούς.",
+        "Μειώνουν τη μη γραμμικότητα του συστήματος."
       ],
       "answerIndex": 1,
-      "explanation": "The '>>' operator is the append operator. The example shows that after executing the command, 'cat a_file' displays its original timestamp followed by the timestamp appended from c_file."
+      "explanation": "Τα κρυφά επίπεδα λειτουργούν σαν εξαγωγή χαρακτηριστικών από τα δεδομένα."
     },
     {
-      "text": "In the C program example for 'inout-redir', why does the word 'Guillermo' appear 6 times on a single line in the output?",
+      "text": "Ποιος αλγόριθμος χρησιμοποιείται στα πολυεπίπεδα νευρωνικά δίκτυα για τον υπολογισμό της επίδρασης του σφάλματος στα βάρη;",
       "answers": [
-        "Because the for loop runs 6 times.",
-        "Because there are two different print statements (fprintf and write) inside a loop that runs 3 times.",
-        "Because the fflush command duplicates the buffer.",
-        "Because the sleep(1) command causes the system to retry the print operation."
+        "Forward propagation",
+        "Gradient descent",
+        "Backpropagation",
+        "K-means"
+      ],
+      "answerIndex": 2,
+      "explanation": "Στα πολυεπίπεδα δίκτυα χρησιμοποιείται το backpropagation για να υπολογιστεί πώς το σφάλμα επηρεάζει τα βάρη κάθε επιπέδου."
+    },
+    {
+      "text": "Ποιο από τα παρακάτω αποτελεί μειονέκτημα των Νευρωνικών Δικτύων;",
+      "answers": [
+        "Αργή κατηγοριοποίηση μετά την εκπαίδευση.",
+        "Αδυναμία χειρισμού πολλών χαρακτηριστικών.",
+        "Πιθανότητα σύγκλισης σε τοπικό ελάχιστο.",
+        "Αδυναμία μάθησης μη γραμμικών σχέσεων."
+      ],
+      "answerIndex": 2,
+      "explanation": "Ένα από τα μειονεκτήματα είναι ότι η εκπαίδευση μπορεί να συγκλίνει σε τοπικό ελάχιστο."
+    },
+    {
+      "text": "Τι ορίζουμε ως 'support vectors' στον αλγόριθμο SVM;",
+      "answers": [
+        "Όλα τα σημεία που ανήκουν στην ίδια συστάδα.",
+        "Τα σημεία που βρίσκονται πιο μακριά από το υπερεπίπεδο απόφασης.",
+        "Τα κοντινότερα σημεία των κατηγοριών που καθορίζουν το τελικό όριο απόφασης.",
+        "Τα βάρη των ακμών σε ένα νευρωνικό δίκτυο."
+      ],
+      "answerIndex": 2,
+      "explanation": "Τα support vectors είναι τα κοντινότερα σημεία των κατηγοριών και καθορίζουν το τελικό όριο απόφασης."
+    },
+    {
+      "text": "Γιατί ο SVM θεωρείται ότι έχει καλή γενίκευση;",
+      "answers": [
+        "Επειδή χρησιμοποιεί τυχαία βάρη.",
+        "Επειδή μεγιστοποιεί το περιθώριο (margin).",
+        "Επειδή βασίζεται στους μέσους όρους των κατηγοριών.",
+        "Επειδή είναι πιο γρήγορος στην εκπαίδευση από τον DBSCAN."
       ],
       "answerIndex": 1,
-      "explanation": "Inside the for loop (which iterates 3 times), both 'fprintf(stdout, ...)' and 'write(1, ...)' are called. This results in 2 prints per iteration, totaling 6 prints of the name before the newline and '!' are printed."
+      "explanation": "Το SVM έχει καλή γενίκευση επειδή μεγιστοποιεί το περιθώριο."
     },
     {
-      "text": "Which command correctly sends standard output (stdout) to 'out.log' and standard error (stderr) to 'err.log' simultaneously?",
+      "text": "Τι επιτυγχάνεται με τη χρήση του 'kernel trick' στον SVM;",
       "answers": [
-        "./inout-redir > out.log > err.log",
-        "./inout-redir 1> out.log 2> err.log",
-        "./inout-redir &> out.log err.log",
-        "./inout-redir >& out.log 2> err.log"
+        "Μείωση του αριθμού των support vectors.",
+        "Γραμμικός διαχωρισμός σε χώρο μικρότερων διαστάσεων.",
+        "Έμμεσος μετασχηματισμός των δεδομένων σε χώρο μεγαλύτερων διαστάσεων.",
+        "Αποφυγή της υπερπροσαρμογής μέσω διαγραφής δεδομένων."
+      ],
+      "answerIndex": 2,
+      "explanation": "Με το kernel trick, τα δεδομένα μετασχηματίζονται έμμεσα σε χώρο μεγαλύτερων διαστάσεων για την επίλυση μη γραμμικών προβλημάτων."
+    },
+    {
+      "text": "Ποιος είναι ο στόχος της μεθόδου του Fisher;",
+      "answers": [
+        "Η εύρεση περιοχών υψηλής πυκνότητας.",
+        "Η μεγιστοποίηση της απόστασης των μέσων όρων και η ελαχιστοποίηση της διασποράς εντός των κατηγοριών.",
+        "Η εύρεση του υπερεπιπέδου που μεγιστοποιεί το περιθώριο μεταξύ support vectors.",
+        "Η ελαχιστοποίηση του αριθμού των κρυφών επιπέδων."
       ],
       "answerIndex": 1,
-      "explanation": "As shown in the 'Directing stdout and stderr' slide, '1>' specifically redirects file descriptor 1 (stdout) and '2>' redirects file descriptor 2 (stderr)."
+      "explanation": "Ο Fisher μεγιστοποιεί τη διαφορά μεταξύ των κατηγοριών (μέσοι όροι) και ελαχιστοποιεί τη διασπορά μέσα σε κάθε κατηγορία."
     },
     {
-      "text": "In the context of 'Some More Redirection', which of the following is NOT shown as a valid way to send both output and errors to a single file named 'allout'?",
+      "text": "Ποια είναι η βασική διαφορά μεταξύ SVM και Fisher όσον αφορά το κριτήριο διαχωρισμού;",
       "answers": [
-        "./inout-redir >& allout",
-        "./inout-redir &> allout",
-        "./inout-redir > allout 2>&1",
-        "./inout-redir | allout"
-      ],
-      "answerIndex": 3,
-      "explanation": "The slides demonstrate '>&', '&>', and '> allout 2>&1' as valid methods. The pipe symbol '|' is used for connecting commands, not for direct file redirection."
-    },
-    {
-      "text": "When using a sequence of commands separated by semicolons (e.g., 'mkdir mydir; cd mydir'), what happens to the shell's working directory after the sequence finishes?",
-      "answers": [
-        "The shell remains in the original directory.",
-        "The shell remains in the last directory specified by the 'cd' command.",
-        "The shell resets to the home directory.",
-        "The shell prompts the user to choose a directory."
+        "Ο Fisher βασίζεται σε support vectors, ενώ ο SVM σε μέσους όρους.",
+        "Ο SVM βασίζεται σε support vectors, ενώ ο Fisher σε μέσους όρους και διασπορά.",
+        "Ο SVM είναι γραμμική μέθοδος, ενώ ο Fisher είναι πάντα μη γραμμική.",
+        "Δεν υπάρχει καμία διαφορά."
       ],
       "answerIndex": 1,
-      "explanation": "Slide 52 (OCR page 7) shows that using semicolons results in the shell staying in the new directory. It is the 'grouping' of commands using parentheses '(...)' that leaves the shell in the original directory."
+      "explanation": "Ο Fisher βρίσκει προβολή με βάση μέσους όρους/διασπορά, ενώ ο SVM βασίζεται στα support vectors."
     },
     {
-      "text": "If the current 'umask' is set to '077', what will be the permissions of a newly created directory?",
-      "answers": ["drwxrwxrwx", "drwx------", "drwxr-xr-x", "d---------"],
-      "answerIndex": 1,
-      "explanation": "A umask of 077 removes all permissions (read, write, execute) for the group and others. Since the default for a directory is 777, 777 - 077 = 700 (drwx------)."
-    },
-    {
-      "text": "What does the metacharacter pattern '*[a-z][uz][b-z]*' match in the provided examples?",
+      "text": "Στον DBSCAN, τι συμβαίνει με τα σημεία θορύβου;",
       "answers": [
-        "Any file ending with a letter, followed by 'u' or 'z', followed by any number of characters starting with 'b' to 'z'.",
-        "Only files named 'uz'.",
-        "Any file that contains exactly three characters.",
-        "Files that match 'my1out', 'out1', and 'zzz'."
+        "Ενσωματώνονται στην πλησιέστερη συστάδα.",
+        "Δημιουργούν μια δική τους ξεχωριστή συστάδα υψηλής πυκνότητας.",
+        "Αγνοούνται.",
+        "Μετατρέπονται σε σημεία πυρήνα μετά από μερικές επαναλήψεις."
+      ],
+      "answerIndex": 2,
+      "explanation": "Στον DBSCAN, τα σημεία θορύβου αγνοούνται."
+    },
+    {
+      "text": "Ποια είναι η πολυπλοκότητα χώρου του DBSCAN;",
+      "answers": ["$O(1)$", "$O(m)$", "$O(m^2)$", "$O(\\log m)$"],
+      "answerIndex": 1,
+      "explanation": "Η πολυπλοκότητα χώρου είναι $O(m)$."
+    },
+    {
+      "text": "Ποιο κριτήριο χρησιμοποιείται για τον τερματισμό της εκπαίδευσης ενός νευρωνικού δικτύου;",
+      "answers": [
+        "Όταν τα βάρη γίνουν μηδενικά.",
+        "Όταν το σφάλμα δεν αλλάζει σημαντικά.",
+        "Όταν το δίκτυο φτάσει το μέγιστο αριθμό κρυφών επιπέδων.",
+        "Όταν ο αριθμός των support vectors σταθεροποιηθεί."
+      ],
+      "answerIndex": 1,
+      "explanation": "Η διαδικασία επαναλαμβάνεται μέχρι να ικανοποιηθεί κάποιο κριτήριο τερματισμού, όπως όταν το σφάλμα δεν αλλάζει σημαντικά."
+    },
+    {
+      "text": "Πώς αντιμετωπίζει ο SVM δεδομένα που δεν είναι γραμμικά διαχωρίσιμα χωρίς τη χρήση kernels;",
+      "answers": [
+        "Με τη χρήση slack variables.",
+        "Με την αύξηση της ακτίνας Eps.",
+        "Με τη χρήση KD-trees.",
+        "Δεν μπορεί να τα αντιμετωπίσει καθόλου."
       ],
       "answerIndex": 0,
-      "explanation": "As seen in the 'Metacharacter-Examples' slide, the command 'ls *[a-z][uz][b-z]*' matches and returns 'my1out', 'out1', and 'zzz'."
+      "explanation": "Αν τα δεδομένα δεν είναι γραμμικά διαχωρίσιμα, μπορούν να χρησιμοποιηθούν slack variables ώστε να επιτρέπονται κάποια λάθη."
     },
     {
-      "text": "According to the 'Variables' classification, which type of variable is used specifically to configure the system environment, such as determining which text editor is used for history files?",
+      "text": "Ποιο από τα παρακάτω αποτελεί πλεονέκτημα του SVM έναντι των Νευρωνικών Δικτύων;",
       "answers": [
-        "Shell Variables",
-        "User-Defined Variables",
-        "Environment Variables",
-        "Local Variables"
+        "Βρίσκει ολικό βέλτιστο (λόγω κυρτής βελτιστοποίησης) αντί για τοπικό ελάχιστο.",
+        "Είναι πολύ πιο γρήγορο στην εκπαίδευση.",
+        "Δεν απαιτεί προεπεξεργασία για ελλιπείς τιμές.",
+        "Δεν απαιτεί επιλογή παραμέτρων."
+      ],
+      "answerIndex": 0,
+      "explanation": "Ο SVM λύνει πρόβλημα κυρτής βελτιστοποίησης, άρα βρίσκει ολικό βέλτιστο και όχι τοπικό ελάχιστο."
+    },
+    {
+      "text": "Τι συμβαίνει όταν δύο σημεία πυρήνα στον DBSCAN βρίσκονται εντός ακτίνας Eps;",
+      "answers": [
+        "Το ένα διαγράφεται ως θόρυβος.",
+        "Τοποθετούνται στην ίδια συστάδα.",
+        "Δημιουργούν δύο διαφορετικές συστάδες που απωθούνται.",
+        "Απαιτείται επανεκκίνηση του αλγορίθμου."
+      ],
+      "answerIndex": 1,
+      "explanation": "Δύο σημεία πυρήνα που βρίσκονται εντός ακτίνας Eps τοποθετούνται στην ίδια συστάδα."
+    },
+    {
+      "text": "Σε τι είναι ευαίσθητα τα Νευρωνικά Δίκτυα σύμφωνα με το κείμενο;",
+      "answers": [
+        "Στη μεγιστοποίηση του περιθωρίου.",
+        "Στο θόρυβο και στις ελλιπείς τιμές χαρακτηριστικών.",
+        "Μόνο σε γραμμικά διαχωρίσιμα δεδομένα.",
+        "Στη χρήση KD-trees."
+      ],
+      "answerIndex": 1,
+      "explanation": "Τα Νευρωνικά Δίκτυα είναι ευαίσθητα στον θόρυβο και δυσκολεύονται με ελλιπείς τιμές χαρακτηριστικών."
+    },
+    {
+      "text": "Ποια είναι η βασική προϋπόθεση για να μάθει ένα νευρωνικό δίκτυο μη γραμμικά όρια απόφασης;",
+      "answers": [
+        "Να μην έχει καθόλου βάρη.",
+        "Να έχει τουλάχιστον ένα κρυφό επίπεδο.",
+        "Να χρησιμοποιεί μόνο Perceptron.",
+        "Να έχει μόνο επίπεδο εισόδου."
+      ],
+      "answerIndex": 1,
+      "explanation": "Με τουλάχιστον ένα κρυφό επίπεδο, τα νευρωνικά δίκτυα μπορούν να μάθουν μη γραμμικά όρια απόφασης."
+    },
+    {
+      "text": "Ποιο είναι ένα από τα μειονεκτήματα του SVM;",
+      "answers": [
+        "Η κατηγοριοποίηση είναι πολύ αργή.",
+        "Δυσκολεύεται με ελλιπείς τιμές ή κατηγορικά χαρακτηριστικά χωρίς προεπεξεργασία.",
+        "Δεν μπορεί να χειριστεί μη γραμμικά προβλήματα με kernels.",
+        "Βρίσκει πάντα τοπικά ελάχιστα."
+      ],
+      "answerIndex": 1,
+      "explanation": "Σύμφωνα με το κείμενο, ο SVM μπορεί να δυσκολευτεί με ελλιπείς τιμές ή κατηγορικά χαρακτηριστικά αν δεν γίνει κατάλληλη προεπεξεργασία."
+    },
+    {
+      "text": "Στον Fisher, τι προσπαθούμε να ελαχιστοποιήσουμε;",
+      "answers": [
+        "Την απόσταση των μέσων όρων των κατηγοριών.",
+        "Τη διασπορά μέσα σε κάθε κατηγορία.",
+        "Τον αριθμό των support vectors.",
+        "Την ακτίνα Eps."
+      ],
+      "answerIndex": 1,
+      "explanation": "Ο Fisher στοχεύει στο να ελαχιστοποιήσει τη διασπορά μέσα σε κάθε κατηγορία (intra-class variance)."
+    },
+    {
+      "text": "Ποια μέθοδος θεωρείται 'πιο ευέλικτη' για μη γραμμικά προβλήματα σύμφωνα με τη σύγκριση SVM και Fisher;",
+      "answers": [
+        "Η μέθοδος Fisher.",
+        "Ο SVM λόγω της χρήσης kernels.",
+        "Ο DBSCAN λόγω των KD-trees.",
+        "Το Perceptron."
+      ],
+      "answerIndex": 1,
+      "explanation": "Ο SVM είναι πιο ευέλικτος γιατί με kernels μπορεί να χειριστεί και μη γραμμικά προβλήματα."
+    },
+    {
+      "text": "Ποιο είναι το αποτέλεσμα της υπερπροσαρμογής (overfitting) στα Νευρωνικά Δίκτυα;",
+      "answers": [
+        "Το δίκτυο μαθαίνει τέλεια τις γενικές σχέσεις αλλά όχι τα δεδομένα εκπαίδευσης.",
+        "Το δίκτυο προσαρμόζεται υπερβολικά στα δεδομένα εκπαίδευσης και χάνει σε γενίκευση.",
+        "Το δίκτυο σταματά να εκπαιδεύεται λόγω χαμηλού σφάλματος.",
+        "Το δίκτυο γίνεται γραμμικό."
+      ],
+      "answerIndex": 1,
+      "explanation": "Η υπερπροσαρμογή συμβαίνει ειδικά αν το δίκτυο είναι πολύ μεγάλο, κάνοντάς το να προσαρμόζεται υπερβολικά στα δεδομένα εκπαίδευσης."
+    },
+    {
+      "text": "Ποιο από τα παρακάτω ισχύει για την εκπαίδευση των Νευρωνικών Δικτύων;",
+      "answers": [
+        "Είναι υπολογιστικά ελαφριά διαδικασία.",
+        "Είναι υπολογιστικά απαιτητική διαδικασία.",
+        "Γίνεται πάντα σε ένα μόνο βήμα.",
+        "Δεν απαιτεί συνάρτηση σφάλματος."
+      ],
+      "answerIndex": 1,
+      "explanation": "Σύμφωνα με το κείμενο, η εκπαίδευση των νευρωνικών δικτύων είναι υπολογιστικά απαιτητική."
+    },
+    {
+      "text": "Τι καθορίζει τη δύναμη της σύνδεσης μεταξύ δύο κόμβων σε ένα νευρωνικό δίκτυο;",
+      "answers": [
+        "Η ακτίνα Eps.",
+        "Το βάρος της ακμής.",
+        "Ο αριθμός των support vectors.",
+        "Η διασπορά του Fisher."
+      ],
+      "answerIndex": 1,
+      "explanation": "Το βάρος κάθε ακμής δείχνει τη δύναμη της σύνδεσης."
+    },
+    {
+      "text": "Στον SVM, αν υπάρχουν πολλά πιθανά υπερεπίπεδα, ποιο επιλέγεται;",
+      "answers": [
+        "Αυτό που περνάει από τους μέσους όρους.",
+        "Αυτό που ελαχιστοποιεί την απόσταση από τα support vectors.",
+        "Αυτό που μεγιστοποιεί το περιθώριο (margin).",
+        "Αυτό που έχει τα λιγότερα slack variables."
       ],
       "answerIndex": 2,
-      "explanation": "The slide on Variables (OCR page 11) states that Environment Variables are used to configure the environment, specifically mentioning a system variable that determines the editor."
+      "explanation": "Ο SVM επιλέγει το υπερεπίπεδο που μεγιστοποιεί το περιθώριο."
     },
     {
-      "text": "In csh, how do you correctly assign the value 'antoulas' to the environment variable 'ALEX'?",
+      "text": "Πώς ορίζεται το σημείο πυρήνα στον DBSCAN;",
       "answers": [
-        "ALEX=antoulas",
-        "set ALEX = antoulas",
-        "setenv ALEX antoulas",
-        "export ALEX=antoulas"
-      ],
-      "answerIndex": 2,
-      "explanation": "Slide 57 (OCR page 12) demonstrates using 'setenv ALEX antoulas' to set an environment variable in the C shell."
-    },
-    {
-      "text": "How do you reference the value of a user-defined variable named 'MYVAR' in bash?",
-      "answers": ["MYVAR", "&MYVAR", "$MYVAR", "#MYVAR"],
-      "answerIndex": 2,
-      "explanation": "As shown in the bash variable slide, 'echo MYVAR' just prints the string, while 'echo $MYVAR' prints the stored value (e.g., 'alexis')."
-    },
-    {
-      "text": "In the bash history example, what does the command '!511' do?",
-      "answers": [
-        "Deletes the 511th command in history.",
-        "Repeats the 511th command in the history list.",
-        "Saves the history to a file named 511.",
-        "Searches for '511' in all files."
+        "Ένα σημείο που δεν έχει κανένα γείτονα.",
+        "Ένα σημείο που έχει αρκετά σημεία στη γειτονιά του.",
+        "Ένα σημείο που είναι πάντα θόρυβος.",
+        "Το σημείο που βρίσκεται στο κέντρο βάρους όλων των δεδομένων."
       ],
       "answerIndex": 1,
-      "explanation": "The History in bash slide shows that '!511' executes the command 'ls -la *tex' because that was the command associated with index 511 in the history list."
+      "explanation": "Σημείο πυρήνα είναι ένα σημείο που έχει αρκετά σημεία στη γειτονιά του."
     },
     {
-      "text": "Which command is used to display a list of all current jobs and their status (Running, Stopped, etc.) in the background or suspended?",
-      "answers": ["ps", "top", "jobs", "bg"],
-      "answerIndex": 2,
-      "explanation": "The 'Process Management' and 'Working with bg and fg' slides show 'jobs' being used to display interrupted or backgrounded processes."
-    },
-    {
-      "text": "In the 'jobs' command output, what does the '+' symbol next to a job number signify?",
+      "text": "Ποιο από τα παρακάτω είναι πλεονέκτημα των Νευρωνικών Δικτύων;",
       "answers": [
-        "The job has been terminated.",
-        "The job is the most recently backgrounded or stopped job (current job).",
-        "The job has a high CPU priority.",
-        "The job is a system-level process."
+        "Γρήγορη κατηγοριοποίηση μετά την εκπαίδευση.",
+        "Εύκολος χειρισμός ελλιπών τιμών.",
+        "Ανοσία στην υπερπροσαρμογή.",
+        "Εγγύηση εύρεσης ολικού ελαχίστου."
       ],
-      "answerIndex": 1,
-      "explanation": "The slide 'Dealing with Multiple Jobs' shows '+' and '-' symbols. In standard shell behavior (implied by the sequence of 'fg' commands), the '+' indicates the default job that 'fg' or 'bg' would act upon if no ID is specified."
-    },
-    {
-      "text": "Which command allows you to view the contents of a compressed '.tar.gz' file without actually decompressing it on the disk?",
-      "answers": ["gunzip", "zcat", "tar -x", "cat"],
-      "answerIndex": 1,
-      "explanation": "The slide on decompression (OCR page 22) specifies that 'zcat' does not alter the structure of the compressed file, allowing its contents to be piped to 'tar xv'."
-    },
-    {
-      "text": "What is the function of the 'tr -d '[i-l]s'' command as shown in the examples?",
-      "answers": [
-        "It translates characters 'i' through 'l' into 's'.",
-        "It deletes all occurrences of characters in the range 'i' to 'l' as well as the character 's'.",
-        "It deletes only the string '[i-l]s' from the file.",
-        "It searches for 'i', 'l', and 's' and replaces them with spaces."
-      ],
-      "answerIndex": 1,
-      "explanation": "The '-d' flag in 'tr' stands for delete. The pattern '[i-l]s' specifies a range (i, j, k, l) and the character 's'. The output on the slide shows these characters have been removed."
-    },
-    {
-      "text": "Which 'find' command would locate all files in the current directory ending in '.tex' and execute an 'ls -l' on each of them?",
-      "answers": [
-        "find . -name '*.tex' -print",
-        "find . -type f -name '*.tex' -exec ls -l '{}' \\;",
-        "find . -ls -name '*.tex'",
-        "find . -perm 664 -exec ls -l"
-      ],
-      "answerIndex": 1,
-      "explanation": "Slide 71 (OCR page 26) shows the syntax: 'find . -type f -name '*tex' -exec ls -l '{}' \\;'."
-    },
-    {
-      "text": "What does the Makefile variable '$@' represent?",
-      "answers": [
-        "The first dependency of the rule.",
-        "The current list of prerequisites.",
-        "The current target of the rule.",
-        "The compiler command (e.g., gcc)."
-      ],
-      "answerIndex": 2,
-      "explanation": "Slide 76 (OCR page 31) explicitly states: '$@ : current target'."
-    },
-    {
-      "text": "According to the 'Using Makefile' slide, why is a TAB character mandatory before a command?",
-      "answers": [
-        "It is only for visual clarity.",
-        "The makefile will not work without it; it is imperative for command recognition.",
-        "It tells 'make' to run the command in the background.",
-        "It allows the command to run with root privileges."
-      ],
-      "answerIndex": 1,
-      "explanation": "Slide 74 (OCR page 29) states: 'The existence of TAB before the command above is imperative; otherwise, makefile does not work!'"
-    },
-    {
-      "text": "In a Makefile, what happens if the 'required-files' (prerequisites) have not changed since the last time the target was built?",
-      "answers": [
-        "The target is deleted and rebuilt.",
-        "The command for that target is not executed because it is up to date.",
-        "The 'make' command returns an error.",
-        "The 'clean' target is automatically triggered."
-      ],
-      "answerIndex": 1,
-      "explanation": "Slide 74 states: 'If required-files have not \"changed\" then the command of the Makefile does not get executed (things are up to date).'"
+      "answerIndex": 0,
+      "explanation": "Η κατηγοριοποίηση μετά την εκπαίδευση στα νευρωνικά δίκτυα είναι γρήγορη."
     }
   ]
 }

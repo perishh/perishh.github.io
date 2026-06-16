@@ -1,204 +1,334 @@
 {
   "questions": [
     {
-      "text": "Based on the provided command line examples, if a user has aliased 'rm' to 'rm -i' and then executes 'rm -f filename', what is the resulting behavior?",
+      "text": "Ποια είναι η χρονική πολυπλοκότητα του αλγορίθμου K-Means, όπου $I$ οι επαναλήψεις, $M$ τα σημεία, $K$ οι συστάδες και $d$ τα χαρακτηριστικά;",
       "answers": [
-        "The file is deleted immediately without any prompt due to the force option.",
-        "The system prompts the user with '(yes/no)?' because the alias 'rm -i' takes precedence over the '-f' flag in some shell configurations.",
-        "The command returns an error because '-i' and '-f' are mutually exclusive.",
-        "The file is moved to a temporary trash directory."
+        "$O(M^2 \\cdot d)$",
+        "$O(I \\cdot M \\cdot K \\cdot d)$",
+        "$O(M \\cdot \\log{M})$",
+        "$O(I \\cdot M^2 \\cdot K)$"
       ],
       "answerIndex": 1,
-      "explanation": "As shown on page 4, even when using 'rm -f aaa', the system still prompts 'remove aaa (yes/no)?' because the user had executed 'alias rm rm -i', which forced interactive mode."
+      "explanation": "Η χρονική πολυπλοκότητα του K-Means είναι $O(I \\cdot M \\cdot K \\cdot d)$, καθώς σε κάθε επανάληψη συγκρίνεται κάθε σημείο με κάθε κέντρο για όλα τα χαρακτηριστικά."
     },
     {
-      "text": "According to the comparison table, which statement is true regarding Hard Links and Soft Links?",
+      "text": "Ποια είναι η βασική πολυπλοκότητα χώρου για τον ιεραρχικό αλγόριθμο συσταδοποίησης;",
       "answers": [
-        "Soft links can only be used for files, not directories.",
-        "Deleting the initial file does not affect a Soft Link.",
-        "Changing the name of the initial file creates problems for Soft Links but not for Hard Links.",
-        "Hard links are essentially copies of the path to the initial file."
+        "$O(M \\cdot d)$",
+        "$O(K \\cdot d)$",
+        "$O(M^2)$",
+        "$O(M \\cdot K)$"
       ],
       "answerIndex": 2,
-      "explanation": "Page 22 explicitly states that for Hard Links, a name change of the initial file does not create problems, whereas for Soft Links, a name change in the initial file creates problems."
+      "explanation": "Ο ιεραρχικός αλγόριθμος απαιτεί $O(M^2)$ χώρο για την αποθήκευση του πίνακα εγγύτητας μεταξύ όλων των σημείων."
     },
     {
-      "text": "In the 'sort' command, what is the specific function of 'number1' in the syntax '+number1 -number2'?",
+      "text": "Τι ορίζει η «εκ των προτέρων» (Apriori) αρχή στην εξόρυξη κανόνων συσχέτισης;",
       "answers": [
-        "It specifies the total number of lines to be sorted.",
-        "It specifies the number of fields to be skipped to get to the beginning of the sort field.",
-        "It specifies the character position within a field to start sorting.",
-        "It defines the ASCII value of the delimiter."
-      ],
-      "answerIndex": 1,
-      "explanation": "Page 15 states that 'number1' specifies the number of fields to be skipped to get to the beginning of the sort field."
-    },
-    {
-      "text": "Referencing the 'wc' command output on page 13, what does the first column of the output '10 30 183 lista' represent?",
-      "answers": [
-        "Number of characters",
-        "Number of words",
-        "Number of lines",
-        "File size in bytes"
+        "Αν ένα σύνολο είναι συχνό, τότε όλα τα υπερσύνολά του είναι συχνά.",
+        "Αν ένα σύνολο είναι σπάνιο, τότε όλα τα υποσύνολά του είναι συχνά.",
+        "Αν ένα σύνολο είναι συχνό, τότε όλα τα υποσύνολά του είναι επίσης συχνά.",
+        "Η υποστήριξη ενός συνόλου είναι πάντα ίση με την εμπιστοσύνη του."
       ],
       "answerIndex": 2,
-      "explanation": "The 'wc' output format is lines, words, and characters. The command 'wc -l' (which isolates lines) shows 10, and 'wc -w' (words) shows 30, confirming the first column is the line count."
+      "explanation": "Η αρχή Apriori βασίζεται στην ιδιότητα της μονοτονίας: αν ένα σύνολο στοιχείων είναι συχνό, κάθε υποσύνολό του πρέπει επίσης να είναι συχνό."
     },
     {
-      "text": "When using the 'less' command, which key is used to search for a specific pattern 's' within the file content?",
-      "answers": ["s", "/s", "f s", "Ctrl+F s"],
-      "answerIndex": 1,
-      "explanation": "Page 11 lists navigation keys for 'less', noting that '/<s>' is used to search for pattern 's'."
-    },
-    {
-      "text": "On page 10, the command 'chmod -R 700 mydir/' was executed. What was the effect on the files A1 and A2 inside that directory?",
+      "text": "Γιατί ο K-Means μπορεί να μην επιστρέψει το βέλτιστο αποτέλεσμα σε μία μόνο εκτέλεση;",
       "answers": [
-        "They were deleted.",
-        "Their permissions remained unchanged as the command only applied to the directory.",
-        "Their permissions were changed to rwx------ (read, write, execute for owner only).",
-        "They became read-only for all users."
+        "Επειδή είναι αργός αλγόριθμος.",
+        "Επειδή είναι άπληστος και εξαρτάται από την αρχική επιλογή των κέντρων.",
+        "Επειδή λειτουργεί μόνο με μη αριθμητικά δεδομένα.",
+        "Επειδή απαιτεί πάντα $K=1$ στην αρχή."
+      ],
+      "answerIndex": 1,
+      "explanation": "Ο K-Means είναι άπληστος αλγόριθμος που ελαχιστοποιεί το τοπικό σφάλμα, άρα η σύγκλιση εξαρτάται από τα αρχικά κέντρα και μπορεί να καταλήξει σε τοπικό ελάχιστο."
+    },
+    {
+      "text": "Πώς υπολογίζεται η εμπιστοσύνη (confidence) ενός κανόνα $A \\to B$;",
+      "answers": [
+        "$\\text{support}(A \\cup B) / \\text{support}(A)$",
+        "$\\text{support}(A \\cup B) / \\text{support}(B)$",
+        "$\\text{support}(A) / \\text{support}(B)$",
+        "$\\text{support}(A) + \\text{support}(B)$"
+      ],
+      "answerIndex": 0,
+      "explanation": "Η εμπιστοσύνη ορίζεται ως ο λόγος της υποστήριξης του συνόλου $A \\cup B$ προς την υποστήριξη του προηγούμενου μέρους $A$."
+    },
+    {
+      "text": "Ποιο είναι ένα από τα κύρια μειονεκτήματα του αλγορίθμου K-Means;",
+      "answers": [
+        "Είναι εξαιρετικά αργός για μικρά σύνολα δεδομένων.",
+        "Είναι ευαίσθητος σε ακραία σημεία (outliers).",
+        "Δημιουργεί μόνο μη κυρτές συστάδες.",
+        "Δεν απαιτεί τον ορισμό του $K$."
+      ],
+      "answerIndex": 1,
+      "explanation": "Επειδή τα κέντρα υπολογίζονται ως η μέση τιμή των σημείων, τα ακραία σημεία μπορούν να τραβήξουν τα κέντρα μακριά από την πραγματική τους θέση."
+    },
+    {
+      "text": "Ποια προσέγγιση του ιεραρχικού αλγορίθμου ξεκινά με κάθε σημείο ως ξεχωριστή συστάδα;",
+      "answers": [
+        "Διαχωριστική (Divisive)",
+        "Συσσωρευτική (Agglomerative)",
+        "Άπληστη (Greedy)",
+        "Τυχαία (Random)"
+      ],
+      "answerIndex": 1,
+      "explanation": "Η συσσωρευτική προσέγγιση ξεκινά από τη βάση (κάθε σημείο μια συστάδα) και συγχωνεύει ζεύγη μέχρι να μείνει μία συστάδα."
+    },
+    {
+      "text": "Ποια είναι η χρονική πολυπλοκότητα του ιεραρχικού αλγορίθμου;",
+      "answers": [
+        "$O(I \\cdot M \\cdot K)$",
+        "$O(M^2 \\log{M})$",
+        "$O(M \\cdot d)$",
+        "$O(M^3)$"
+      ],
+      "answerIndex": 1,
+      "explanation": "Η χρονική πολυπλοκότητα είναι $O(M^2 \\log{M})$, γεγονός που τον καθιστά αργό για μεγάλα σύνολα δεδομένων $M$."
+    },
+    {
+      "text": "Στον αλγόριθμο Apriori, τι συμβαίνει αν ένα στοιχειοσύνολο είναι σπάνιο;",
+      "answers": [
+        "Όλα τα υπερσύνολά του είναι επίσης σπάνια.",
+        "Όλα τα υποσύνολά του είναι συχνά.",
+        "Ο αλγόριθμος σταματά αμέσως.",
+        "Προστίθεται αυτόματα στο επόμενο επίπεδο."
+      ],
+      "answerIndex": 0,
+      "explanation": "Σύμφωνα με την Apriori αρχή, αν ένα σύνολο δεν ικανοποιεί το κατώφλι υποστήριξης, κανένα υπερσύνολό του δεν μπορεί να το ικανοποιεί."
+    },
+    {
+      "text": "Πώς μπορεί να βελτιωθεί η απόδοση του K-Means για μη κυρτές συστάδες;",
+      "answers": [
+        "Με αύξηση των επαναλήψεων $I$.",
+        "Με χρήση των συστάδων του K-Means ως βάση για συνένωση από άλλους αλγορίθμους.",
+        "Με μείωση του $K$.",
+        "Με χρήση μόνο ακραίων σημείων."
+      ],
+      "answerIndex": 1,
+      "explanation": "Για μη κυρτά σχήματα, οι μικρότερες συστάδες που παράγει ο K-Means μπορούν να συνενωθούν για να σχηματίσουν το τελικό μη κυρτό σχήμα."
+    },
+    {
+      "text": "Ποιο μέτρο χρησιμοποιεί ο K-Means για τον επαναϋπολογισμό των κέντρων;",
+      "answers": [
+        "Τη διάμεσο (median)",
+        "Τον μέσο όρο (mean)",
+        "Την επικρατούσα τιμή (mode)",
+        "Το άθροισμα των χαρακτηριστικών"
+      ],
+      "answerIndex": 1,
+      "explanation": "Σε κάθε επανάληψη, το νέο κέντρο μιας συστάδας είναι ο μέσος όρος των συντεταγμένων όλων των σημείων που ανήκουν σε αυτήν."
+    },
+    {
+      "text": "Τι αντιπροσωπεύει η «υποστήριξη» (support) στην εξόρυξη κανόνων συσχέτισης;",
+      "answers": [
+        "Πόσο συχνά εμφανίζεται το $B$ όταν έχει εμφανιστεί το $A$.",
+        "Πόσο συχνά εμφανίζεται ένα σύνολο αντικειμένων στη βάση δεδομένων.",
+        "Τον μέσο όρο των αντικειμένων ανά συναλλαγή.",
+        "Την πιθανότητα ένα αντικείμενο να μην αγοραστεί."
+      ],
+      "answerIndex": 1,
+      "explanation": "Η υποστήριξη δείχνει τη συχνότητα εμφάνισης ενός συνόλου αντικειμένων στο σύνολο των συναλλαγών."
+    },
+    {
+      "text": "Ποιο σχήμα συστάδων προτιμά ο K-Means;",
+      "answers": [
+        "Αυθαίρετο σχήμα",
+        "Επιμήκη σχήματα",
+        "Κυρτά σχήματα (σφαιρικά)",
+        "Σχήματα δακτυλίου"
       ],
       "answerIndex": 2,
-      "explanation": "The '-R' flag stands for recursive. Before the command, A1 and A2 had 'rwxr-xr-x'. After the 'chmod -R 700', 'ls -lR' shows they both have 'rwx------'."
+      "explanation": "Ο K-Means τείνει να δημιουργεί κυρτές (σφαιρικές) συστάδες λόγω της χρήσης της ευκλείδειας απόστασης και του μέσου όρου."
     },
     {
-      "text": "A user runs 'grep -n x86 dmesg'. What does the '-n' option contribute to the output?",
+      "text": "Πότε τερματίζει ο αλγόριθμος Apriori;",
       "answers": [
-        "It makes the search case-insensitive.",
-        "It displays the line numbers where the pattern was found.",
-        "It counts the total number of matches.",
-        "It only displays the names of files containing the match."
+        "Όταν βρεθούν τουλάχιστον 100 κανόνες.",
+        "Όταν δεν παράγονται νέα συχνά στοιχειοσύνολα.",
+        "Μετά από $K$ επαναλήψεις.",
+        "Όταν η εμπιστοσύνη φτάσει στο $100%$."
       ],
       "answerIndex": 1,
-      "explanation": "As shown on page 12, the output for 'grep -n' includes prefixes like '10:', '41:', '58:', which correspond to the line numbers in the file."
+      "explanation": "Ο αλγόριθμος λειτουργεί επίπεδο προς επίπεδο και σταματά όταν δεν υπάρχουν πλέον υποψήφια σύνολα που να υπερβαίνουν το κατώφλι υποστήριξης."
     },
     {
-      "text": "Based on the shell I/O descriptions, what are the file descriptors for stdin, stdout, and stderr respectively?",
+      "text": "Ποια είναι η χρησιμότητα του δέντρου (dendrogram) στον ιεραρχικό αλγόριθμο;",
       "answers": [
-        "1, 2, 3",
-        "0, 1, 2",
-        "1, 0, 2",
-        "Standard input has no descriptor."
+        "Επιτρέπει στον χρήστη να επιλέξει το επίπεδο συσταδοποίησης (κόψιμο).",
+        "Υπολογίζει αυτόματα το βέλτιστο $K$ χωρίς παρέμβαση.",
+        "Μειώνει τη χρονική πολυπλοκότητα στο $O(M)$.",
+        "Χρησιμοποιείται μόνο για την αφαίρεση ακραίων σημείων."
+      ],
+      "answerIndex": 0,
+      "explanation": "Το δενδρόγραμμα αναπαριστά όλη την ιεραρχία και ο χρήστης μπορεί να αποφασίσει πόσες συστάδες επιθυμεί «κόβοντας» το δέντρο στο ανάλογο ύψος."
+    },
+    {
+      "text": "Ποια είναι η πολυπλοκότητα χώρου του K-Means;",
+      "answers": [
+        "$O(M^2)$",
+        "$O((M + K) \\cdot d)$",
+        "$O(M \\cdot I)$",
+        "$O(K^2)$"
       ],
       "answerIndex": 1,
-      "explanation": "Page 27 states that the file descriptors for stdin, stdout, and stderr are 0, 1, 2 respectively."
+      "explanation": "Απαιτείται χώρος για την αποθήκευση των $M$ δεδομένων και των $K$ κέντρων, καθένα από τα οποία έχει $d$ χαρακτηριστικά."
     },
     {
-      "text": "Which command is used to display the differences between two ASCII files as shown on page 24?",
-      "answers": ["cmp", "diff", "comm", "dist"],
-      "answerIndex": 1,
-      "explanation": "The screenshot on page 24 demonstrates the use of 'diff' to show line-by-line differences (e.g., '4c4' and the specific changed lines)."
-    },
-    {
-      "text": "According to page 7, how does a user move from 'input' mode to 'edit' mode in the vi/vim editor?",
+      "text": "Ποια μέθοδος μπορεί να χρησιμοποιηθεί για την αποφυγή τοπικών ελαχίστων στον K-Means;",
       "answers": [
-        "Pressing the 'i' key",
-        "Pressing the 'ESC' button",
-        "Pressing 'Enter'",
-        "Typing ':w'"
+        "Εκτέλεση του αλγορίθμου πολλές φορές με διαφορετικές αρχικοποιήσεις.",
+        "Χρήση μόνο μίας τυχαίας αρχικοποίησης.",
+        "Αύξηση του πλήθους των χαρακτηριστικών $d$.",
+        "Μείωση του πλήθους των σημείων $M$."
       ],
-      "answerIndex": 1,
-      "explanation": "Page 7 specifies: 'Move from input to edit with ESC button.'"
+      "answerIndex": 0,
+      "explanation": "Η εκτέλεση με διαφορετικά αρχικά κέντρα και η επιλογή της λύσης με το μικρότερο SSE βοηθά στην εύρεση μιας καλύτερης συνολικής λύσης."
     },
     {
-      "text": "On page 21, what happens when 'more mysoftlink' is executed after the original file 'bbbb' has been deleted?",
+      "text": "Ποιο είναι το κύριο πλεονέκτημα του ιεραρχικού αλγορίθμου έναντι του K-Means;",
       "answers": [
-        "The system displays the contents of 'myhardlink' instead.",
-        "The system returns 'mysoftlink: No such file or directory'.",
-        "The system displays an empty file.",
-        "The system automatically restores 'bbbb' from the link."
-      ],
-      "answerIndex": 1,
-      "explanation": "Page 21 shows that after 'rm bbbb', the command 'more mysoftlink' results in 'mysoftlink: No such file or directory' because the soft link points to a non-existent path."
-    },
-    {
-      "text": "In the context of printing commands on page 25, which command is used to remove a specific print job from the queue?",
-      "answers": ["lpstat -r", "lpq -d", "lprm", "lpr -clear"],
-      "answerIndex": 2,
-      "explanation": "Page 25 shows 'lprm -Php-LaserJet-1320-series 143' being used to remove job 143 from the printer queue."
-    },
-    {
-      "text": "Looking at the 'cut' command examples on page 23, what is the result of 'cut -f3,2 -d \":\" lista1'?",
-      "answers": [
-        "It displays the first and second columns.",
-        "It displays the third and second columns (in that specific order) of the file using ':' as a delimiter.",
-        "It displays the lines starting from character 2 to 3.",
-        "It displays the third and second columns, but re-ordered to 2 then 3 in the output."
-      ],
-      "answerIndex": 1,
-      "explanation": "The output on page 23 shows that 'cut -f3,2' extracts those specific fields. Note that 'cut' usually outputs fields in the order they appear in the file, but the command specifically designates those columns."
-    },
-    {
-      "text": "What is the primary difference between 'more' and 'less' as defined in the processing commands table?",
-      "answers": [
-        "'more' is for directories while 'less' is for files.",
-        "'less' allows for backward display of file content, whereas 'more' is page-by-page (forward).",
-        "'more' can edit files, 'less' is read-only.",
-        "There is no difference; they are aliases for the same binary."
-      ],
-      "answerIndex": 1,
-      "explanation": "Page 8 describes 'more' as page-by-page display and 'less' as forward/backward display of file content."
-    },
-    {
-      "text": "On page 19, the command 'touch antoulas' is executed when the file 'antoulas' does not exist. What is the result?",
-      "answers": [
-        "The command fails with an error.",
-        "An empty file named 'antoulas' is created.",
-        "The system searches for a user named 'antoulas'.",
-        "The system changes the timestamp of the current directory."
-      ],
-      "answerIndex": 1,
-      "explanation": "Page 8 and page 19 explain that 'touch' is used to change the timestamp or 'create an empty file' if it doesn't exist."
-    },
-    {
-      "text": "In a 'csh' shell, what does the command 'grep bra < lista > out1' do?",
-      "answers": [
-        "It searches for 'bra' in 'lista' and displays it on the screen.",
-        "It appends the word 'bra' to the files 'lista' and 'out1'.",
-        "It takes 'lista' as stdin, searches for 'bra', and redirects the stdout to a file named 'out1'.",
-        "It compares the files 'lista' and 'out1' for the pattern 'bra'."
+        "Είναι πολύ πιο γρήγορος.",
+        "Απαιτεί λιγότερη μνήμη.",
+        "Μπορεί να ανακαλύψει συστάδες αυθαίρετου σχήματος.",
+        "Δεν μπορεί να δουλέψει με μη αριθμητικά δεδομένα."
       ],
       "answerIndex": 2,
-      "explanation": "Page 28 shows this redirection example in csh, where '<' redirects stdin and '>' redirects stdout."
+      "explanation": "Λόγω της φύσης του και των διαφορετικών κριτηρίων εγγύτητας, ο ιεραρχικός αλγόριθμος μπορεί να ανιχνεύσει πιο περίπλοκα σχήματα από τον K-Means."
     },
     {
-      "text": "According to the slide on shell types, what file is executed as soon as a user logs into a system?",
-      "answers": ["~/.cshrc", ".logout", ".login", ".bash_history"],
-      "answerIndex": 2,
-      "explanation": "Page 26 states: 'As soon as a user logs into a system, the commands in file .login are executed.'"
-    },
-    {
-      "text": "When using 'ls -F', as seen on page 1, what does a trailing slash (/) indicate next to an item name?",
+      "text": "Τι είδους αναζήτηση χρησιμοποιεί ο αλγόριθμος Apriori;",
       "answers": [
-        "The item is an executable file.",
-        "The item is a symbolic link.",
-        "The item is a directory.",
-        "The item is a hidden file."
+        "Αναζήτηση κατά βάθος (Depth-first)",
+        "Τυχαία αναζήτηση (Random search)",
+        "Αναζήτηση κατά πλάτος (Breadth-first)",
+        "Δυαδική αναζήτηση (Binary search)"
       ],
       "answerIndex": 2,
-      "explanation": "In the 'ls -lF' output on page 1, entries like 'junk/' and 'hsperfdata_root/' have trailing slashes and are also identified by the 'd' at the start of the permission string, indicating directories."
+      "explanation": "Ο Apriori εξετάζει τα στοιχειοσύνολα επίπεδο προς επίπεδο (1-itemsets, μετά 2-itemsets κ.ο.κ.), άρα είναι αναζήτηση κατά πλάτος."
     },
     {
-      "text": "What is the function of the '-i' option in the 'cp' and 'mv' commands?",
+      "text": "Πώς ορίζεται ένας κανόνας συσχέτισης από ένα συχνό στοιχειοσύνολο $L$;",
       "answers": [
-        "It forces the command to ignore errors.",
-        "It enables interactive mode, asking for confirmation before an action is taken.",
-        "It makes the command case-insensitive for filenames.",
-        "It installs the files into the system directory."
+        "$A \\to L-A$, όπου $A$ μη κενό υποσύνολο του $L$.",
+        "$L \\to A$, όπου $A$ είναι υπερσύνολο του $L$.",
+        "$A \\to B$, όπου $A$ και $B$ είναι ξένα προς το $L$.",
+        "$(A+B) \\to L$."
       ],
-      "answerIndex": 1,
-      "explanation": "Page 20 defines '-i' as 'interactive mode (asks before an action can be taken).'"
+      "answerIndex": 0,
+      "explanation": "Για ένα συχνό σύνολο $L$, οι κανόνες προκύπτουν χωρίζοντάς το σε δύο μέρη: το προηγούμενο (antecedent) και το επόμενο (consequent)."
     },
     {
-      "text": "To see only the last 3 lines of a file named 'lista2', which command should be used based on the examples?",
+      "text": "Στον K-Means, τι συμβαίνει στο βήμα της ανάθεσης;",
       "answers": [
-        "head -3 lista2",
-        "tail -3 lista2",
-        "tail +3 lista2",
-        "last 3 lista2"
+        "Κάθε κέντρο μετακινείται στον μέσο όρο των σημείων του.",
+        "Κάθε σημείο ανατίθεται στο κοντινότερο κέντρο βάρους.",
+        "Διαγράφονται τα ακραία σημεία.",
+        "Αυξάνεται το $K$ κατά 1."
       ],
       "answerIndex": 1,
-      "explanation": "Page 24 shows the command 'tail -3 lista2' being used to display the final three lines of the file."
+      "explanation": "Το πρώτο στάδιο κάθε επανάληψης είναι η αντιστοίχιση κάθε σημείου δεδομένων στη συστάδα της οποίας το κέντρο είναι πλησιέστερο."
+    },
+    {
+      "text": "Γιατί ο ιεραρχικός αλγόριθμος θεωρείται κατάλληλος για δεδομένα με σχέση εμφώλευσης;",
+      "answers": [
+        "Επειδή δημιουργεί μια δενδροειδή δομή που αντικατοπτρίζει την ιεραρχία.",
+        "Επειδή είναι άπληστος.",
+        "Επειδή χρησιμοποιεί $K$ κέντρα.",
+        "Επειδή ελαχιστοποιεί το SSE."
+      ],
+      "answerIndex": 0,
+      "explanation": "Η ιεραρχική συσταδοποίηση παράγει επίπεδα συστάδων, επιτρέποντας την αναπαράσταση σχέσεων όπου μια συστάδα περιέχεται σε μια άλλη."
+    },
+    {
+      "text": "Ποιο από τα παρακάτω είναι βελτίωση για την αντιμετώπιση ακραίων σημείων στον K-Means;",
+      "answers": [
+        "Αφαίρεση μικρών συστάδων μετά τη συσταδοποίηση.",
+        "Αύξηση του $K$ στο άπειρο.",
+        "Χρήση μόνο τυχαίων αρχικών κέντρων.",
+        "Αγνόηση του SSE."
+      ],
+      "answerIndex": 0,
+      "explanation": "Τα ακραία σημεία συχνά καταλήγουν σε πολύ μικρές συστάδες (με 1-2 σημεία), οι οποίες μπορούν να αφαιρεθούν ή να συγχωνευθούν."
+    },
+    {
+      "text": "Τι προσπαθεί να ελαχιστοποιήσει ο αλγόριθμος K-Means;",
+      "answers": [
+        "Το πλήθος των συστάδων $K$.",
+        "Το άθροισμα των τετραγωνικών αποστάσεων από τα κέντρα των συστάδων.",
+        "Τη χρονική πολυπλοκότητα $O(M^2)$.",
+        "Τον αριθμό των χαρακτηριστικών $d$."
+      ],
+      "answerIndex": 1,
+      "explanation": "Η αντικειμενική συνάρτηση του K-Means είναι η ελαχιστοποίηση της ενδοσυστάδας διασποράς (SSE)."
+    },
+    {
+      "text": "Στον αλγόριθμο Apriori, αν έχουμε τα συχνά $(k-1)$-στοιχειοσύνολα, πώς προκύπτουν τα υποψήφια $k$-στοιχειοσύνολα;",
+      "answers": [
+        "Με τυχαία επιλογή από τη βάση δεδομένων.",
+        "Από τον συνδυασμό των συχνών $(k-1)$-στοιχειοσυνόλων.",
+        "Με αφαίρεση στοιχείων από τα 1-στοιχειοσύνολα.",
+        "Με χρήση μόνο των σπάνιων συνόλων."
+      ],
+      "answerIndex": 1,
+      "explanation": "Τα υποψήφια σύνολα μεγέθους $k$ δημιουργούνται συνδυάζοντας τα ήδη γνωστά συχνά σύνολα μεγέθους $k-1$."
+    },
+    {
+      "text": "Ποια είναι η κύρια διαφορά μεταξύ συσσωρευτικής και διαχωριστικής ιεραρχικής συσταδοποίησης;",
+      "answers": [
+        "Η συσσωρευτική είναι top-down, ενώ η διαχωριστική bottom-up.",
+        "Η συσσωρευτική είναι bottom-up, ενώ η διαχωριστική top-down.",
+        "Μόνο η συσσωρευτική χρησιμοποιεί αποστάσεις.",
+        "Η διαχωριστική είναι πάντα ταχύτερη."
+      ],
+      "answerIndex": 1,
+      "explanation": "Η συσσωρευτική ξεκινά από τα μεμονωμένα σημεία (κάτω προς τα πάνω), ενώ η διαχωριστική από το σύνολο των δεδομένων (πάνω προς τα κάτω)."
+    },
+    {
+      "text": "Ποια είναι μια εναλλακτική προσέγγιση για τη βελτίωση της αντικειμενικής συνάρτησης του K-Means αντί της τυχαίας αρχικοποίησης;",
+      "answers": [
+        "Βαθμωτή κατάβαση (Gradient descent).",
+        "Εξαντλητική εξέταση όλων των πιθανών διαχωρισμών.",
+        "Μείωση των επαναλήψεων $I$ στο 1.",
+        "Χρήση μόνο του χαρακτηριστικού $d=1$."
+      ],
+      "answerIndex": 0,
+      "explanation": "Η βαθμωτή κατάβαση επιλέγει σε κάθε βήμα την αλλαγή που βελτιώνει περισσότερο την αντικειμενική συνάρτηση."
+    },
+    {
+      "text": "Ποιο είναι το κόστος αποθήκευσης δεδομένων στον K-Means αν $M=1000$, $K=10$ και $d=5$;",
+      "answers": [
+        "5050 μονάδες",
+        "1010 μονάδες",
+        "10000 μονάδες",
+        "50000 μονάδες"
+      ],
+      "answerIndex": 0,
+      "explanation": "Χώρος = $(M + K) \\cdot d = (1000 + 10) \\cdot 5 = 1010 \\cdot 5 = 5050$."
+    },
+    {
+      "text": "Ποιος αλγόριθμος είναι πιο αποδοτικός για πολύ μεγάλα σύνολα δεδομένων ($M > 1.000.000$);",
+      "answers": [
+        "Ιεραρχικός αλγόριθμος",
+        "K-Means",
+        "Εξαντλητική αναζήτηση",
+        "Κανένας από τους παραπάνω"
+      ],
+      "answerIndex": 1,
+      "explanation": "Ο K-Means είναι πολύ πιο αποδοτικός ($O(M)$ γραμμικός ως προς $M$) σε σχέση με τον ιεραρχικό που είναι $O(M^2)$."
+    },
+    {
+      "text": "Τι συμβαίνει αν το κατώφλι εμπιστοσύνης (confidence threshold) οριστεί στο 1.0 (100%);",
+      "answers": [
+        "Κανένας κανόνας δεν θα βρεθεί ποτέ.",
+        "Θα κρατηθούν μόνο οι κανόνες όπου το $B$ εμφανίζεται πάντα μαζί με το $A$.",
+        "Ο αλγόριθμος Apriori θα τερματίσει πιο γρήγορα.",
+        "Η υποστήριξη όλων των συνόλων θα γίνει 1."
+      ],
+      "answerIndex": 1,
+      "explanation": "Εμπιστοσύνη 1.0 σημαίνει ότι σε κάθε συναλλαγή που περιέχει το $A$, περιέχεται απαραίτητα και το $B$."
     }
   ]
 }
